@@ -1,13 +1,2 @@
 *.obj
 *.ipch
-*.log
-*.suo
-*.db
-*.exe
-*.ilk
-*.pdb
-*.pch
-*.tlog
-*.pdb
-*.opendb
-Debug/
