@@ -215,13 +215,18 @@
 #define ID_CONTROL_FRENARASIENTO        32888
 #define ID_CONTROL_FRENARBRAZO          32889
 #define ID_PLAY                         32890
+#define ID_STOP                         32893
+#define ID_PAUSE                        32894
+#define ID_TEXTURAS                     32895
+#define ID_ILUMINACION                  32896
+#define ID_PROJECCION                   32897
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32891
+#define _APS_NEXT_COMMAND_VALUE         32898
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

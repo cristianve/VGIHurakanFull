@@ -301,6 +301,10 @@ BEGIN
     BEGIN
         MENUITEM "&Nueva ventana",              ID_WINDOW_NEW
     END
+    POPUP "Ayuda"
+    BEGIN
+        MENUITEM "&Acerca de EntornVGI (Tecla ALT)...", ID_APP_ABOUT
+    END
     MENUITEM SEPARATOR
     POPUP "Hurakan"
     BEGIN
@@ -331,22 +335,18 @@ BEGIN
         END
         MENUITEM "Texturas",                    ID_HURAKAN_TEXTURAS
     END
-    POPUP "Ay&uda"
-    BEGIN
-        MENUITEM "&Acerca de EntornVGI (Tecla ALT)...", ID_APP_ABOUT
-    END
     MENUITEM "Play",                        ID_PLAY
-    MENUITEM "Pause",                       0
-    MENUITEM "Stop",                        0
+    MENUITEM "Pause",                       ID_PAUSE
+    MENUITEM "Stop",                        ID_STOP
     POPUP "Injecciones Partes"
     BEGIN
         MENUITEM "Parte 1",                     ID_INJECCIONESPARTES_PARTE1
         MENUITEM "Parte 2",                     ID_INJECCIONESPARTES_PARTE2
         MENUITEM "Parte 3",                     ID_INJECCIONESPARTES_PARTE3
     END
-    MENUITEM "Projección",                  0
-    MENUITEM "Iluminación",                 0
-    MENUITEM "Texturas",                    0
+    MENUITEM "Projeccion",                  ID_PROJECCION
+    MENUITEM "Iluminacion",                 ID_ILUMINACION
+    MENUITEM "Texturas",                    ID_TEXTURAS
     POPUP "Control"
     BEGIN
         MENUITEM "Bloquear Asientos",           ID_CONTROL_BLOQUEARASIENTOS

@@ -1,7 +1,10 @@
-﻿     Creando biblioteca C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\EntornVGI.lib y objeto C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\EntornVGI.exp
-glew32s.lib(glew.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'glew32s.lib(glew.obj)' o en 'C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-soil.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(image_DXT.obj)' o en 'C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-soil.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(image_helper.obj)' o en 'C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-soil.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(SOIL.obj)' o en 'C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-soil.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(stb_image_aug.obj)' o en 'C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-  EntornVGI.vcxproj -> C:\Users\97cve\Desktop\VGIHurakanFull\VGIHurakanFull\Debug\EntornVGI.exe
+﻿  ChildFrm.cpp
+  ClassView.cpp
+  EntornVGI.cpp
+  EntornVGIDoc.cpp
+  EntornVGIView.cpp
+  FileView.cpp
+  MainFrm.cpp
+  OutputWnd.cpp
+  PropertiesWnd.cpp
+  EntornVGI.vcxproj -> C:\Users\97cve\Desktop\VGIHurakanFull\Debug\EntornVGI.exe
