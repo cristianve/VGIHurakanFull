@@ -281,8 +281,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum 1: Atenuació constant (c=1), sobre l'eix X, no restringida.
 	llumGL[1].encesa = false;
-	llumGL[1].difusa[1] = 1.0f;			llumGL[1].difusa[1] = 1.0f;			llumGL[1].difusa[2] = 1.0f;		llumGL[1].difusa[3] = 1.0f;
-	llumGL[1].especular[1] = 1.0f;		llumGL[1].especular[1] = 1.0f;		llumGL[1].especular[2] = 1.0f;	llumGL[1].especular[3] = 1;
+	llumGL[1].difusa[0] = 1.0f;			llumGL[1].difusa[1] = 1.0f;			llumGL[1].difusa[2] = 1.0f;		llumGL[1].difusa[3] = 1.0f;
+	llumGL[1].especular[0] = 1.0f;		llumGL[1].especular[1] = 1.0f;		llumGL[1].especular[2] = 1.0f;	llumGL[1].especular[3] = 1;
 
 	llumGL[1].posicio.R = 75.0;			llumGL[1].posicio.alfa = 0.0;		llumGL[1].posicio.beta = 0.0;// (x,y,z)=(75,0,0)
 	llumGL[1].atenuacio.a = 0.0;		llumGL[1].atenuacio.b = 0.0;		llumGL[1].atenuacio.c = 1.0;
@@ -292,8 +292,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum 2: Atenuació constant (c=1), sobre l'eix Y, no restringida.
 	llumGL[2].encesa = false;
-	llumGL[2].difusa[1] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[2].difusa[2] = 1.0f;		llumGL[2].difusa[3] = 1.0f;
-	llumGL[2].especular[1] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[2].especular[2] = 1.0f;	llumGL[2].especular[3] = 1;
+	llumGL[2].difusa[0] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[2].difusa[2] = 1.0f;		llumGL[2].difusa[3] = 1.0f;
+	llumGL[2].especular[0] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[2].especular[2] = 1.0f;	llumGL[2].especular[3] = 1;
 
 	llumGL[2].posicio.R = 75.0;			llumGL[2].posicio.alfa = 0.0;		llumGL[2].posicio.beta = 90.0;	// (x,y,z)=(0,75,0)
 	llumGL[2].atenuacio.a = 0.0;		llumGL[2].atenuacio.b = 0.0;		llumGL[2].atenuacio.c = 1.0;
@@ -303,8 +303,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum 3: Atenuació constant (c=1), sobre l'eix Y=X, no restringida.
 	llumGL[3].encesa = false;
-	llumGL[3].difusa[1] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[3].difusa[2] = 1.0f;		llumGL[3].difusa[3] = 1.0f;
-	llumGL[3].especular[1] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[3].especular[2] = 1.0f;	llumGL[3].especular[3] = 1;
+	llumGL[3].difusa[0] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[3].difusa[2] = 1.0f;		llumGL[3].difusa[3] = 1.0f;
+	llumGL[3].especular[0] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[3].especular[2] = 1.0f;	llumGL[3].especular[3] = 1;
 
 	llumGL[3].posicio.R = 75.0;			llumGL[3].posicio.alfa = 45.0;		llumGL[3].posicio.beta = 45.0;// (x,y,z)=(75,75,75)
 	llumGL[3].atenuacio.a = 0.0;		llumGL[3].atenuacio.b = 0.0;		llumGL[3].atenuacio.c = 1.0;
@@ -314,8 +314,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum 4: Atenuació constant (c=1), sobre l'eix -Z, no restringida.
 	llumGL[4].encesa = false;
-	llumGL[4].difusa[1] = 1.0f;			llumGL[4].difusa[1] = 1.0f;			llumGL[4].difusa[2] = 1.0f;		llumGL[4].difusa[3] = 1.0f;
-	llumGL[4].especular[1] = 1.0f;		llumGL[4].especular[1] = 1.0f;		llumGL[4].especular[2] = 1.0f;	llumGL[4].especular[3] = 1;
+	llumGL[4].difusa[0] = 1.0f;			llumGL[4].difusa[1] = 1.0f;			llumGL[4].difusa[2] = 1.0f;		llumGL[4].difusa[3] = 1.0f;
+	llumGL[4].especular[0] = 1.0f;		llumGL[4].especular[1] = 1.0f;		llumGL[4].especular[2] = 1.0f;	llumGL[4].especular[3] = 1;
 
 	llumGL[4].posicio.R = 75.0;			llumGL[4].posicio.alfa = -90.0;		llumGL[4].posicio.beta = 0.0;// (x,y,z)=(0,0,-75)
 	llumGL[4].atenuacio.a = 0.0;		llumGL[4].atenuacio.b = 0.0;		llumGL[4].atenuacio.c = 1.0;
@@ -325,8 +325,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum #5:
 	llumGL[5].encesa = false;
-	llumGL[5].difusa[1] = 1.0f;			llumGL[5].difusa[1] = 1.0f;			llumGL[5].difusa[2] = 1.0f;		llumGL[5].difusa[3] = 1.0f;
-	llumGL[5].especular[1] = 1.0f;		llumGL[5].especular[1] = 1.0f;		llumGL[5].especular[2] = 1.0f;	llumGL[5].especular[3] = 1;
+	llumGL[5].difusa[0] = 1.0f;			llumGL[5].difusa[1] = 1.0f;			llumGL[5].difusa[2] = 1.0f;		llumGL[5].difusa[3] = 1.0f;
+	llumGL[5].especular[0] = 1.0f;		llumGL[5].especular[1] = 1.0f;		llumGL[5].especular[2] = 1.0f;	llumGL[5].especular[3] = 1;
 
 	llumGL[5].posicio.R = 0.0;			llumGL[5].posicio.alfa = 0.0;		llumGL[5].posicio.beta = 0.0; // Cap posició definida
 	llumGL[5].atenuacio.a = 0.0;		llumGL[5].atenuacio.b = 0.0;		llumGL[5].atenuacio.c = 1.0;
@@ -336,8 +336,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum #6: Llum Vaixell, configurada a la funció vaixell() en escena.cpp.
 	llumGL[6].encesa = false;
-	llumGL[6].difusa[1] = 1.0f;			llumGL[6].difusa[1] = 1.0f;			llumGL[6].difusa[2] = 1.0f;		llumGL[6].difusa[3] = 1.0f;
-	llumGL[6].especular[1] = 1.0f;		llumGL[6].especular[1] = 1.0f;		llumGL[6].especular[2] = 1.0f;	llumGL[6].especular[3] = 1;
+	llumGL[6].difusa[0] = 1.0f;			llumGL[6].difusa[1] = 1.0f;			llumGL[6].difusa[2] = 1.0f;		llumGL[6].difusa[3] = 1.0f;
+	llumGL[6].especular[0] = 1.0f;		llumGL[6].especular[1] = 1.0f;		llumGL[6].especular[2] = 1.0f;	llumGL[6].especular[3] = 1;
 
 	llumGL[6].posicio.R = 0.0;			llumGL[6].posicio.alfa = 0.0;		llumGL[6].posicio.beta = 0.0; // Cap posició definida, definida en funció vaixell() en escena.cpp
 	llumGL[6].atenuacio.a = 0.0;		llumGL[6].atenuacio.b = 0.0;		llumGL[6].atenuacio.c = 1.0;
@@ -347,8 +347,8 @@ CEntornVGIView::CEntornVGIView()
 
 // LLum #7: Llum Far, configurada a la funció faro() en escena.cpp.
 	llumGL[7].encesa = false;
-	llumGL[7].difusa[1] = 1.0f;		llumGL[7].difusa[1] = 1.0f;			llumGL[7].difusa[2] = 1.0f;		llumGL[7].difusa[3] = 1.0f;
-	llumGL[7].especular[1] = 1.0f;		llumGL[7].especular[1] = 1.0f;		llumGL[7].especular[2] = 1.0f;	llumGL[7].especular[3] = 1;
+	llumGL[7].difusa[0] = 1.0f;		llumGL[7].difusa[1] = 1.0f;			llumGL[7].difusa[2] = 1.0f;		llumGL[7].difusa[3] = 1.0f;
+	llumGL[7].especular[0] = 1.0f;		llumGL[7].especular[1] = 1.0f;		llumGL[7].especular[2] = 1.0f;	llumGL[7].especular[3] = 1;
 
 	llumGL[7].posicio.R = 0.0;			llumGL[7].posicio.alfa = 0.0;		llumGL[7].posicio.beta = 0.0; // Cap posició definida, definida en funció faro() en escena.cpp
 	llumGL[7].atenuacio.a = 0.0;		llumGL[7].atenuacio.b = 0.0;		llumGL[7].atenuacio.c = 1.0;
@@ -2154,7 +2154,6 @@ void CEntornVGIView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_ButoEAvall = true;
 	m_PosEAvall = point;
 	m_EsfeEAvall = OPV;
-
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -2165,7 +2164,7 @@ void CEntornVGIView::OnLButtonUp(UINT nFlags, CPoint point)
 // TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 // Entorn VGI: Desactivem flag m_ButoEAvall quan deixem d'apretar botó esquerra del mouse.
 	m_ButoEAvall = false;
-
+	
 // OPCIÓ VISTA-->SATÈLIT: Càlcul increment desplaçament del Punt de Vista
 	if ((satelit) && (projeccio != ORTO))
 	{	//m_EsfeIncEAvall.R = m_EsfeEAvall.R - OPV.R;
@@ -2178,7 +2177,7 @@ void CEntornVGIView::OnLButtonUp(UINT nFlags, CPoint point)
 		if ((m_EsfeIncEAvall.R == 0.0) && (m_EsfeIncEAvall.alfa == 0.0) && (m_EsfeIncEAvall.beta == 0.0)) KillTimer(WM_TIMER);
 		else SetTimer(WM_TIMER, 10, NULL);
 	}
-
+	
 	CView::OnLButtonUp(nFlags, point);
 }
 
@@ -2465,12 +2464,12 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 		// Codi de tractament de l'animació quan transcorren els ms. del crono.
 		if (d1.instant >= d1.duracion_total) {
 			KillTimer(WM_TIMER);
-			d1.instant = 0;
+			//d1.instant = 0;
 			anima = false;
 			demo_on = false;
 		}
 		else {
-			d1.instant = d1.instant + (d1.interval / 1000);
+			d1.instant = (std::clock() -d1.get_start())/(double)CLOCKS_PER_SEC;
 		}
 		d1.move_step();
 		// Crida a OnPaint() per redibuixar l'escena
@@ -4377,47 +4376,23 @@ void CEntornVGIView::OnUpdateHurakanAsientos(CCmdUI* pCmdUI)
 void CEntornVGIView::OnHurakan()
 {	
 	// TODO: Agregue aquí su código de controlador de comandos
-
-	//PERSPECTIVA
-	projeccio = PERSPECT;
-	mobil = true;			//zzoom = true;
-
-	//OBJ
-	//objecte = OBJOBJ;	
-	objecte = HURAKAN;
-
-	textura = true;
-
-	//ILUMINACIO PLANA
-	ilumina = PLANA;
-	test_vis = false;		oculta = true;
-
-
-	// Entorn VGI: Variable de tipus CString 'nom' conté el nom del fitxer seleccionat
-
-	// Entorn VGI: Conversió de la variable CString nom a la variable char *nomfitx, 
-	//		compatible amb  les funcions de càrrega de fitxers fractals
-
-	char* nomfitx = CString2Char(PATH_HURAKAN);
 	char* nom_braç = CString2Char(PATH_ARM);
 	char* nom_base = CString2Char(PATH_BASE);
 	char* nom_asiento = CString2Char(PATH_ASIENTO);
 	char* nom_persona = CString2Char(PATH_PERSONA);
-	// i carreguem
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+		if (ObOBJ == NULL) ObOBJ = new COBJModel;
+		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
+		ObOBJ->LoadModel(nom_base, OBJECTEBASE, false);
+		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
+		ObOBJ->LoadModel(nom_persona, OBJECTEPERSONA, false);
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+	objecte = HURAKAN;
+	projeccio = PERSPECT;
+	mobil = true;			
+	ilumina = PLANA;
+	oculta = true;
 
-	if (ObOBJ == NULL) ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
-	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
-	ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
-	ObOBJ->LoadModel(nom_base, OBJECTEBASE, false);
-	ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
-	ObOBJ->LoadModel(nom_persona, OBJECTEPERSONA, false);
-
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Desactivem contexte OpenGL
-
-	// Crida a OnPaint() per redibuixar l'escena
-	InvalidateRect(NULL, false);
 
 }
 
@@ -4576,18 +4551,29 @@ void CEntornVGIView::OnCiclosPrueba1()
 {
 	// TODO: Agregue aquí su código de controlador de comandos
 	// TODO: Agregue aquí su código de controlador de comandos
-	demo_on = true;
-	textura = true;
-	d1.mode = 1;
-	d1.start_demo();
-	anima = true;
-	SetTimer(WM_TIMER, d1.interval, NULL);
 	
-//  Modificar R per centrar la Vista a la mida de l'objecte (Perspectiva)
-//	Canviar l'escala per a centrar la vista (Ortogràfica)
+	if (objecte == HURAKAN) {
+		//PERSPECTIVA
+		
+		//OBJ
+		//objecte = OBJOBJ;	
+		if (d1.instant != 0 && demo_on) {
+			KillTimer(WM_TIMER);
+		}
+		demo_on = true;
+		textura = true;
+		d1.mode = 1;
+		
+		d1.start_demo();
+		anima = true;
+		SetTimer(WM_TIMER, d1.interval, NULL);
 
-// Crida a OnPaint() per redibuixar l'escena
-	InvalidateRect(NULL, false);
+		//  Modificar R per centrar la Vista a la mida de l'objecte (Perspectiva)
+		//	Canviar l'escala per a centrar la vista (Ortogràfica)
+
+		// Crida a OnPaint() per redibuixar l'escena
+		InvalidateRect(NULL, false);
+	}
 }
 
 

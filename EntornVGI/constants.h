@@ -8,6 +8,8 @@
 #ifndef CONST_H
 #define CONST_H
 
+#define CONST_TEMPS 1.66
+
 //--------------- VGI: Tipus de Projecció
 #define CAP ' '
 #define AXONOM 'A'

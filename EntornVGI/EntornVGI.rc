@@ -54,8 +54,8 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)\r\n"
     "LANGUAGE 10, 3\r\n"
     "#include ""res\\EntornVGI.rc2""  // recursos editados que no son de Microsoft Visual C++\r\n"
-    "#include ""l.ESN\\afxres.rc""      // Componentes estÃƒÂ¡ndar\r\n"
-    "#include ""l.ESN\\afxprint.rc""    // Recursos de impresiÃƒÂ³n y vista previa de impresiÃƒÂ³n\r\n"
+    "#include ""l.ESN\\afxres.rc""      // Componentes estÃƒÆ’Ã‚Â¡ndar\r\n"
+    "#include ""l.ESN\\afxprint.rc""    // Recursos de impresiÃƒÆ’Ã‚Â³n y vista previa de impresiÃƒÆ’Ã‚Â³n\r\n"
     "#if !defined(_AFXDLL)\r\n"
     "#include ""l.ESN\\afxribbon.rc""        // Recursos de barra de control y cinta MFC\r\n"
     "#endif\r\n"
@@ -417,7 +417,7 @@ BEGIN
     END
     POPUP "Hurakan"
     BEGIN
-        MENUITEM "Hurakan",                     ID_HURAKAN_HURAKAN, CHECKED
+        MENUITEM "Carrega_Hurakan",             ID_HURAKAN_HURAKAN, CHECKED
         POPUP "Partes Hurakan"
         BEGIN
             MENUITEM "Brazo",                       ID_PARTESHURAKAN_BRAZO
@@ -427,7 +427,7 @@ BEGIN
         MENUITEM "Personas",                    ID_HURAKAN_PERSONAS, CHECKED
         POPUP "Ciclos"
         BEGIN
-            MENUITEM "Prueba1",                     ID_CICLOS_PRUEBA1
+            MENUITEM "Prueba1",                     ID_CICLOS_PRUEBA1, CHECKED
             MENUITEM "Prueba2",                     ID_CICLOS_PRUEBA2
             MENUITEM "Ciclo completo",              ID_CICLOS_CICLOCOMPLETO
         END
@@ -823,8 +823,8 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
 LANGUAGE 10, 3
 #include "res\EntornVGI.rc2"  // recursos editados que no son de Microsoft Visual C++
-#include "l.ESN\afxres.rc"      // Componentes estÃƒÂ¡ndar
-#include "l.ESN\afxprint.rc"    // Recursos de impresiÃƒÂ³n y vista previa de impresiÃƒÂ³n
+#include "l.ESN\afxres.rc"      // Componentes estÃƒÆ’Ã‚Â¡ndar
+#include "l.ESN\afxprint.rc"    // Recursos de impresiÃƒÆ’Ã‚Â³n y vista previa de impresiÃƒÆ’Ã‚Â³n
 #if !defined(_AFXDLL)
 #include "l.ESN\afxribbon.rc"        // Recursos de barra de control y cinta MFC
 #endif

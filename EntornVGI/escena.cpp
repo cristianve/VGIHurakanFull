@@ -34,7 +34,7 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 	if (texturID[0] != -1) SetTextureParameters(texturID[0], true, true, textur_map, false);
 	if (textur) glEnable(GL_TEXTURE_2D);
 		else glDisable(GL_TEXTURE_2D);
-
+	
 	switch (objecte)
 	{
 
@@ -66,10 +66,12 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 		//SeleccionaColor(ref_mat, sw_mat, col_object);
 		if (demo_on) d1.dibuixa_demo1();
 		else {
-			if (textur) glCallList(OBJECTEOBJT);
-			else glCallList(OBJECTEOBJ);
-			sea();
+			d1.dibuixa_inicial();
 		}
+		glPushMatrix();
+		glTranslatef(0, 0, -0.8);
+		sea();
+		glPopMatrix();
 		break;
 		
 

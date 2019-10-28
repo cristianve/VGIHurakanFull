@@ -2,8 +2,10 @@
 #include "Demo_prova.h"
 
 void Demo_prova::dibuixa_demo1() {
-	angle_brac = rot_brac.get_angle();
-
+	coord pos_brac_origen = brac.get_desp_origen();
+	coord pos_seient_origen = seient.get_desp_origen();
+	coord angle_brac = brac.get_angle();
+	coord angle_seient = seient.get_angle();
 	glPushMatrix();
 		glTranslatef(-pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
 		glRotatef(angle_brac.x, 1, 0, 0);
@@ -25,27 +27,42 @@ void Demo_prova::dibuixa_demo1() {
 		glCallList(OBJECTEBASE);
 	glPopMatrix();
 }
+void Demo_prova::dibuixa_inicial() {
+	coord pos_brac_origen = brac.get_desp_origen();
+	coord pos_seient_origen = seient.get_desp_origen();
+	
+	glPushMatrix();
+	glTranslatef(pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
+	glRotatef(0, 1, 0, 0);
+	glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
+	glCallList(OBJECTEBRAC);
 
+	glPushMatrix();
+	glTranslatef(pos_seient_origen.x, pos_seient_origen.y, pos_seient_origen.z);
+	glRotatef(0, 1, 0, 0);
+	glTranslatef(pos_seient_origen.x, pos_seient_origen.y, -pos_seient_origen.z);
+	glCallList(OBJECTESEIENT);
+	glPopMatrix();
+
+	glPopMatrix();
+
+
+
+	glPushMatrix();
+	glCallList(OBJECTEBASE);
+	glPopMatrix();
+}
 
 
 void Demo_prova::move_step() {
-	rot_brac.set_instant(instant);
-	//rot_brac.step_animacio();
-}
-
-void Demo_prova::ini_movs() {
-	Move* rot_brac_acc = new Move;
-	Move* rot_brac_freno = new Move;
-
-	rot_brac_acc->setMove_Rotacional(1, 0, 0, 1, 0, 0, 3, 0, 0, 10);
-	rot_brac_acc->set_t_ini(0);
 	
-	rot_brac_freno->setMove_Rotacional(1, 0, 0, -1, 0, 0, 3, 0, 0, 10);
-	rot_brac_freno->set_t_ini(rot_brac_acc->get_t_final());
-
-	rot_brac.add_move(rot_brac_acc);
-	rot_brac.add_move(rot_brac_freno);
-	duracion_total = rot_brac.get_duracio()/3.34;
-
+	brac.set_instant(instant);
+	brac.step();
+	
+	seient.set_instant(instant);
+	seient.step();
 	
 }
+
+
+

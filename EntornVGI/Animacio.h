@@ -13,7 +13,6 @@ private:
 	acc object_acc;
 	dir object_dir;
 	coord angle_obj;
-	coord angle_ini;
 
 	double object_id= 0;
 
@@ -42,6 +41,10 @@ public:
 		return angle_obj;
 	}
 
+	void set_angle(coord angle) {
+		angle_obj = angle;
+	}
+
 	double get_duracio() {
 		return duracio;
 	};
@@ -62,14 +65,15 @@ public:
 				move_act = moviments.top();
 				move_act->setMoveV(v_angular);
 			}
-			else {
+			else{
 				object_v = move_act->getMoveV();
 				move_act = moviments.top();
 				move_act->setMoveV(object_v);
 			}
+			
 			moviments.pop_mov();
 		}
-		else {
+		else if(move_act->get_t_ini() / CONST_TEMPS <= instant) {
 			if (move_act->get_type()) {
 				move_act->move_step_rot(angle_obj);
 			}

@@ -125,9 +125,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animacio.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="Conj_Animacions.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="Demo_prova.h" />
     <ClInclude Include="EntornVGI.h" />
@@ -142,6 +142,7 @@
     <ClInclude Include="Move.h" />
     <ClInclude Include="MoveQueue.h" />
     <ClInclude Include="Obj3DS.h" />
+    <ClInclude Include="Objeto.h" />
     <ClInclude Include="objLoader.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -152,9 +153,9 @@
     <ClInclude Include="visualitzacio.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animacio.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="Conj_Animacions.cpp" />
     <ClCompile Include="Demo_prova.cpp" />
     <ClCompile Include="EntornVGI.cpp" />
     <ClCompile Include="EntornVGIDoc.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="MoveQueue.cpp" />
     <ClCompile Include="Obj3DS.cpp" />
+    <ClCompile Include="Objeto.cpp" />
     <ClCompile Include="objLoader.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />

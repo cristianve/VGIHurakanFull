@@ -30,11 +30,11 @@ struct coord {
 class Move
 {
 private:
+	//variables acceleracio, es modifiquen amb set_acc i set_freno
 	float g_plus = 0.008;
 	float g_freno = 0.008;
 	float acc_angular_plus = 0.008;
 	float acc_angular_freno = 0.008;
-
 
 	//0: Moviment lineal		1: moviment rotacional
 	int type = 0;
@@ -45,90 +45,75 @@ private:
 	v v_rotacional;
 	v v_max_rotacional;
 
-
+	//mov lineal
 	dir move_dir;
 	acc move_acc;
 	v v_move;
 	v v_move_max;
+
+	//control temporal
 	double t_inici;
 	double instant;
 	double duracio;
 	double t_final;
 
 public:
+	//inicialitzar animacions
+	void setMove_Lineal(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
+	void setMove_Rotacional(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
 
+	//avançar animacio
 	void move_step_rot(coord &a);
 	void move_step_lin(coord &pos);
-
+	//control final animacio
 	bool is_finished() {
 		return (instant >= t_final);
 	};
 
+
+	//avanç temporal animacio
 	void set_instant(double inst) {
 		instant = inst;
 	}
-
+	//set temps inicial
 	void set_t_ini(double t_inici) {
-		t_final = t_inici + duracio/3.34;
+		t_final = t_inici + duracio;
 		this->t_inici = t_inici;
 	}
-
-	void setMove_Lineal(int dir_x,int dir_y,int dir_z,int acc_x, int acc_y,int acc_z,double vmax_x,double vmax_y,double vmax_z,double dur) {
-		type = 0;
-		duracio = dur;
-		instant = 0;
-		dir move_dir;
-		move_dir.d_x = dir_x;
-		move_dir.d_y = dir_y;
-		move_dir.d_z = dir_z;
-		this->move_dir = move_dir;
-		acc move_acc;
-		move_acc.acc_x = acc_x;
-		move_acc.acc_y = acc_y;
-		move_acc.acc_z = acc_z;
-		this->move_acc = move_acc;
-		v v_move;
-		v_move.v_X = vmax_x;
-		v_move.v_Y = vmax_y;
-		v_move.v_Z = vmax_z;
-		this->v_move_max = v_move;
+	//get temps inicial
+	double get_t_ini() {
+		return t_inici;
 	};
-
-	
-
-	void setMove_Rotacional(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur) {
-		type = 1;
-		duracio = dur;
-		instant = 0;
-		dir move_dir;
-		move_dir.d_x = dir_x;
-		move_dir.d_y = dir_y;
-		move_dir.d_z = dir_z;
-		this->move_dir = move_dir;
-		acc move_acc;
-		move_acc.acc_x = acc_x;
-		move_acc.acc_y = acc_y;
-		move_acc.acc_z = acc_z;
-		this->rot_acc = move_acc;
-		v v_move;
-		v_move.v_X = vmax_x;
-		v_move.v_Y = vmax_y;
-		v_move.v_Z = vmax_z;
-		this->v_max_rotacional = v_move;
+	//funcions de canviar la acc
+	void set_acc(double acc) {
+		if (type) {
+			acc_angular_plus = acc;
+		}
+		else {
+			g_plus = acc;
+		}
 	};
-
+	void set_freno(double acc) {
+		if (type) {
+			acc_angular_freno = acc;
+		}
+		else {
+			g_freno = acc;
+		}
+	};
+	//obtenir tipus de la animacio(random)
 	int get_type() {
 		return type;
 	};
-
+	//get temps final
 	double get_t_final() {
 		return t_final;
 	};
-
+	//get duracio moviment
 	double getMoveDur() {
 		return duracio;
 	};
-
+	
 	dir getMoveDir() {
 		if (type) {
 			return dir_rotacio;
@@ -137,7 +122,6 @@ public:
 			return move_dir;
 		}
 	};
-
 	acc getMoveAcc() {
 		if (type) {
 			return rot_acc;
