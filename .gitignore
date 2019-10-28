@@ -10,4 +10,4 @@
 *.tlog
 *.pdb
 *.opendb
-/Debug
+Debug/
