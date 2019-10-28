@@ -1,4 +1,4 @@
-# VGIHurakanFull
+# VGIHurakan
 VGI C++
 
 Es proposa implementar una aplicació que modeli i visualitzi l’atracció Hurakan, del parc d’atraccions
