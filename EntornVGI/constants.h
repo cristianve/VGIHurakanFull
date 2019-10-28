@@ -45,7 +45,6 @@
 #define VAIXELL 'v'
 #define OBJ3DS '3'		// Objecte format 3DS
 #define OBJOBJ '4'		// Objecte format OBJ
-#define PERSONA 'P'
 #define HURAKAN 'h'
 #define BRAZO 'B'
 
@@ -65,7 +64,8 @@
 #define OBJECTEBRAC 7
 #define OBJECTEBASE 8
 #define OBJECTESEIENT 9
-#define OBJECTEPERSONA 10
+#define OBJECTESKYDOME 10
+#define OBJECTEFLOOR 11
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;
@@ -79,7 +79,7 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 10
+#define NUM_MAX_TEXTURES 20
 
 // Tipus de textures
 #define CAP ' '

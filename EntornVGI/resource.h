@@ -205,13 +205,23 @@
 #define ID_PARTESHURAKAN_BRAZO          32878
 #define ID_PARTESHURAKAN_ASIENTOS       32879
 #define ID_PARTESHURAKAN_BASE           32880
+#define ID_PLAY_PAUSE                   32881
+#define ID_INJECCIONESPARTES_PARTE1     32882
+#define ID_INJECCIONESPARTES_PARTE2     32883
+#define ID_INJECCIONESPARTES_PARTE3     32884
+#define ID_CONTROL_BLOQUEARASIENTOS     32885
+#define ID_CONTROL_A32886               32886
+#define ID_CONTROL_VELOCIDADASIENTO     32887
+#define ID_CONTROL_FRENARASIENTO        32888
+#define ID_CONTROL_FRENARBRAZO          32889
+#define ID_PLAY                         32890
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32881
+#define _APS_NEXT_COMMAND_VALUE         32891
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

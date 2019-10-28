@@ -29,7 +29,8 @@
 extern const CString PATH_ARM = CString(_T("obj/hurakan_arm.obj"));
 extern const CString PATH_BASE = CString(_T("obj/hurakan_base.obj"));
 extern const CString PATH_ASIENTO = CString(_T("obj/hurakan_seients.obj"));
-//extern const CString PATH_PERSONA = CString(_T("obj/hombre.obj"));
+extern const CString PATH_FLOOR = CString(_T("obj/floor.obj"));
+extern const CString PATH_SKYDOME = CString(_T("obj/skydome.obj"));
 // Se pueden definir SHARED_HANDLERS en un proyecto ATL implementando controladores de vista previa, miniatura
 // y filtro de búsqueda, y permiten compartir código de documentos con ese proyecto.
 #ifndef SHARED_HANDLERS
@@ -191,6 +192,7 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 	ON_UPDATE_COMMAND_UI(ID_VISTA_GRIDXYZ, &CEntornVGIView::OnUpdateVistaGridXYZ)
 	ON_COMMAND(ID_ILUMINACIO2SIDES, &CEntornVGIView::OnIluminacio2Sides)
 	ON_UPDATE_COMMAND_UI(ID_ILUMINACIO2SIDES, &CEntornVGIView::OnUpdateIluminacio2Sides)
+		//CHANGED
 	ON_COMMAND(ID_HURAKAN_HURAKAN, &CEntornVGIView::OnHurakan)
 	ON_UPDATE_COMMAND_UI(ID_HURAKAN_HURAKAN, &CEntornVGIView::OnUpdateHurakan)
 	ON_COMMAND(ID_PARTESHURAKAN_BRAZO, &CEntornVGIView::OnHurakanBrazos)
@@ -444,6 +446,7 @@ void CEntornVGIView::OnFilePrintPreview()
 BOOL CEntornVGIView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// Preparación predeterminada
+
 	return DoPreparePrinting(pInfo);
 }
 
@@ -733,6 +736,28 @@ void CEntornVGIView::OnSize(UINT nType, int cx, int cy)
 void CEntornVGIView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
+
+		// TODO: Agregue aquí su código de controlador de comandos
+	char* nom_braç = CString2Char(PATH_ARM);
+	char* nom_base = CString2Char(PATH_BASE);
+	char* nom_asiento = CString2Char(PATH_ASIENTO);
+	char* nom_floor = CString2Char(PATH_FLOOR);
+	char* nom_skydome = CString2Char(PATH_SKYDOME);
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+		if (ObOBJ == NULL) ObOBJ = new COBJModel;
+		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
+		ObOBJ->LoadModel(nom_base, OBJECTEBASE, false);
+		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
+		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, false);
+		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, false);
+	
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+	objecte = HURAKAN;
+	projeccio = PERSPECT;
+	mobil = true;			
+	ilumina = PLANA;
+	oculta = true;
+	textura = true;
 
 	CDC* pDC = GetDC();
 	//m_glRenderer.PrepareScene(pDC);
@@ -4261,15 +4286,12 @@ void CEntornVGIView::OnHurakanBase()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_BASE);
-
 	// i carreguem
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
-
+	
 	if (ObOBJ == NULL) ObOBJ = new COBJModel;
 	ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
 	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
-
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Desactivem contexte OpenGL
 
 	// Crida a OnPaint() per redibuixar l'escena
 	InvalidateRect(NULL, false);
@@ -4333,19 +4355,21 @@ void CEntornVGIView::OnHurakan()
 	char* nom_braç = CString2Char(PATH_ARM);
 	char* nom_base = CString2Char(PATH_BASE);
 	char* nom_asiento = CString2Char(PATH_ASIENTO);
-	//char* nom_persona = CString2Char(PATH_PERSONA);
+	char* nom_floor = CString2Char(PATH_FLOOR);
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
 		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
 		ObOBJ->LoadModel(nom_base, OBJECTEBASE, false);
 		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
-		//ObOBJ->LoadModel(nom_persona, OBJECTEPERSONA, false);
+		ObOBJ->LoadModel(nom_asiento, OBJECTEFLOOR, false);
+
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 	objecte = HURAKAN;
 	projeccio = PERSPECT;
 	mobil = true;			
 	ilumina = PLANA;
 	oculta = true;
+	textura = true;
 
 
 }

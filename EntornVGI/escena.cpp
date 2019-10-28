@@ -70,17 +70,10 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 		}
 		glPushMatrix();
 		glTranslatef(0, 0, -0.8);
-		sea();
+		//sea();
 		glPopMatrix();
 		break;
 		
-
-	case PERSONA:
-		//glDisable(GL_TEXTURE_2D);
-		//SeleccionaColor(ref_mat, sw_mat, col_object);
-		if (textur) glCallList(OBJECTEOBJT);
-		else glCallList(OBJECTEOBJ);
-		break;
 
 
 // Dibuix de l'objecte 3DS
@@ -1007,6 +1000,20 @@ void llanta(bool textur, GLint VTextur[NUM_MAX_TEXTURES])
 	gluDisk(0.0f,5.0f,RESOLUCIO_RODA,1);
 
 }
+
+
+// Suelo
+void floor(void)
+{
+	int i, j, step, it1, it2;
+	//     GLfloat pi=3.14159;
+	float angle, delay;
+	CColor color;
+
+	
+
+}
+
 
 
 // Mar amb ondulacions

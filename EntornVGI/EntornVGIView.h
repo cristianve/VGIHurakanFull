@@ -381,8 +381,6 @@ public:
 	afx_msg void OnIluminacio2Sides();
 	afx_msg void OnUpdateIluminacio2Sides(CCmdUI *pCmdUI);
 	//MODIFIED
-	afx_msg void OnPersonas();
-	afx_msg void OnUpdatePersonas(CCmdUI* pCmdUI);
 	afx_msg void OnHurakan();
 	afx_msg void OnUpdateHurakan(CCmdUI* pCmdUI);
 	afx_msg void OnHurakanBrazos();

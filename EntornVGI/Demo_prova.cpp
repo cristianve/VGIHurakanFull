@@ -26,6 +26,12 @@ void Demo_prova::dibuixa_demo1() {
 	glPushMatrix();
 		glCallList(OBJECTEBASE);
 	glPopMatrix();
+	glPushMatrix();
+	glCallList(OBJECTEFLOOR);
+	glPopMatrix();
+	glPushMatrix();
+	glCallList(OBJECTESKYDOME);
+	glPopMatrix();
 }
 void Demo_prova::dibuixa_inicial() {
 	coord pos_brac_origen = brac.get_desp_origen();
@@ -50,6 +56,14 @@ void Demo_prova::dibuixa_inicial() {
 
 	glPushMatrix();
 	glCallList(OBJECTEBASE);
+	glPopMatrix();
+
+	glPushMatrix();
+	glCallList(OBJECTEFLOOR);
+	glPopMatrix();
+
+	glPushMatrix();
+	glCallList(OBJECTESKYDOME);
 	glPopMatrix();
 }
 
