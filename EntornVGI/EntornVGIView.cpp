@@ -4392,12 +4392,24 @@ void CEntornVGIView::OnUpdateHurakanAsientos(CCmdUI* pCmdUI)
 
 void CEntornVGIView::OnHurakan()
 {	
+
+	objecte = HURAKAN;
+	projeccio = PERSPECT;
+	mobil = true;
+	ilumina = PLANA;
+	oculta = true;
+	textura = false;
+
+	//DESACTIVAMOS SHADERS
+	OnShadersSense();
+
 	// TODO: Agregue aquí su código de controlador de comandos
 	char* nom_braç = CString2Char(PATH_ARM);
 	char* nom_base = CString2Char(PATH_BASE);
 	char* nom_asiento = CString2Char(PATH_ASIENTO);
 	char* nom_floor = CString2Char(PATH_FLOOR);
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
+
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
 		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
@@ -4405,14 +4417,9 @@ void CEntornVGIView::OnHurakan()
 		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
 		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, false);
 		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, false);
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
-	objecte = HURAKAN;
-	projeccio = PERSPECT;
-	mobil = true;			
-	ilumina = PLANA;
-	oculta = true;
-	textura = true;
 
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+	
 
 }
 
