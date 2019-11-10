@@ -31,6 +31,10 @@ extern const CString PATH_BASE = CString(_T("obj/hurakan_base.obj"));
 extern const CString PATH_ASIENTO = CString(_T("obj/hurakan_seients.obj"));
 extern const CString PATH_FLOOR = CString(_T("obj/floor.obj"));
 extern const CString PATH_SKYDOME = CString(_T("obj/skydome.obj"));
+//TEXTURES
+extern const CString PATH_TEXTURE_ARM = CString(_T("textures/Arm.png"));
+extern const CString PATH_TEXTURE_BASE = CString(_T("textures/Base.png"));
+extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
 // Se pueden definir SHARED_HANDLERS en un proyecto ATL implementando controladores de vista previa, miniatura
 // y filtro de búsqueda, y permiten compartir código de documentos con ese proyecto.
 #ifndef SHARED_HANDLERS
@@ -4219,7 +4223,6 @@ void CEntornVGIView::OnUpdateShaderLoadFiles(CCmdUI *pCmdUI)
 /* ------------------------------------------------------------------------- */
 
 
-
 void CEntornVGIView::OnHurakanBrazos()
 {	/**/
 	// TODO: Agregue aquí su código de controlador de comandos
@@ -4241,15 +4244,26 @@ void CEntornVGIView::OnHurakanBrazos()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_ARM);
+	char* nomTexture = CString2Char(PATH_TEXTURE_ARM);
+
+	// Entorn VGI: Activació el contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
+	texturesID[0] = loadIMA_SOIL(nomTexture);
+
+	//	Pas de textura al shader
+	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
+
+
+	OnShadersGouraud();
+
 
 	// i carreguem
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
 
 	if (ObOBJ == NULL) ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
+	//ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
 	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
-
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Desactivem contexte OpenGL
 
 	// Crida a OnPaint() per redibuixar l'escena
 	InvalidateRect(NULL, false);
@@ -4264,9 +4278,8 @@ void CEntornVGIView::OnUpdateHurakanBrazos(CCmdUI* pCmdUI)
 }
 
 void CEntornVGIView::OnHurakanBase()
-{	
+{
 
-	//ID_PARTESHURAKAN_ASIENTOS+
 
 
 	//PERSPECTIVA
@@ -4277,7 +4290,7 @@ void CEntornVGIView::OnHurakanBase()
 	//objecte = OBJOBJ;	
 	objecte = OBJOBJ;
 
-	textura = true;
+	//textura = true;
 
 	//ILUMINACIO PLANA
 	ilumina = PLANA;
@@ -4286,11 +4299,26 @@ void CEntornVGIView::OnHurakanBase()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_BASE);
+
+	char* nomTexture = CString2Char(PATH_TEXTURE_BASE);
+
+	// Entorn VGI: Activació el contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
+	texturesID[0] = loadIMA_SOIL(nomTexture);
+
+	//	Pas de textura al shader
+	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
+
+
+	OnShadersGouraud();
+
+
 	// i carreguem
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
-	
+
 	if (ObOBJ == NULL) ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
+	//ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
 	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
 
 	// Crida a OnPaint() per redibuixar l'escena
@@ -4306,8 +4334,8 @@ void CEntornVGIView::OnUpdateHurakanBase(CCmdUI* pCmdUI)
 }
 
 void CEntornVGIView::OnHurakanAsientos()
-{	
-	/*	ID_PARTESHURAKAN_BASE	*/	
+{
+	/*	ID_PARTESHURAKAN_BASE	*/
 		//PERSPECTIVA
 	projeccio = PERSPECT;
 	mobil = true;			//zzoom = true;
@@ -4325,15 +4353,26 @@ void CEntornVGIView::OnHurakanAsientos()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_ASIENTO);
+	char* nomTexture = CString2Char(PATH_TEXTURE_SEIENTS);
+
+	// Entorn VGI: Activació el contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
+	texturesID[0] = loadIMA_SOIL(nomTexture);
+
+	//	Pas de textura al shader
+	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
+
+
+	OnShadersGouraud();
+
 
 	// i carreguem
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
 
 	if (ObOBJ == NULL) ObOBJ = new COBJModel;
-	ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
+	//ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
 	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
-
-	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Desactivem contexte OpenGL
 
 	// Crida a OnPaint() per redibuixar l'escena
 	InvalidateRect(NULL, false);
@@ -4346,6 +4385,8 @@ void CEntornVGIView::OnUpdateHurakanAsientos(CCmdUI* pCmdUI)
 	if (objecte == OBJOBJ) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
+
+
 
 
 

@@ -1,10 +1,2 @@
-﻿  ChildFrm.cpp
-  ClassView.cpp
-  EntornVGI.cpp
-  EntornVGIDoc.cpp
-  EntornVGIView.cpp
-  FileView.cpp
-  MainFrm.cpp
-  OutputWnd.cpp
-  PropertiesWnd.cpp
-  EntornVGI.vcxproj -> C:\Users\97cve\Desktop\VGIHurakanFull\Debug\EntornVGI.exe
+﻿  EntornVGIView.cpp
+  EntornVGI.vcxproj -> C:\Users\Budy\Desktop\VGIHurakanFull\Debug\EntornVGI.exe
