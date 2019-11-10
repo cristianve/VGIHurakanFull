@@ -35,6 +35,8 @@ extern const CString PATH_SKYDOME = CString(_T("obj/skydome.obj"));
 extern const CString PATH_TEXTURE_ARM = CString(_T("textures/Arm.png"));
 extern const CString PATH_TEXTURE_BASE = CString(_T("textures/Base.png"));
 extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
+extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.jpg"));
+extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
 // Se pueden definir SHARED_HANDLERS en un proyecto ATL implementando controladores de vista previa, miniatura
 // y filtro de búsqueda, y permiten compartir código de documentos con ese proyecto.
 #ifndef SHARED_HANDLERS
@@ -205,8 +207,15 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 	ON_UPDATE_COMMAND_UI(ID_PARTESHURAKAN_BASE, &CEntornVGIView::OnUpdateHurakanBase)
 	ON_COMMAND(ID_PARTESHURAKAN_ASIENTOS, &CEntornVGIView::OnHurakanAsientos)
 	ON_UPDATE_COMMAND_UI(ID_PARTESHURAKAN_ASIENTOS, &CEntornVGIView::OnUpdateHurakanAsientos)
-		ON_COMMAND(ID_CICLOS_PRUEBA1, &CEntornVGIView::OnCiclosPrueba1)
-		ON_UPDATE_COMMAND_UI(ID_CICLOS_PRUEBA1, &CEntornVGIView::OnUpdateCiclosPrueba1)
+	ON_COMMAND(ID_CICLOS_PRUEBA1, &CEntornVGIView::OnCiclosPrueba1)
+	ON_UPDATE_COMMAND_UI(ID_CICLOS_PRUEBA1, &CEntornVGIView::OnUpdateCiclosPrueba1)
+
+	ON_UPDATE_COMMAND_UI(ID_PARTESHURAKAN_SKYDOME, &CEntornVGIView::OnUpdateHurakanSkydome)
+	ON_COMMAND(ID_PARTESHURAKAN_SKYDOME, &CEntornVGIView::OnHurakanSkydome)
+	ON_UPDATE_COMMAND_UI(ID_PARTESHURAKAN_FLOOR, &CEntornVGIView::OnUpdateHurakanFloor)
+	ON_COMMAND(ID_PARTESHURAKAN_FLOOR, &CEntornVGIView::OnHurakanFloor)
+
+
 		END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4386,7 +4395,116 @@ void CEntornVGIView::OnUpdateHurakanAsientos(CCmdUI* pCmdUI)
 	else pCmdUI->SetCheck(0);
 }
 
+void CEntornVGIView::OnHurakanSkydome()
+{
 
+
+
+	//PERSPECTIVA
+	projeccio = PERSPECT;
+	mobil = true;			//zzoom = true;
+
+	//OBJ
+	//objecte = OBJOBJ;	
+	objecte = OBJOBJ;
+
+	//textura = true;
+
+	//ILUMINACIO PLANA
+	ilumina = PLANA;
+	test_vis = false;		oculta = true;
+
+
+	//PATH OBJ
+	char* nomfitx = CString2Char(PATH_SKYDOME);
+
+	char* nomTexture = CString2Char(PATH_TEXTURE_SKYDOME);
+
+	// Entorn VGI: Activació el contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
+	texturesID[0] = loadIMA_SOIL(nomTexture);
+
+	//	Pas de textura al shader
+	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
+
+
+	OnShadersGouraud();
+
+
+	// i carreguem
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
+
+	if (ObOBJ == NULL) ObOBJ = new COBJModel;
+	//ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
+	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
+
+	// Crida a OnPaint() per redibuixar l'escena
+	InvalidateRect(NULL, false);
+
+}
+
+void CEntornVGIView::OnUpdateHurakanSkydome(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+	if (objecte == OBJOBJ) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+void CEntornVGIView::OnHurakanFloor()
+{
+
+
+
+	//PERSPECTIVA
+	projeccio = PERSPECT;
+	mobil = true;			//zzoom = true;
+
+	//OBJ
+	//objecte = OBJOBJ;	
+	objecte = OBJOBJ;
+
+	//textura = true;
+
+	//ILUMINACIO PLANA
+	ilumina = PLANA;
+	test_vis = false;		oculta = true;
+
+
+	//PATH OBJ
+	char* nomfitx = CString2Char(PATH_FLOOR);
+
+	char* nomTexture = CString2Char(PATH_TEXTURE_FLOOR);
+
+	// Entorn VGI: Activació el contexte OpenGL
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
+	texturesID[0] = loadIMA_SOIL(nomTexture);
+
+	//	Pas de textura al shader
+	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
+
+
+	OnShadersGouraud();
+
+
+	// i carreguem
+	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);	// Activem contexte OpenGL
+
+	if (ObOBJ == NULL) ObOBJ = new COBJModel;
+	//ObOBJ->LoadModel(nomfitx, OBJECTEOBJ, false);	// Carregar objecte OBJ SENSE textura
+	ObOBJ->LoadModel(nomfitx, OBJECTEOBJT, true);	// Carregar objecte OBJ AMB textura
+
+	// Crida a OnPaint() per redibuixar l'escena
+	InvalidateRect(NULL, false);
+
+}
+
+void CEntornVGIView::OnUpdateHurakanFloor(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+	if (objecte == OBJOBJ) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
 
 
 
@@ -4398,7 +4516,7 @@ void CEntornVGIView::OnHurakan()
 	mobil = true;
 	ilumina = PLANA;
 	oculta = true;
-	textura = false;
+	textura = true;
 
 	//DESACTIVAMOS SHADERS
 	OnShadersSense();
@@ -4411,14 +4529,16 @@ void CEntornVGIView::OnHurakan()
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
 
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
-		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, false);
-		ObOBJ->LoadModel(nom_base, OBJECTEBASE, false);
-		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, false);
-		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, false);
-		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, false);
+		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, true);
+		ObOBJ->LoadModel(nom_base, OBJECTEBASE, true);
+		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, true);
+		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, true);
+		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, true);
 
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+
 	
 
 }

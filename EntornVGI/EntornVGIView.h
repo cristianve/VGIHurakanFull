@@ -391,6 +391,10 @@ public:
 	afx_msg void OnUpdateHurakanAsientos(CCmdUI* pCmdUI);
 	afx_msg void OnCiclosPrueba1();
 	afx_msg void OnUpdateCiclosPrueba1(CCmdUI* pCmdUI);
+	afx_msg void OnHurakanSkydome();
+	afx_msg void OnUpdateHurakanSkydome(CCmdUI* pCmdUI);
+	afx_msg void OnHurakanFloor();
+	afx_msg void OnUpdateHurakanFloor(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp
