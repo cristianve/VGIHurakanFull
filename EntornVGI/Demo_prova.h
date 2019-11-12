@@ -38,7 +38,7 @@ public:
 	Demo_prova(float t, float angle_1) {
 		
 	};
-	void dibuixa_inicial();
+	void dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 
 
 
@@ -65,7 +65,7 @@ public:
 
 	};
 
-	void dibuixa_demo1();
+	void dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 
 	void move_step();
 

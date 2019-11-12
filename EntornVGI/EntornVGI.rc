@@ -309,7 +309,7 @@ BEGIN
     MENUITEM SEPARATOR
     POPUP "Hurakan"
     BEGIN
-        MENUITEM "Carrega_Hurakan",             ID_HURAKAN_HURAKAN, CHECKED
+        MENUITEM "Activar/Desactivar Texturas", ID_HURAKAN_HURAKAN, CHECKED
         POPUP "Partes Hurakan"
         BEGIN
             MENUITEM "Brazo",                       ID_PARTESHURAKAN_BRAZO

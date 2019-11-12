@@ -25,28 +25,17 @@
 #define POLARX 'X'
 
 //-------------- VGI: Tipus d'Objectes 
-#define CAMIO 'm'
-#define CILINDRE 'y'
-#define CUB 'c'
-#define CUB_RGB 'C'
-#define C_BEZIER '2'
-#define C_LEMNISCATA 'K'
-#define C_LEMNISCATA2D 'W'
-#define C_BSPLINE 'q'
-#define ESFERA 'e'
+
 #define O_FRACTAL 'f'
-#define HIDROAVIO 'H'
-#define ICOSAEDRE 'i'
-#define ROBOT 'u'
-#define TETERA 't'
-#define TIE 'I'
-#define TORUS 'o'
-#define TRUCK 'T'
-#define VAIXELL 'v'
+
 #define OBJ3DS '3'		// Objecte format 3DS
 #define OBJOBJ '4'		// Objecte format OBJ
 #define HURAKAN 'h'
 #define BRAZO 'B'
+#define SEIENTS 's'
+#define BASE 'b'
+#define FLOOR 'F'
+#define SKYDOME 'S'
 
 //-------------- VGI: Tipus d'Iluminacio
 #define PUNTS 'P'
