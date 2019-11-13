@@ -127,7 +127,6 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
-    <ClInclude Include="Conj_Animacions.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="Demo_prova.h" />
     <ClInclude Include="EntornVGI.h" />
@@ -155,7 +154,6 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
-    <ClCompile Include="Conj_Animacions.cpp" />
     <ClCompile Include="Demo_prova.cpp" />
     <ClCompile Include="EntornVGI.cpp" />
     <ClCompile Include="EntornVGIDoc.cpp" />
