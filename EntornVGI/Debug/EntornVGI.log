@@ -1,57 +1,7 @@
-﻿  stdafx.cpp
-  ChildFrm.cpp
-  ClassView.cpp
-  Conj_Animacions.cpp
-  Demo_prova.cpp
-  EntornVGI.cpp
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(64,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'double' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : puede ser 'v &v::operator =(v &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : o       'v &v::operator =(const v &)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(64,1): message : al hacer coincidir la lista de argumentos '(v, double)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(66,1): error C2664: 'void Move::setMoveV(double)': el argumento 1 no puede convertirse de 'v' a 'double' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(66,24): message : No hay disponible ningún operador de conversión definido por el usuario que pueda realizar esta conversión, o bien no se puede llamar al operador (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(128,7): message : vea la declaración de 'Move::setMoveV' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(69,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'double' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : puede ser 'v &v::operator =(v &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : o       'v &v::operator =(const v &)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(69,1): message : al hacer coincidir la lista de argumentos '(v, double)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(71,1): error C2664: 'void Move::setMoveV(double)': el argumento 1 no puede convertirse de 'v' a 'double' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(71,24): message : No hay disponible ningún operador de conversión definido por el usuario que pueda realizar esta conversión, o bien no se puede llamar al operador (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(128,7): message : vea la declaración de 'Move::setMoveV' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(78,1): error C2660: 'Move::move_step_rot': la función no acepta 1 argumentos (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(74,7): message : vea la declaración de 'Move::move_step_rot' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(81,1): error C2039: 'move_step_lin': no es un miembro de 'Move' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(30): message : vea la declaración de 'Move' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(90,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'int' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(9,1): message : puede ser 'dir &dir::operator =(dir &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(9,1): message : o       'dir &dir::operator =(const dir &)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(90,1): message : al hacer coincidir la lista de argumentos '(dir, int)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(91,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'int' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(15,1): message : puede ser 'acc &acc::operator =(acc &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(15,1): message : o       'acc &acc::operator =(const acc &)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(91,1): message : al hacer coincidir la lista de argumentos '(acc, int)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(92,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'double' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : puede ser 'v &v::operator =(v &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : o       'v &v::operator =(const v &)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(92,1): message : al hacer coincidir la lista de argumentos '(v, double)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(94,1): error C2679: '=' binario: no se encontró un operador que adopte un operando en la parte derecha de tipo 'double' (o bien no existe una conversión aceptable) (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : puede ser 'v &v::operator =(v &&)' (compilando archivo de origen Conj_Animacions.cpp)
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Move.h(21,1): message : o       'v &v::operator =(const v &)' (compilando archivo de origen Conj_Animacions.cpp)
-  EntornVGIDoc.cpp
-  EntornVGIView.cpp
-  escena.cpp
-  FileView.cpp
-  glut_geometry.cpp
-  Load3DS.cpp
-  MainFrm.cpp
-  material.cpp
-  Move.cpp
-  MoveQueue.cpp
-  Obj3DS.cpp
-  Objeto.cpp
-  objLoader.cpp
-  OutputWnd.cpp
-  PropertiesWnd.cpp
-  ViewTree.cpp
-  visualitzacio.cpp
-C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\EntornVGI\Animacio.h(94,1): message : al hacer coincidir la lista de argumentos '(v, double)' (compilando archivo de origen Conj_Animacions.cpp)
+﻿     Creando biblioteca C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\EntornVGI.lib y objeto C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\EntornVGI.exp
+glew32s.lib(glew.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'glew32s.lib(glew.obj)' o en 'C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+soil.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(image_DXT.obj)' o en 'C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+soil.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(image_helper.obj)' o en 'C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+soil.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(SOIL.obj)' o en 'C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+soil.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'soil.lib(stb_image_aug.obj)' o en 'C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  EntornVGI.vcxproj -> C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\EntornVGI.exe
