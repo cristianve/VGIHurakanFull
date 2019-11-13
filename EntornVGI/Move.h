@@ -31,25 +31,27 @@ class Move
 {
 private:
 	//variables acceleracio, es modifiquen amb set_acc i set_freno
-	float g_plus = 0.008;
-	float g_freno = 0.008;
-	float acc_angular_plus = 0.008;
-	float acc_angular_freno = 0.008;
+	float g_plus = 2;
+	float g_freno = 2;
+	double acc_angular_plus = 10;
+	double acc_angular_freno = 2;
 
 	//0: Moviment lineal		1: moviment rotacional
 	int type = 0;
 
 	//mov rotacional
-	dir dir_rotacio;
-	acc rot_acc;
-	v v_rotacional;
-	v v_max_rotacional;
+	int dir_rotacio;
+	int rot_acc;
+	double v_rotacional;
+	double v_max_rotacional;
 
+	
 	//mov lineal
-	dir move_dir;
-	acc move_acc;
-	v v_move;
-	v v_move_max;
+	int move_dir;
+	int move_acc;
+	double v_move;
+	double v_move_max;
+	
 
 	//control temporal
 	double t_inici;
@@ -57,14 +59,20 @@ private:
 	double duracio;
 	double t_final;
 
-public:
-	//inicialitzar animacions
-	void setMove_Lineal(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
-	void setMove_Rotacional(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
+	
 
+public:
+	bool is_libre;
+	//inicialitzar animacions
+	//void setMove_Lineal(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
+	void setMove_acc(int dir, double vmax, double dur);
+	void setMove_freno(double dur);
+	void setMove_wait(double dur);
+	void setfreemove(double dur);
 	//avançar animacio
-	void move_step_rot(coord &a);
-	void move_step_lin(coord &pos);
+	
+	void move_step_rot(coord &a,double time);
+	//void move_step_lin(coord &pos);
 	//control final animacio
 	bool is_finished() {
 		return (instant >= t_final);
@@ -86,20 +94,17 @@ public:
 	};
 	//funcions de canviar la acc
 	void set_acc(double acc) {
-		if (type) {
-			acc_angular_plus = acc;
-		}
-		else {
-			g_plus = acc;
-		}
+		acc_angular_plus = acc;
 	};
 	void set_freno(double acc) {
-		if (type) {
-			acc_angular_freno = acc;
-		}
-		else {
-			g_freno = acc;
-		}
+		acc_angular_freno = acc;
+	};
+	//funcions de canviar la acc
+	double get_acc() {
+		return acc_angular_plus;
+	};
+	double get_freno() {
+		return acc_angular_freno;
 	};
 	//obtenir tipus de la animacio(random)
 	int get_type() {
@@ -114,37 +119,18 @@ public:
 		return duracio;
 	};
 	
-	dir getMoveDir() {
-		if (type) {
-			return dir_rotacio;
-		}
-		else {
-			return move_dir;
-		}
+	int getMoveDir() {
+		return dir_rotacio;
 	};
-	acc getMoveAcc() {
-		if (type) {
-			return rot_acc;
-		}
-		else {
-			return move_acc;
-		}
+	int getMoveAcc() {
+		return rot_acc;
 	};
-	void setMoveV(v v_s) {
-		if (type){
-			v_rotacional = v_s;
-		}
-		else {
-			v_move = v_s;
-		}
+	void setMoveV(double v_s) {
+		v_rotacional = v_s;
 	}
-	v getMoveV() {
-		if (type) {
-			return v_rotacional;
-		}
-		else {
-			return v_move;
-		}
+	double getMoveV() {
+		return v_rotacional;
+		
 	};
 	
 

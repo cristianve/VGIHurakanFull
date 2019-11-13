@@ -1,36 +1,41 @@
 #include "stdafx.h"
 #include "Objeto.h"
 void Objeto::step() {
-	//avança el temps de l'animació
+	
 	move_act->set_instant(instant);
-	//si el moviment ha acabat i hi ha algun a la cua
-	if (move_act->is_finished() && !moves.empty()) {
-		if (move_act->get_type()) {
+	double time = (instant - lastInstant);
+	if (move_act->is_libre && !move_act->is_finished() && move_act->get_type() != 3)
+	{
+		freeStep(time);
+	}
+	else
+	{
+		//si el moviment ha acabat i hi ha algun a la cua
+		if (move_act->is_finished() && !moves.empty()) {
+			
+			aceleracion = move_act->get_acc();
+			if (move_act->get_type() == 2) {
+				aceleracion = -move_act->get_freno();
+			}
 			velo_angular = move_act->getMoveV();
 			//s'agafa el nou moviment de la cua
-			move_act = moves.top();
-			//s'assigna la velocitat angular del moviment anterior al nou moviment
-			move_act->setMoveV(velo_angular);
+			moves.pop_mov();
+			if (!moves.empty()) {
+				move_act = moves.top();
+				move_act->set_t_ini(instant);
+				//s'assigna la velocitat angular del moviment anterior al nou moviment
+				move_act->setMoveV(velo_angular);
+				//Es treu el moviment realitzat de la cua de moviments
+				move_act->set_acc(aceleracion);
+				if (move_act->get_type() == 2) {
+					move_act->set_freno(-aceleracion);
+				}
+			}
 		}
-		else {
-			velo = move_act->getMoveV();
-			//S'agafa el nou moviment de la cua
-			move_act = moves.top();
-			//s'assigna la velocitat angular del moviment anterior al nou moviment
-			move_act->setMoveV(velo);
-		}
-		//Es treu el moviment realitzat de la cua de moviments
-		moves.pop_mov();
-	}
-	//si el moviment no ha acabat pero el instant actual es major al seu temps d'inici
-	else if (move_act->get_t_ini() <= instant) {
-		if (move_act->get_type()) {
-			//avancem moviment
-			move_act->move_step_rot(angle);
-		}
-		else {
-			//avancem moviment
-			move_act->move_step_lin(pos);
+		//si el moviment no ha acabat pero el instant actual es major al seu temps d'inici
+		else if (!move_act->is_finished() && move_act->get_t_ini() <= instant) {
+				//avancem movimen
+			move_act->move_step_rot(angle,time);
 		}
 	}
 }
@@ -45,85 +50,87 @@ void Objeto::add_move(Move* m) {
 	direc = move_act->getMoveDir();
 	accel_dir = move_act->getMoveAcc();
 	velo = move_act->getMoveV();
-	if (move_act->get_type()) {
-		velo_angular = move_act->getMoveV();
-	}
+	velo_angular = move_act->getMoveV();
 }
 
-void Objeto::read_moves(char* filename) {
-	FILE* fp;
-	char ch[1000];
+void Objeto::read_moves(char* filename,double instant) {
+	FILE* movements;
 	int n_moves = 0;
-	int i = 0;
-	int tipus = 0;
+	char type = 'X';
+	char aux = 'X';
+	int n_llegits;
+	double time = 0.0;
+	duracio = 0;
+	this->instant = instant;
 
-	int dirx, diry, dirz, accx, accy, accz;
-	dirx = 0;
-	diry = 0;
-	dirz = 0;
-	accx = 0;
-	accy = 0;
-	accz = 0;
-	double vmaxx, vmaxy, vmaxz, dur;
-	vmaxx = 0;
-	vmaxy = 0;
-	vmaxz = 0;
-	dur = 0;
-	double acc, freno;
-	acc = freno = 0;
-	int t_ini = 0;
+	movements = fopen(filename, "r");
+	if (movements != NULL)
+	{
+		n_llegits = fscanf(movements, "%d\n", &n_moves);
+		for (int i = 0; i < n_moves; i++) {
+			n_llegits = fscanf(movements, "%c", &type);
+			n_llegits = fscanf(movements, "%lf\n", &time);
 
-	fp = fopen(filename, "r");
-	if (fp != NULL) {
-		fscanf(fp, "%d\n",&n_moves);
-		while (i < n_moves) {
 			Move* m = new Move;
-			dirx = 0;
-			diry = 0;
-			dirz = 0;
-			accx = 0;
-			accy = 0;
-			accz = 0;
-			vmaxx = 0;
-			vmaxy = 0;
-			vmaxz = 0;
-			dur = 0;
-			fscanf(fp, "%d ", &tipus);
-			fscanf(fp, "%d ", &t_ini);
-			fscanf(fp, "%d ", &dirx);
-			fscanf(fp, "%d ", &diry);
-			fscanf(fp, "%d ", &dirz);
-			fscanf(fp, "%d ", &accx);
-			fscanf(fp, "%d ", &accy);
-			fscanf(fp, "%d ", &accz);
-			fscanf(fp, "%lf ", &vmaxx);
-			fscanf(fp, "%lf ", &vmaxy);
-			fscanf(fp, "%lf ", &vmaxz);
-			fscanf(fp, "%lf ", &dur);
-			fscanf(fp, "%lf ", &acc);
-			fscanf(fp, "%lf", &freno);
-			if (tipus) {
-				m->setMove_Rotacional(dirx, diry, dirz, accx, accy, accz, vmaxx, vmaxy, vmaxz, dur);
-			}
-			else {
-				m->setMove_Lineal(dirx, diry, dirz, accx, accy, accz, vmaxx, vmaxy, vmaxz, dur);
-			}
-			if (acc != 0) {
-				m->set_acc(acc);
-			}
-			if (freno != 0) {
-				m->set_freno(freno);
-			}
-			if (t_ini != -1) {
-				m->set_t_ini(t_ini);
-			}
-			else {
-				m->set_t_ini(moves.bottom()->get_t_final());
+			switch (type)
+			{
+			case 'W':
+				m->setMove_wait(time);
+				break;
+			case 'F':
+				m->setMove_freno(time);
+				break;
+			case 'A':
+				m->setMove_acc(1, V_MAXIMA,time);
+				break;
+			case 'Z':
+				m->setMove_acc(-1, V_MAXIMA, time);
+				break;
+			case 'L':
+				m->setfreemove(time);
+				break;
+			default:
+				break;
 			}
 			add_move(m);
-			i++;
+
 		}
-		fclose(fp);
+		moves.top()->set_t_ini(instant);
+		fclose(movements);
 	}
+
+
+
+}
+
+void Objeto::freeStep(double time)
+{
+	bool izq = false;
 	
+	float actualAngle = angle_abs;
+
+	if (actualAngle > 180)
+	{
+		actualAngle = actualAngle - 180;
+		izq = true;
+	}
+
+	float rozamiento = -0.5 * velo_angular;
+	actualAngle = actualAngle * 3.14 / 180;
+	float fuerzaPorPeso = peso * sin(actualAngle);
+
+	if (!izq) fuerzaPorPeso *= -1;
+
+
+	float fuerzaTotal = fuerzaPorPeso + rozamiento;
+	aceleracion = (fuerzaTotal / (peso*0.15))*10;
+
+
+	velo_angular += (aceleracion)*time;
+
+	angle.x = angle.x + (velo_angular * time);
+
+	if (angle.x >= 360) {
+		angle.x = angle.x - 360;
+	}
 }

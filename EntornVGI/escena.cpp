@@ -30,10 +30,8 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 	case HURAKAN:
 		//glDisable(GL_TEXTURE_2D);
 		//SeleccionaColor(ref_mat, sw_mat, col_object);
-		if (demo_on) d1.dibuixa_demo1(textur, texturID);
-		else {
-			d1.dibuixa_inicial(textur, texturID);
-		}
+		d1.dibuixa_demo1(textur, texturID);
+		
 		glPushMatrix();
 		glTranslatef(0, 0, -0.8);
 		//sea();

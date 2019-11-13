@@ -1,11 +1,12 @@
 #pragma once
 #include <iostream>
-#include "Conj_Animacions.h"
+#include "MoveQueue.h"
 class Objeto
 {
 public:
 	Objeto() {
-
+		peso = 200;
+		isLibre = false;
 	}
 
 	void del_Animacio() {
@@ -14,6 +15,7 @@ public:
 	};
 
 	void set_instant(double instant) {
+		this->lastInstant = this->instant;
 		this->instant = instant;
 	};
 	double get_duracio() {
@@ -31,21 +33,17 @@ public:
 	coord get_pos() {
 		return pos;
 	};
-	void read_moves(char* filename);
+	void read_moves(char* filename,double instant);
 	void set_pos(double x,double y,double z) {
 		pos.x = x;
 		pos.y = y;
 		pos.z = z;
 	};
-	void set_v(double x, double y, double z) {
-		velo.v_X = x;
-		velo.v_Y = y;
-		velo.v_Z = z;
+	void set_v(double x) {
+		velo = x;
 	};
-	void set_v_angular(double x, double y, double z) {
-		velo_angular.v_X = x;
-		velo_angular.v_Y = y;
-		velo_angular.v_Z = z;
+	void set_v_angular(double x) {
+		velo_angular = x;
 	};
 	void set_desp_origen(double x, double y, double z) {
 		desp_origen.x = x;
@@ -55,10 +53,14 @@ public:
 	coord get_desp_origen() {
 		return desp_origen;
 	};
+	void set_angle_abs(double angle) {
+		angle_abs = angle;
+	}
 
 	void step();
 
 	void add_move(Move* m);
+	void freeStep(double time);
 	
 	
 
@@ -66,14 +68,15 @@ private:
 	//variables control moviment
 	coord desp_origen;
 	coord angle;
+	double angle_abs;
 	coord pos;
 
-	v velo;
-	v velo_angular;
+	double velo;
+	double velo_angular;
 	
-	acc accel_dir;
+	double accel_dir;
 
-	dir direc;
+	double direc;
 	
 	MoveQueue moves;
 	Move* move_act;
@@ -81,6 +84,12 @@ private:
 	//variables control temporal
 	double instant = 0;
 	double duracio = 0;
+
+	//Variables para el modo libre 
+	float peso;
+	double aceleracion;
+	bool isLibre;
+	double lastInstant = 0;
 	
 };
 

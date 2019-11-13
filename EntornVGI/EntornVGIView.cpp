@@ -662,7 +662,12 @@ void CEntornVGIView::OnInitialUpdate()
 	oculta = true;
 	textura = true;
 	demo_on = true;
-
+	anima = true;
+	if (d1.instant != 0 && demo_on) {
+		KillTimer(WM_TIMER);
+	}
+	SetTimer(WM_TIMER, d1.interval, NULL);
+	d1.set_t_base();
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 	
 
@@ -2416,14 +2421,14 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 	if (anima)	{
 		// Codi de tractament de l'animació quan transcorren els ms. del crono.
 		// Codi de tractament de l'animació quan transcorren els ms. del crono.
-		if (d1.instant >= d1.duracion_total) {
-			KillTimer(WM_TIMER);
-			//d1.instant = 0;
-			anima = false;
-			demo_on = false;
-		}
-		else {
-			d1.instant = (std::clock() -d1.get_start())/(double)CLOCKS_PER_SEC;
+		
+		d1.instant = (std::clock() - (double)d1.get_t_base()) / (double)CLOCKS_PER_SEC;
+		if (d1.demo_on) {
+			double aux = (std::clock() - (double)d1.get_start())/(double)CLOCKS_PER_SEC;
+			if (aux > d1.duracion_total) {
+				d1.demo_on = false;
+				d1.reset_demo();
+			}
 		}
 		d1.move_step();
 		// Crida a OnPaint() per redibuixar l'escena
@@ -2945,7 +2950,7 @@ void CEntornVGIView::OnHurakan()
 	}
 	
 	demo_on = true;
-
+	
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 
 
@@ -3142,16 +3147,14 @@ void CEntornVGIView::OnCiclosPrueba1()
 
 		//OBJ
 		//objecte = OBJOBJ;	
-		if (d1.instant != 0 && demo_on) {
-			KillTimer(WM_TIMER);
-		}
+		
 		demo_on = true;
 		textura = true;
 		d1.mode = 1;
 		
 		d1.start_demo();
 		anima = true;
-		SetTimer(WM_TIMER, d1.interval, NULL);
+		
 
 		//  Modificar R per centrar la Vista a la mida de l'objecte (Perspectiva)
 		//	Canviar l'escala per a centrar la vista (Ortogràfica)

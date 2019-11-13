@@ -183,10 +183,15 @@ void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 void Demo_prova::move_step() {
 	
 	brac.set_instant(instant);
-	brac.step();
-	
 	seient.set_instant(instant);
-	seient.step();
+	if (demo_on) {
+		brac.set_angle_abs(brac.get_angle().x);
+		brac.step();
+		seient.set_angle_abs(brac.get_angle().x + seient.get_angle().x);
+		seient.step();
+	}
+	
+	
 	
 }
 
