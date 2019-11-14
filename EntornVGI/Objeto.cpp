@@ -46,19 +46,19 @@ void Objeto::stepTeclado()
 			frenar(time);
 			break;
 		case LIBRE:
-			freeStep(time);
+			freeStep_f(time);
 			break;
 		case ACELERAR_POSITIVO:
 			if(velo_angular < MAXIMA_VELOCIDAD_ACELERACION)
 				acelerar(time, true);
 			else
-				freeStep(time);
+				freeStep_f(time);
 			break;
 		case ACELERAR_NEGATIVO:
 			if (velo_angular > -MAXIMA_VELOCIDAD_ACELERACION)
 				acelerar(time, false);
 			else
-				freeStep(time);
+				freeStep_f(time);
 			break;
 		case CLAVAR_BRAZO:
 			if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR)*(-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR)*(-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
@@ -102,7 +102,7 @@ void Objeto::stepAsientoTeclado()
 		break;
 	case LIBRE:
 		isTambaleoTimeSet = false;
-		freeStep(time);
+		freeStep_f(time);
 		break;
 	case GIRAR_POSITIVO:
 		isTambaleoTimeSet = false;
@@ -134,7 +134,7 @@ void Objeto::tambaleo(double time)
 	}
 	else
 	{
-		freeStep(time);
+		freeStep_f(time);
 	}
 }
 
