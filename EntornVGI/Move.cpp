@@ -53,6 +53,7 @@ void Move::setMove_wait(double dur) {
 void Move::setfreemove(double dur) {
 	type = 4;
 	duracio = dur;
+	v_rotacional = 0;
 	is_libre = true;
 }
 
