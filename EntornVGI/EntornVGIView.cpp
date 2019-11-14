@@ -1415,6 +1415,76 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 // Crida a OnPaint() per redibuixar l'escena
 	InvalidateRect(NULL, false);
 
+
+	//Brazo
+	//Si pulsa Q, frena el brazo
+	if (nChar == 81)
+	{
+		d1.setEstadoBrazo(FRENAR);
+	}
+	else if (nChar == 87) //Si pulsa W, acelera
+	{
+		d1.setEstadoBrazo(ACELERAR_POSITIVO);
+	}
+	else if (nChar == 83) //Si pulsa S acelera en el sentido contrario
+	{
+		d1.setEstadoBrazo(ACELERAR_NEGATIVO);
+	}
+	else if (nChar == 69) //Si pulsa E, espera
+	{
+		if (isWaiting)
+		{
+			d1.setEstadoBrazo(LIBRE);
+			d1.setEstadoAsientos(LIBRE);
+			isWaiting = false;
+		}
+		else
+		{
+			d1.setEstadoBrazo(PAUSAR);
+			d1.setEstadoAsientos(PAUSAR);
+			isWaiting = true;
+		}
+	}
+	else if (nChar == 68) //Si pulsa D, clava el brazo (si puede)
+	{
+		if (isBrazoClavado)
+		{
+			d1.setEstadoBrazo(LIBRE);
+			isBrazoClavado = false;
+		}
+		else
+		{
+			d1.setEstadoBrazo(CLAVAR_BRAZO);
+			isBrazoClavado = true;
+		}
+	}
+
+	//Asientos
+	if (nChar == 77)   //Si pulsas M giras positivamente los asientos
+	{
+		d1.setEstadoAsientos(GIRAR_POSITIVO);
+	}
+	else if (nChar == 66) //Si pulsas B giras negativamente los asientos 
+	{
+		d1.setEstadoAsientos(GIRAR_NEGATIVO);
+	}
+	else if (nChar == 78)	//Si pulsas N bloqueas los asientos 
+	{
+		if (isAsientoClavado)
+		{
+			isAsientoClavado = false;
+			d1.setEstadoAsientos(LIBRE);
+		}
+		else
+		{
+			isAsientoClavado = true;
+			d1.setEstadoAsientos(CLAVAR_ASIENTO);
+		}
+	}
+	else if (nChar == 75) //Si pulsas K tambaleas
+	{
+		d1.setEstadoAsientos(TAMBALEAR);
+	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
@@ -1424,6 +1494,18 @@ void CEntornVGIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 // TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 
 	CView::OnKeyUp(nChar, nRepCnt, nFlags);
+
+	//Si levanta cualquiera de estas teclas cambia el brazo al modo libre
+	if (nChar == 87 || nChar ==  83 || nChar == 81)
+	{
+		d1.setEstadoBrazo(LIBRE);
+	}
+
+	//Si levanta cualquiera de estas teclas cambia el asiento al modo libre
+	if (nChar == 77 || nChar == 66)
+	{
+		d1.setEstadoAsientos(LIBRE);
+	}
 }
 
 
