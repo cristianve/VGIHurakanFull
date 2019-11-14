@@ -14,7 +14,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 
 	//TEXURES
 	//TEXURES
-	if (textu) {
+	if (textu)
+	{
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -34,7 +35,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glPushMatrix();
 	//TEXURES
 	//TEXURES
-	if (textu) {
+	if (textu)
+	{
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -56,7 +58,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glPushMatrix();
 	//TEXURES
 	//TEXURES
-	if (textu) {
+	if (textu) 
+	{
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -69,7 +72,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glPushMatrix();
 	//TEXURES
 	//TEXURES
-	if (textu) {
+	if (textu) 
+	{
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -84,7 +88,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 
 	//TEXURES
 	//TEXURES
-	if (textu) {
+	if (textu) 
+	{
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -95,7 +100,9 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glCallList(OBJECTESKYDOME);
 	glPopMatrix();
 }
-void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
+
+void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES])
+{
 	coord pos_brac_origen = brac.get_desp_origen();
 	coord pos_seient_origen = seient.get_desp_origen();
 	
@@ -133,9 +140,6 @@ void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glPopMatrix();
 
 	glPopMatrix();
-
-
-
 	glPushMatrix();
 
 	//TEXURES
@@ -179,21 +183,49 @@ void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glPopMatrix();
 }
 
-
-void Demo_prova::move_step() {
-	
+void Demo_prova::move_step() 
+{
 	brac.set_instant(instant);
 	seient.set_instant(instant);
-	if (demo_on) {
+	if (demo_on) 
+	{
 		brac.set_angle_abs(brac.get_angle().x);
 		brac.step();
 		seient.set_angle_abs(brac.get_angle().x + seient.get_angle().x);
 		seient.step();
 	}
-	
-	
-	
+	else
+	{
+		//Modo teclado o mando
+		brac.set_angle_abs(brac.get_angle().x);
+		brac.stepTeclado();
+		seient.set_angle_abs(brac.get_angle().x + seient.get_angle().x);
+		seient.stepAsientoTeclado();
+	}
 }
 
+void Demo_prova::reset_demo()
+{
+	brac.set_angle(0, 0, 0);
+	seient.set_angle(0, 0, 0);
+	brac.set_v_angular(0);
+	seient.set_v_angular(0);
+};
 
+void Demo_prova::start_demo()
+{
+	set_start();
+	demo_on = true;
+	//inicialitzant direccio moviments
+	brac.read_moves("brac_moves.txt", instant);
+	seient.read_moves("seient_moves.txt", instant);
+	dur_pausa = 0;
 
+	brac.set_desp_origen(0.5, 0, 8.94);
+	seient.set_desp_origen(0.5, 0, 3);
+	brac.set_angle(0, 0, 0);
+	seient.set_angle(0, 0, 0);
+	brac.set_v_angular(0);
+	seient.set_v_angular(0);
+	duracion_total = brac.get_duracio();
+};

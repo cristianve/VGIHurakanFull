@@ -26,10 +26,10 @@ void Objeto::step() {
 				//s'assigna la velocitat angular del moviment anterior al nou moviment
 				move_act->setMoveV(velo_angular);
 				//Es treu el moviment realitzat de la cua de moviments
+				}
 				move_act->set_acc(aceleracion);
 				if (move_act->get_type() == 2) {
 					move_act->set_freno(-aceleracion);
-				}
 			}
 		}
 		//si el moviment no ha acabat pero el instant actual es major al seu temps d'inici
@@ -37,6 +37,107 @@ void Objeto::step() {
 				//avancem movimen
 			move_act->move_step_rot(angle,time);
 		}
+	}
+}
+
+void Objeto::stepTeclado()
+{
+	double time = (instant - lastInstant);
+	switch (estado)
+	{
+		case FRENAR:
+			frenar(time);
+			break;
+		case LIBRE:
+			freeStep(time);
+			break;
+		case ACELERAR_POSITIVO:
+			if(velo_angular < MAXIMA_VELOCIDAD_ACELERACION)
+				acelerar(time, true);
+			else
+				freeStep(time);
+			break;
+		case ACELERAR_NEGATIVO:
+			if (velo_angular > -MAXIMA_VELOCIDAD_ACELERACION)
+				acelerar(time, false);
+			else
+				freeStep(time);
+			break;
+		case CLAVAR_BRAZO:
+			if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR)*(-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR)*(-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
+			{
+				frenar(time);
+			}
+			else
+			{
+				velo_angular = 0;
+				aceleracion = 0;
+			}
+			break;
+		case PAUSAR:
+			break;
+		default:
+			break;
+	}
+}
+
+void Objeto::stepAsiento()
+{
+
+}
+
+void Objeto::stepAsientoTeclado()
+{
+	double time = (instant - lastInstant);
+	switch (estado)
+	{
+	case CLAVAR_ASIENTO:
+		isTambaleoTimeSet = false;
+		if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR) * (-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR) * (-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
+		{
+			frenar(time);
+		}
+		else
+		{
+			velo_angular = 0;
+			aceleracion = 0;
+		}
+		break;
+	case LIBRE:
+		isTambaleoTimeSet = false;
+		freeStep(time);
+		break;
+	case GIRAR_POSITIVO:
+		isTambaleoTimeSet = false;
+		acelerar(time, true);
+		break;
+	case GIRAR_NEGATIVO:
+		isTambaleoTimeSet = false;
+		acelerar(time, false);
+		break;
+	case TAMBALEAR:
+		if(!isTambaleoTimeSet)
+			startTambaleoTime = instant;
+		tambaleo(time);
+		break;
+	case PAUSAR:
+		break;
+	default:
+		break;
+	}
+}
+
+void Objeto::tambaleo(double time)
+{
+	isTambaleoTimeSet = true;
+	double tambaleoInstant = instant - startTambaleoTime;
+	if(tambaleoInstant <= 2)
+	{ 
+		acelerar(time, true);
+	}
+	else
+	{
+		freeStep(time);
 	}
 }
 
@@ -133,4 +234,33 @@ void Objeto::freeStep(double time)
 	if (angle.x >= 360) {
 		angle.x = angle.x - 360;
 	}
+}
+
+void Objeto::acelerar(double time, bool isPositivo)
+{
+	if (velo_angular > V_MAXIMA) {
+		velo_angular = V_MAXIMA;
+	}
+	else {
+		aceleracion = HURAKAN_ACELERACION;
+		if (!isPositivo)
+			aceleracion *= (-1);
+		velo_angular += aceleracion * time;
+	}
+	angle.x = angle.x + (velo_angular * time);
+}
+
+void Objeto::frenar(double time)
+{
+	if (velo_angular > 0)
+	{
+		velo_angular -= HURAKAN_FRENO * time;
+		if (velo_angular < 0) velo_angular = 0;
+	}
+	else
+	{
+		velo_angular += HURAKAN_FRENO * time;
+		if (velo_angular > 0) velo_angular = 0;
+	}
+	angle.x = angle.x + (velo_angular * time);
 }

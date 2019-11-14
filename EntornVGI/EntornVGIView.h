@@ -37,6 +37,12 @@ protected: // Crear sólo a partir de serialización
 public:
 	CEntornVGIDoc* GetDocument() const;
 
+
+	//Control por teclado 
+	bool isBrazoClavado = false;
+	bool isAsientoClavado = false;
+	bool isWaiting = false;
+
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
 
