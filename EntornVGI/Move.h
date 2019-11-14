@@ -66,7 +66,7 @@ public:
 	//inicialitzar animacions
 	//void setMove_Lineal(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y, int acc_z, double vmax_x, double vmax_y, double vmax_z, double dur);
 	void setMove_acc(int dir, double vmax, double dur);
-	void setMove_freno(double dur);
+	void setMove_freno(int dir,double dur);
 	void setMove_wait(double dur);
 	void setfreemove(double dur);
 	//avançar animacio
@@ -118,7 +118,9 @@ public:
 	double getMoveDur() {
 		return duracio;
 	};
-	
+	void setMoveDir(double d) {
+		dir_rotacio = d;
+	}
 	int getMoveDir() {
 		return dir_rotacio;
 	};

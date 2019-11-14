@@ -9,7 +9,7 @@
 #define CONST_H
 
 
-#define V_MAXIMA 30
+#define V_MAXIMA 300
 #define CONST_TEMPS 1.66
 
 //--------------- VGI: Tipus de Projecció

@@ -26,7 +26,8 @@ void Move::setMove_Lineal(int dir_x, int dir_y, int dir_z, int acc_x, int acc_y,
 
 void Move::setMove_acc(int dir,  double vmax, double dur) {
 	v_rotacional = 0;
-	type = 1;
+	if (dir == 1)type = 1;
+	else type = 0;
 	duracio = dur;
 	instant = 0;
 	dir_rotacio = dir;
@@ -35,10 +36,12 @@ void Move::setMove_acc(int dir,  double vmax, double dur) {
 
 	this->v_max_rotacional = vmax;
 }
-void Move::setMove_freno(double dur) {
+void Move::setMove_freno(int dir,double dur) {
+	dir_rotacio = dir;
 	v_rotacional = 0;
 	is_libre = false;
 	type = 2;
+	this->rot_acc = -1;
 	duracio = dur;
 }
 void Move::setMove_wait(double dur) {

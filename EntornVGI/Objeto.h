@@ -60,8 +60,8 @@ public:
 	void step();
 
 	void add_move(Move* m);
-	void freeStep(double time);
-	
+	void freeStep_f(double time);
+	void freeStep_b(double time);
 	
 
 private:

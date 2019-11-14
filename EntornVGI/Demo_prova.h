@@ -71,12 +71,13 @@ public:
 		dur_pausa = 0;
 		
 		brac.set_desp_origen(0.5, 0, 8.94);
-		seient.set_desp_origen(0.5, 0, 3);
+		seient.set_desp_origen(0.62, 0, 2.63);
 		brac.set_angle(0, 0, 0);
 		seient.set_angle(0, 0, 0);
 		brac.set_v_angular(0);
 		seient.set_v_angular(0);
-		duracion_total = brac.get_duracio();
+		if (brac.get_duracio() > seient.get_duracio()) duracion_total = brac.get_duracio();
+		else duracion_total = seient.get_duracio();
 		//ini_movs();
 
 
