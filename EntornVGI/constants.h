@@ -37,6 +37,11 @@
 #define SEIENTS 's'
 #define BASE 'b'
 #define FLOOR 'F'
+#define WALLS 'W'
+#define GRASS 'G'
+#define OTHERS 'O'
+#define TEMPLE 'T'
+
 #define SKYDOME 'S'
 
 //-------------- VGI: Tipus d'Iluminacio
@@ -57,6 +62,10 @@
 #define OBJECTESEIENT 9
 #define OBJECTESKYDOME 10
 #define OBJECTEFLOOR 11
+#define OBJECTEGRASS 12
+#define OBJECTETEMPLE 13
+#define OBJECTEOTHERS 14
+#define OBJECTEWALLS 15
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;

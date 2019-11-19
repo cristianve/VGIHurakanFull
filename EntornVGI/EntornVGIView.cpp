@@ -31,12 +31,20 @@ extern const CString PATH_BASE = CString(_T("obj/hurakan_base.obj"));
 extern const CString PATH_ASIENTO = CString(_T("obj/hurakan_seients.obj"));
 extern const CString PATH_FLOOR = CString(_T("obj/floor.obj"));
 extern const CString PATH_SKYDOME = CString(_T("obj/skydome.obj"));
+extern const CString PATH_GRASS = CString(_T("obj/Background_grass.obj"));
+extern const CString PATH_WALLS = CString(_T("obj/Backgroud_walls.obj"));
+extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
+extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
 //TEXTURES
 extern const CString PATH_TEXTURE_ARM = CString(_T("textures/Arm.png"));
 extern const CString PATH_TEXTURE_BASE = CString(_T("textures/Base.png"));
 extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
 extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.jpg"));
 extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
+extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
+extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/Walls.jpg"));
+extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/Background_others_diffuse.jpg"));
+extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
 
 
 
@@ -645,6 +653,10 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_base = CString2Char(PATH_BASE);
 	char* nom_asiento = CString2Char(PATH_ASIENTO);
 	char* nom_floor = CString2Char(PATH_FLOOR);
+	char* nom_grass = CString2Char(PATH_GRASS);
+	char* nom_others = CString2Char(PATH_OTHERS);
+	char* nom_temple = CString2Char(PATH_TEMPLE);
+	char* nom_walls = CString2Char(PATH_WALLS);
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
 
 
@@ -653,6 +665,9 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nomTextureSeient = CString2Char(PATH_TEXTURE_SEIENTS);
 	char* nomTextureSkydome = CString2Char(PATH_TEXTURE_SKYDOME);
 	char* nomTextureFloor = CString2Char(PATH_TEXTURE_FLOOR);
+	char* nomTextureTemple = CString2Char(PATH_TEXTURE_TEMPLE);
+	char* nomTextureWalls = CString2Char(PATH_TEXTURE_WALLS);
+	char* nomTextureGrass = CString2Char(PATH_TEXTURE_GRASS);
 
 	
 	objecte = HURAKAN;
@@ -678,6 +693,9 @@ void CEntornVGIView::OnInitialUpdate()
 	texturesID[OBJECTESEIENT] = loadIMA_SOIL(nomTextureSeient);
 	texturesID[OBJECTESKYDOME] = loadIMA_SOIL(nomTextureSkydome);
 	texturesID[OBJECTEFLOOR] = loadIMA_SOIL(nomTextureFloor);
+	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
+	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass);
+	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple);
 
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
@@ -686,6 +704,10 @@ void CEntornVGIView::OnInitialUpdate()
 		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, true);
 		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, true);
 		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, true);
+		ObOBJ->LoadModel(nom_grass, OBJECTEGRASS, true);
+		ObOBJ->LoadModel(nom_walls, OBJECTEWALLS, true);
+		ObOBJ->LoadModel(nom_temple, OBJECTETEMPLE, true);
+		ObOBJ->LoadModel(nom_others, OBJECTEOTHERS, true);
 	
 		//	Pas de textura al shader
 	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));

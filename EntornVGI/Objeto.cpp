@@ -24,7 +24,7 @@ void Objeto::step() {
 				move_act->set_t_ini(instant);
 				//s'assigna la velocitat angular del moviment anterior al nou moviment
 				move_act->setMoveV(velo_angular);
-				if (move_act->get_type() == 4) move_act->setMoveDir(d);
+				if (move_act->get_type() != 0 && move_act->get_type() != 1) move_act->setMoveDir(d);
 				//Es treu el moviment realitzat de la cua de moviments
 				
 			}

@@ -70,21 +70,86 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	glCallList(OBJECTEBASE);
 	glPopMatrix();
 	glPushMatrix();
+		//TEXURES
+		//TEXURES
+		if (textu) 
+		{
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		//glTranslatef(0, 0, -0.35);
+		glCallList(OBJECTEFLOOR);
+	glPopMatrix();
+
+	glPushMatrix();
 	//TEXURES
 	//TEXURES
-	if (textu) 
+	if (textu)
 	{
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glEnable(GL_TEXTURE_2D);
 	}//
-
-	glCallList(OBJECTEFLOOR);
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEGRASS);
 	glPopMatrix();
+
 	glPushMatrix();
+
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEWALLS);
+	glPopMatrix();
+
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEOTHERS);
+	glPopMatrix();
+
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTETEMPLE);
+	glPopMatrix();
 
 	//TEXURES
 	//TEXURES
@@ -103,9 +168,16 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 
 void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES])
 {
-	coord pos_brac_origen = brac.get_desp_origen();
-	coord pos_seient_origen = seient.get_desp_origen();
-	
+	coord pos_brac_origen;
+	coord pos_seient_origen;
+
+	pos_brac_origen.x = 0.5;
+	pos_brac_origen.y = 0.067;
+	pos_brac_origen.z = 8.93;
+
+	pos_seient_origen.x = 0.5;
+	pos_seient_origen.y = 0;
+	pos_seient_origen.z = 2.64;
 	glPushMatrix();
 	//TEXURES
 	//TEXURES
@@ -221,8 +293,8 @@ void Demo_prova::start_demo()
 	seient.read_moves("seient_moves.txt", instant);
 	dur_pausa = 0;
 
-	brac.set_desp_origen(0.5, 0, 8.94);
-	seient.set_desp_origen(0.5, 0, 3);
+	brac.set_desp_origen(0.5, 0.067, 8.93);
+	seient.set_desp_origen(0.5,0,2.64);
 	brac.set_angle(0, 0, 0);
 	seient.set_angle(0, 0, 0);
 	brac.set_v_angular(0);

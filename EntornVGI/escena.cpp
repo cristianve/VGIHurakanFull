@@ -32,10 +32,6 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 		//SeleccionaColor(ref_mat, sw_mat, col_object);
 		d1.dibuixa_demo1(textur, texturID);
 		
-		glPushMatrix();
-		glTranslatef(0, 0, -0.8);
-		//sea();
-		glPopMatrix();
 		break;
 
 		// Dibuix de l'objecte 3DS
