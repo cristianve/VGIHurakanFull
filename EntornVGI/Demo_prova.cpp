@@ -280,6 +280,8 @@ void Demo_prova::reset_demo()
 {
 	brac.set_angle(0, 0, 0);
 	seient.set_angle(0, 0, 0);
+	brac.set_v(0);
+	seient.set_v(0);
 	brac.set_v_angular(0);
 	seient.set_v_angular(0);
 };

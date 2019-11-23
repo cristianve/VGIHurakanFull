@@ -62,8 +62,8 @@ public:
 
 	void read_moves(char* filename,double instant);
 
-	void set_v(double x) {velo = x;};
-	void set_v_angular(double x) {velo_angular = x;};
+	void set_v(double x) { velo = x;  set_velo = true; };
+	void set_v_angular(double x) { velo_angular = x; set_velo = true; };
 	void set_desp_origen(double x, double y, double z) 
 	{
 		desp_origen.x = x;
@@ -89,6 +89,7 @@ public:
 	void frenar(double time);
 private:
 	//variables control moviment
+	bool set_velo = false;
 	coord desp_origen;
 	coord angle;
 	double angle_abs;

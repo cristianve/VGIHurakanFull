@@ -2,6 +2,10 @@
 #include "Objeto.h"
 void Objeto::step() {
 	int d;
+	if (set_velo) {
+		move_act->setMoveV(velo_angular);
+		set_velo = false;
+	}
 	move_act->set_instant(instant);
 	double time = (instant - lastInstant);
 	if (move_act->is_libre && !move_act->is_finished() && move_act->get_type() != 3)

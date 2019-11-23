@@ -677,7 +677,7 @@ void CEntornVGIView::OnInitialUpdate()
 	ilumina = PLANA;
 	oculta = true;
 	textura = true;
-	demo_on = true;
+	demo_on = false;
 	anima = true;
 	if (d1.instant != 0 && demo_on) {
 		KillTimer(WM_TIMER);
@@ -3249,18 +3249,21 @@ void CEntornVGIView::OnCiclosPrueba1()
 		//PERSPECTIVA
 		
 
-	
+		if (demo_on) {
+			d1.reset_demo();
+			d1.start_demo();
+		}
+		else {
 
-		//OBJ
-		//objecte = OBJOBJ;	
-		
-		demo_on = true;
-		textura = true;
-		d1.mode = 1;
-		
-		d1.start_demo();
-		anima = true;
-		
+			//OBJ
+			//objecte = OBJOBJ;	
+
+			demo_on = true;
+			textura = true;
+			d1.mode = 1;
+			d1.start_demo();
+			anima = true;
+		}
 
 		//  Modificar R per centrar la Vista a la mida de l'objecte (Perspectiva)
 		//	Canviar l'escala per a centrar la vista (Ortogràfica)
