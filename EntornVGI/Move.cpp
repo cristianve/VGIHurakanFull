@@ -69,7 +69,7 @@ void Move::move_step_rot(coord &angle_obj,double time) {
 		}
 		else if (rot_acc == 1) {
 			//gas
-			if (v_rotacional > v_max_rotacional) {
+			if (abs(v_rotacional) > V_MAXIMA) {
 				v_rotacional = v_max_rotacional;
 			}
 			else {

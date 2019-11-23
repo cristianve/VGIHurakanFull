@@ -37,6 +37,9 @@ public:
 		moves.deleteQueue();
 		delete(move_act);
 	};
+	void set_peso(double peso) {
+		this->peso = peso;
+	};
 
 	void set_instant(double instant) 
 	{
@@ -59,7 +62,7 @@ public:
 		pos.y = y;
 		pos.z = z;
 	};
-
+	void reset_moves();
 	void read_moves(char* filename,double instant);
 
 	void set_v(double x) { velo = x;  set_velo = true; };

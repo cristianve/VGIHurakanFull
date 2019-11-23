@@ -32,9 +32,9 @@ class Move
 private:
 	//variables acceleracio, es modifiquen amb set_acc i set_freno
 	float g_plus = 2;
-	float g_freno = 2;
+	float g_freno = 10;
 	double acc_angular_plus = 10;
-	double acc_angular_freno = 2;
+	double acc_angular_freno = 20;
 
 	//0: Moviment lineal		1: moviment rotacional
 	int type = 0;

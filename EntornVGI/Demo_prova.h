@@ -32,7 +32,7 @@ public:
 	Demo_prova()
 	{
 		demo_on = false;
-
+		seient.set_peso(900);
 		//Iniciamos el brazo
 		brac.set_estado(LIBRE);
 		brac.set_desp_origen(0.5, 0.067, 8.93);

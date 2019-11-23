@@ -1,5 +1,13 @@
 #include "stdafx.h"
 #include "Objeto.h"
+
+void Objeto::reset_moves() {
+	while (!moves.empty()) {
+		moves.pop_mov();
+	}
+	move_act = NULL;
+}
+
 void Objeto::step() {
 	int d;
 	if (set_velo) {
