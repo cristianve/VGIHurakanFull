@@ -63,4 +63,9 @@ public:
 	void start_demo();
 	void dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 	void move_step();
+
+	//Metodos grabacion
+	void Demo_prova::setGrabacio();
+	void Demo_prova::initGrabacio();
+	void Demo_prova::stopGrabacio();
 };

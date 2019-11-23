@@ -293,8 +293,8 @@ void Demo_prova::start_demo()
 	set_start();
 	demo_on = true;
 	//inicialitzant direccio moviments
-	brac.read_moves("brac_moves.txt", instant);
-	seient.read_moves("seient_moves.txt", instant);
+	brac.read_moves("grabacio_brac.txt", instant);
+	seient.read_moves("grabacio_seients.txt", instant);
 	dur_pausa = 0;
 
 	brac.set_desp_origen(0.5, 0.067, 8.93);
@@ -305,3 +305,20 @@ void Demo_prova::start_demo()
 	seient.set_v_angular(0);
 	duracion_total = brac.get_duracio();
 };
+
+//Metodos grabacion
+void Demo_prova::setGrabacio()
+{
+	brac.set_grabacio_filename("grabacio_brac.txt");
+	seient.set_grabacio_filename("grabacio_seients.txt");
+}
+void Demo_prova::initGrabacio()
+{
+	brac.setGrabacio(true);
+	seient.setGrabacio(true);
+}
+void Demo_prova::stopGrabacio()
+{
+	brac.setGrabacio(false);
+	seient.setGrabacio(false);
+}

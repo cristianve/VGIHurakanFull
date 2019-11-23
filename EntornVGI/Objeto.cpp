@@ -88,6 +88,8 @@ void Objeto::stepTeclado()
 		default:
 			break;
 	}
+	//Call Grabacio
+	write_moves();
 }
 
 void Objeto::stepAsiento()
@@ -134,6 +136,8 @@ void Objeto::stepAsientoTeclado()
 	default:
 		break;
 	}
+	//Call Grabacio
+	write_moves();
 }
 
 void Objeto::tambaleo(double time)
@@ -310,5 +314,122 @@ void Objeto::freeStep_b(double time)
 
 	if (angle.x <= -360) {
 		angle.x = angle.x + 360;
+	}
+}
+
+void Objeto::set_grabacio_filename(char* filename)
+{
+	if (!isGrabando)
+	{
+		grabacioFilename = filename;
+	}
+}
+void Objeto::setGrabacio(bool grabacio)
+{
+	if (isGrabando && !grabacio)		//Se acabó la gravación
+	{
+		tiempoGrabacion = instant - lastGrabacioInstant;
+		if (tiempoGrabacion > 0 && numberOfMovements < NUM_OF_MOVEMENTS) { //Si hay un movimiento en curso y queda hueco en el array
+			//Recoger en el array el ultimo movimiento, ya que queda suelto
+			char state = getState();
+			movements[numberOfMovements] = state;
+			movements_time[numberOfMovements] = tiempoGrabacion;
+		}
+
+		//Escribir en el fichero
+		FILE* grabacio;
+		grabacio = fopen(grabacioFilename, "w");
+		fprintf(grabacio, "%d\n", numberOfMovements + 1);
+		for (int i = 0; i < numberOfMovements + 1; i++)
+		{
+			if (movements[i] != 'A' && movements[i] != 'Z')
+			{
+				if (i + 1 == NUM_OF_MOVEMENTS) {
+					fprintf(grabacio, "%c%lf", movements[i], movements_time[i]);					//Si es el ultimo le quita el salto de linea
+				}
+				else {
+					fprintf(grabacio, "%c%lf\n", movements[i], movements_time[i]);
+				}
+			}
+			else
+			{
+				if (i + 1 == NUM_OF_MOVEMENTS) {
+					fprintf(grabacio, "%c%lf %d", movements[i], movements_time[i], HURAKAN_ACELERACION);					//Si es el ultimo le quita el salto de linea
+				}
+				else {
+					fprintf(grabacio, "%c%lf %d\n", movements[i], movements_time[i], HURAKAN_ACELERACION);
+				}
+			}
+		}
+		fclose(grabacio);
+	}
+	if (!isGrabando && grabacio)	//Se inicia la grabacion
+	{
+		recienIniciado = true;
+		numberOfMovements = 0; //Reiniciem els moviments
+		tiempoGrabacion = 0;
+		lastGrabacioInstant = instant;
+	}
+	isGrabando = grabacio;
+}
+
+char Objeto::getState()
+{
+	char state = 'W';
+	switch (lastEstado)
+	{
+	case CLAVAR_ASIENTO:
+		state = 'C';
+		break;
+	case LIBRE:
+		state = 'L';
+		break;
+	case GIRAR_POSITIVO:
+		state = 'A';
+		break;
+	case GIRAR_NEGATIVO:
+		state = 'Z';
+		break;
+	case TAMBALEAR:
+		state = 'T';
+		break;
+	case PAUSAR:
+		state = 'W';
+		break;
+	default:
+		state = 'X';
+		break;
+	}
+	return state;
+}
+
+void Objeto::write_moves()
+{
+	if (isGrabando)
+	{
+		if (recienIniciado)
+		{
+			recienIniciado = false;
+			lastEstado = estado;
+		}
+		if (lastEstado != estado)
+		{
+			tiempoGrabacion = instant - lastGrabacioInstant;
+			lastGrabacioInstant = instant;
+			char state = getState();
+			movements[numberOfMovements] = state;
+			movements_time[numberOfMovements] = tiempoGrabacion;
+			numberOfMovements++;
+			tiempoGrabacion = 0;	//Reinicia el tiempo
+			lastEstado = estado;
+			if (numberOfMovements == NUM_OF_MOVEMENTS)
+			{
+				setGrabacio(false);		//si no hay mas hueco en el array finaliza la grabación
+			}
+		}
+		else
+		{
+			//tiempoGrabacion += 0.01; //Suma 10 ms
+		}
 	}
 }

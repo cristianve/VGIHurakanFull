@@ -42,6 +42,7 @@ public:
 	bool isBrazoClavado = false;
 	bool isAsientoClavado = false;
 	bool isWaiting = false;
+	bool isGrabando = false;
 
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 

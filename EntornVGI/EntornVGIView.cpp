@@ -670,6 +670,8 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nomTextureGrass = CString2Char(PATH_TEXTURE_GRASS);
 	char* nomTextureOthers = CString2Char(PATH_TEXTURE_OTHERS);
 
+	//Grabacio
+	d1.setGrabacio(); //Prepara la grabación
 	
 	objecte = HURAKAN;
 	projeccio = PERSPECT;
@@ -1480,6 +1482,21 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			d1.setEstadoBrazo(CLAVAR_BRAZO);
 			isBrazoClavado = true;
+		}
+	}
+
+	//Grabación
+	if (nChar == 71)	//Se inicia y se para con la G
+	{
+		if (isGrabando)
+		{
+			d1.stopGrabacio();
+			isGrabando = false;
+		}
+		else
+		{
+			d1.initGrabacio();
+			isGrabando = true;
 		}
 	}
 

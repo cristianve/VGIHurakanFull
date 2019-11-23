@@ -22,6 +22,8 @@
 #define MAXIMA_ACELERACION_CLAVAR 1
 #define MAXIMA_VELOCIDAD_ACELERACION (30)
 
+#define NUM_OF_MOVEMENTS 1000
+
 class Objeto
 {
 public:
@@ -31,6 +33,12 @@ public:
 		isLibre = false;
 		estado = PAUSAR;
 		isTambaleoTimeSet = false;
+		isGrabando = false;
+		lastEstado = PAUSAR;
+		grabacioFilename = NULL;
+		numberOfMovements = 0;
+		recienIniciado = false;
+		lastGrabacioInstant = 0;
 	}
 
 	void del_Animacio() {
@@ -90,6 +98,11 @@ public:
 
 	void acelerar(double time, bool isPositivo);
 	void frenar(double time);
+	char getState();
+
+	void set_grabacio_filename(char* filename);
+	void setGrabacio(bool grabacio);
+	void write_moves();
 private:
 	//variables control moviment
 	bool set_velo = false;
@@ -123,5 +136,16 @@ private:
 
 	//Variables modo teclado
 	int estado;
+
+	//Variables grabacion
+	double tiempoGrabacion;
+	bool isGrabando;
+	int lastEstado;
+	char* grabacioFilename;
+	int numberOfMovements;
+	char movements[NUM_OF_MOVEMENTS];
+	double movements_time[NUM_OF_MOVEMENTS];
+	bool recienIniciado;
+	double lastGrabacioInstant;
 };
 
