@@ -43,7 +43,7 @@ extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.j
 extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
 extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
 extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/Walls.jpg"));
-extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/Background_others_diffuse.jpg"));
+extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/others.png"));
 extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
 
 
@@ -668,6 +668,7 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nomTextureTemple = CString2Char(PATH_TEXTURE_TEMPLE);
 	char* nomTextureWalls = CString2Char(PATH_TEXTURE_WALLS);
 	char* nomTextureGrass = CString2Char(PATH_TEXTURE_GRASS);
+	char* nomTextureOthers = CString2Char(PATH_TEXTURE_OTHERS);
 
 	
 	objecte = HURAKAN;
@@ -696,6 +697,7 @@ void CEntornVGIView::OnInitialUpdate()
 	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
 	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass);
 	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple);
+	texturesID[OBJECTEOTHERS] = loadIMA_SOIL(nomTextureOthers);
 
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
