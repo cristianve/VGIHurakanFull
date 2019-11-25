@@ -8,6 +8,9 @@
 #ifndef CONST_H
 #define CONST_H
 
+#define INPUT_DEADZONE_L 100
+#define INPUT_DEADZONE_R 2
+
 
 #define V_MAXIMA 45
 #define CONST_TEMPS 1.66

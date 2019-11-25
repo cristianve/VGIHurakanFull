@@ -261,17 +261,17 @@ void Demo_prova::move_step()
 	seient.set_instant(instant);
 	if (demo_on) 
 	{
-		brac.set_angle_abs(brac.get_angle().x);
+		brac.set_angle_free_move(brac.get_angle().x);
 		brac.step();
-		seient.set_angle_abs(brac.get_angle().x + seient.get_angle().x);
+		seient.set_angle_free_move(brac.get_angle().x + seient.get_angle().x);
 		seient.step();
 	}
 	else
 	{
 		//Modo teclado o mando
-		brac.set_angle_abs(brac.get_angle().x);
+		brac.set_angle_free_move(brac.get_angle().x);
 		brac.stepTeclado();
-		seient.set_angle_abs(brac.get_angle().x + seient.get_angle().x);
+		seient.set_angle_free_move(brac.get_angle().x + seient.get_angle().x);
 		seient.stepAsientoTeclado();
 	}
 }
@@ -282,8 +282,6 @@ void Demo_prova::reset_demo()
 	seient.reset_moves();
 	brac.set_angle(0, 0, 0);
 	seient.set_angle(0, 0, 0);
-	brac.set_v(0);
-	seient.set_v(0);
 	brac.set_v_angular(0);
 	seient.set_v_angular(0);
 };

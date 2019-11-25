@@ -162,8 +162,7 @@ void Objeto::add_move(Move* m) {
 	//actualitza l'actual i els seus par�metres.
 	move_act = moves.top();
 	direc = move_act->getMoveDir();
-	accel_dir = move_act->getMoveAcc();
-	velo = move_act->getMoveV();
+	accel_dir = move_act->getMoveAccDir();
 	velo_angular = move_act->getMoveV();
 }
 

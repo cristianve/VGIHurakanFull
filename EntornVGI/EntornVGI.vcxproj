@@ -128,6 +128,7 @@
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="CXBOXController.h" />
     <ClInclude Include="Demo_prova.h" />
     <ClInclude Include="EntornVGI.h" />
     <ClInclude Include="EntornVGIDoc.h" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="CXBOXController.cpp" />
     <ClCompile Include="Demo_prova.cpp" />
     <ClCompile Include="EntornVGI.cpp" />
     <ClCompile Include="EntornVGIDoc.cpp" />

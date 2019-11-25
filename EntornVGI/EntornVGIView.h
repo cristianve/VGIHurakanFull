@@ -8,7 +8,7 @@
 #pragma once
 
 #include "MainFrm.h"
-
+#include "CXBOXController.h"
 // Entorn VGI: Constants de l'aplicació entorn VGI
 #include "constants.h"
 #include "Demo_prova.h"
@@ -178,6 +178,7 @@ public:
 //-------------- Entorn VGI: Fi De Variables globals de CEntornVGIView
 	Demo_prova d1;
 	bool demo_on = false;
+	CXBOXController* Player1;
 
 // Operaciones
 public:

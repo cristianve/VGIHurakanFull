@@ -317,7 +317,7 @@ CEntornVGIView::CEntornVGIView()
 	sw_il = true;		palcolFractal = false;
 
 // Entorn VGI: Altres variables
-	mida = 1.0;			nom = "";		buffer = "";
+	mida = 1.0;			nom = "";		buffer = ""; Player1 = new CXBOXController(1);
 
 // Entorn VGI: Inicialització de les llibreries DevIL per a la càrrega de textures i fitxers .3DS
 	ilInit();					// Inicialitzar llibreria IL
@@ -907,6 +907,75 @@ void CEntornVGIView::OnPaint()
 
 //  Actualitzar la barra d'estat de l'aplicació amb els valors R,A,B,PVx,PVy,PVz
 	Barra_Estat();
+
+	//Control mando
+	if (Player1->IsConnected())
+	{
+		XINPUT_STATE state = Player1->GetState();
+
+		//RT
+		float brazo_pos = state.Gamepad.bRightTrigger;
+		float brazo_neg = state.Gamepad.bLeftTrigger;
+
+		if (brazo_pos > 0) {
+			d1.setEstadoBrazo(ACELERAR_POSITIVO);
+		}
+		else if (brazo_neg > 0) {
+			d1.setEstadoBrazo(ACELERAR_NEGATIVO);
+		}
+		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+		{
+			d1.setEstadoBrazo(FRENAR);
+		}
+		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			if (d1.get_estado_brazo() != CLAVAR_BRAZO) {
+				d1.setEstadoBrazo(CLAVAR_BRAZO);
+			}
+			else {
+				d1.setEstadoBrazo(LIBRE);
+			}
+		}
+		else {
+			d1.setEstadoBrazo(LIBRE);
+		}
+
+		//RB
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			d1.setEstadoAsientos(ACELERAR_POSITIVO);
+		}
+		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+		{
+			d1.setEstadoAsientos(ACELERAR_NEGATIVO);
+		}
+		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+		{
+			d1.setEstadoAsientos(FRENAR);
+		}
+		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+		{
+			if (d1.get_estado_Asiento() != CLAVAR_ASIENTO) {
+				d1.setEstadoAsientos(CLAVAR_ASIENTO);
+			}
+			else {
+				d1.setEstadoAsientos(LIBRE);
+			}
+		}
+		else {
+			d1.setEstadoAsientos(LIBRE);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
+		{
+			exit(0);
+		}
+	
+
+		
+
+
+	}
 }
 
 

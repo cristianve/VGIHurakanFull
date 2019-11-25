@@ -55,6 +55,8 @@ public:
 	void setEstadoBrazo(int estado) { brac.set_estado(estado); }
 	void setEstadoAsientos(int estado) { seient.set_estado(estado); }
 	void dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
+	int get_estado_brazo() { return brac.getState(); };
+	int get_estado_Asiento() { return seient.getState(); };
 	void reset_demo();
 	clock_t get_t_base() {return t_base;}
 	void set_t_base() {t_base = std::clock();}

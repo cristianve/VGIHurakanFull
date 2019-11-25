@@ -1,13 +1,2 @@
-﻿  ChildFrm.cpp
-  ClassView.cpp
-  Demo_prova.cpp
-  EntornVGI.cpp
-  EntornVGIDoc.cpp
-  EntornVGIView.cpp
-  FileView.cpp
-  MainFrm.cpp
-  OutputWnd.cpp
-  PropertiesWnd.cpp
-  escena.cpp
-  visualitzacio.cpp
+﻿  EntornVGIView.cpp
   EntornVGI.vcxproj -> C:\Users\Miki\Desktop\Uni\3r.5\VGI-2\ABP\Entorn_Tibidabo\VGIHurakanFull\Debug\EntornVGI.exe
