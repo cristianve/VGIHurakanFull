@@ -222,13 +222,14 @@
 #define ID_PROJECCION                   32897
 #define ID_PARTESHURAKAN_SKYDOME        32898
 #define ID_PARTESHURAKAN_FLOOR          32899
+#define ID_CICLOS_PRUEBAGRABADA         32900
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32900
+#define _APS_NEXT_COMMAND_VALUE         32901
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

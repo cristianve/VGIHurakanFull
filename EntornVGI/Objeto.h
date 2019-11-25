@@ -26,126 +26,108 @@
 
 class Objeto
 {
+private:
+
+	//GENERAL OBJECTE
+
+	//posicio i desp
+	coord pos;
+	coord desp_origen;
+
+	//angles
+	coord angle;
+	double angle_free_move = 0;
+
+	//velocitat
+	bool set_velo = false;
+	double velo_angular = 0;
+	
+	//temps
+	double instant = 0;
+	double duracio = 0;
+
+
+	//CONTROL DEMO
+	MoveQueue moves;
+	Move* move_act;
+	double direc = 0;
+	double accel_dir = -1;
+
+
+	//CONTROL FREE MOVE
+	bool isBrazo = false;
+	bool isLibre = true;
+	float peso = 200;
+	double aceleracion = 0;
+	double lastInstant = 0;
+
+
+	//CONTROL TECLAT
+	int estado = PAUSAR;
+	//tambaleo
+	bool isTambaleoTimeSet = false;
+	double startTambaleoTime = 0;
+
+
+	//CONTROL GRABACIO
+	double tiempoGrabacion = 0;
+	bool isGrabando= false;
+	int lastEstado = PAUSAR;
+	char* grabacioFilename = NULL;
+	int numberOfMovements = 0;
+	char movements_record[NUM_OF_MOVEMENTS];
+	double movements_record_time[NUM_OF_MOVEMENTS];
+	bool recienIniciado = false;
+	double lastGrabacioInstant = 0;
+
 public:
-	Objeto() 
-	{
-		peso = 200;
-		isLibre = false;
-		estado = PAUSAR;
-		isTambaleoTimeSet = false;
-		isGrabando = false;
-		lastEstado = PAUSAR;
-		grabacioFilename = NULL;
-		numberOfMovements = 0;
-		recienIniciado = false;
-		lastGrabacioInstant = 0;
-	}
 
-	void del_Animacio() {
-		moves.deleteQueue();
-		delete(move_act);
-	};
-	void set_peso(double peso) {
-		this->peso = peso;
-	};
+	//Constructor
+	Objeto() {};
+	
+	//GENERAL OBJECTE
 
-	void set_instant(double instant) 
-	{
-		this->lastInstant = this->instant;
-		this->instant = instant;
-	};
-	double get_duracio() {return duracio;};
+	//posicio
+	coord get_pos() { return pos; };
+	void set_pos(double x, double y, double z) { pos.x = x; pos.y = y; pos.z = z; };
+	void set_desp_origen(double x, double y, double z) { desp_origen.x = x; desp_origen.y = y; desp_origen.z = z; };
+	coord get_desp_origen() { return desp_origen; };
 
-	coord get_angle() {return angle;};
-	void set_angle(double angle_x, double angle_y, double angle_z) {
-		angle.x = angle_x;
-		angle.y = angle_y;
-		angle.z = angle_z;
-	};
+	//angle
+	coord get_angle() { return angle; };
+	void set_angle(double angle_x, double angle_y, double angle_z) { angle.x = angle_x; angle.y = angle_y; angle.z = angle_z; };
 
-	coord get_pos() {return pos;};
-	void set_pos(double x, double y, double z)
-	{
-		pos.x = x;
-		pos.y = y;
-		pos.z = z;
-	};
-	void reset_moves();
-	void read_moves(char* filename,double instant);
-
-	void set_v(double x) { velo = x;  set_velo = true; };
+	//velo
 	void set_v_angular(double x) { velo_angular = x; set_velo = true; };
-	void set_desp_origen(double x, double y, double z) 
-	{
-		desp_origen.x = x;
-		desp_origen.y = y;
-		desp_origen.z = z;
-	};
-	coord get_desp_origen() {return desp_origen;};
-	void set_angle_abs(double angle) {angle_abs = angle;}
 
-	void set_estado(int estado) { this->estado = estado; }
+	//temps
+	void set_instant(double instant) { this->lastInstant = this->instant; this->instant = instant; };
+	double get_duracio() { return duracio; };
 
+	//CONTROL DEMO
+	void read_moves(char* filename, double instant);
+	void add_move(Move* m);
 	void step();
+	void reset_moves();
+
+	//CONTROL FREE MOVE
+	void set_peso(double peso) { this->peso = peso; };
+	void set_angle_free_move(double angle) { angle_free_move = angle; }
+	void freeStep_f(double time);
+	void freeStep_b(double time);
+	
+	//CONTROL TECLADO
+	void set_estado(int estado) { this->estado = estado; }
 	void stepTeclado();
 	void stepAsiento();
 	void stepAsientoTeclado();
 	void tambaleo(double time);
-	void add_move(Move* m);
-	void freeStep_f(double time);
-	void freeStep_b(double time);
-	
-
 	void acelerar(double time, bool isPositivo);
 	void frenar(double time);
 	char getState();
-
 	void set_grabacio_filename(char* filename);
 	void setGrabacio(bool grabacio);
 	void write_moves();
-private:
-	//variables control moviment
-	bool set_velo = false;
-	coord desp_origen;
-	coord angle;
-	double angle_abs;
-	coord pos;
-
-	bool isTambaleoTimeSet;
-	double startTambaleoTime;
-	double velo;
-	double velo_angular;
 	
-	double accel_dir;
-
-	double direc;
-	
-	MoveQueue moves;
-	Move* move_act;
-
-	//variables control temporal
-	double instant = 0;
-	double duracio = 0;
-
-	//Variables para el modo libre 
-	float peso;
-	double aceleracion;
-	bool isLibre;
-	double lastInstant = 0;
-	bool isBrazo;
-
-	//Variables modo teclado
-	int estado;
-
-	//Variables grabacion
-	double tiempoGrabacion;
-	bool isGrabando;
-	int lastEstado;
-	char* grabacioFilename;
-	int numberOfMovements;
-	char movements[NUM_OF_MOVEMENTS];
-	double movements_time[NUM_OF_MOVEMENTS];
-	bool recienIniciado;
-	double lastGrabacioInstant;
 };
 

@@ -168,7 +168,7 @@ void Objeto::add_move(Move* m) {
 }
 
 void Objeto::read_moves(char* filename,double instant) {
-	FILE* movements;
+	FILE* movements_record;
 	int n_moves = 0;
 	char type = 'X';
 	char aux = 'X';
@@ -178,13 +178,13 @@ void Objeto::read_moves(char* filename,double instant) {
 	duracio = 0;
 	this->instant = instant;
 
-	movements = fopen(filename, "r");
-	if (movements != NULL)
+	movements_record = fopen(filename, "r");
+	if (movements_record != NULL)
 	{
-		n_llegits = fscanf(movements, "%d\n", &n_moves);
+		n_llegits = fscanf(movements_record, "%d\n", &n_moves);
 		for (int i = 0; i < n_moves; i++) {
-			n_llegits = fscanf(movements, "%c", &type);
-			n_llegits = fscanf(movements, "%lf", &time);
+			n_llegits = fscanf(movements_record, "%c", &type);
+			n_llegits = fscanf(movements_record, "%lf", &time);
 
 			Move* m = new Move;
 			switch (type)
@@ -193,17 +193,17 @@ void Objeto::read_moves(char* filename,double instant) {
 				m->setMove_wait(time);
 				break;
 			case 'F':
-				n_llegits = fscanf(movements, " %lf", &acc);
+				n_llegits = fscanf(movements_record, " %lf", &acc);
 				m->setMove_freno(moves.top()->getMoveDir(),time);
 				m->set_freno(acc);
 				break;
 			case 'A':
-				n_llegits = fscanf(movements, " %lf", &acc);
+				n_llegits = fscanf(movements_record, " %lf", &acc);
 				m->setMove_acc(1, V_MAXIMA,time);
 				m->set_acc(acc);
 				break;
 			case 'Z':
-				n_llegits = fscanf(movements, " %lf", &acc);
+				n_llegits = fscanf(movements_record, " %lf", &acc);
 				m->setMove_acc(-1, V_MAXIMA, time);
 				m->set_acc(acc);
 				break;
@@ -213,12 +213,12 @@ void Objeto::read_moves(char* filename,double instant) {
 			default:
 				break;
 			}
-			fscanf(movements, "\n");
+			fscanf(movements_record, "\n");
 			add_move(m);
 
 		}
 		moves.top()->set_t_ini(instant);
-		fclose(movements);
+		fclose(movements_record);
 	}
 
 
@@ -228,7 +228,7 @@ void Objeto::read_moves(char* filename,double instant) {
 void Objeto::freeStep_f(double time)
 {
 	bool izq = false;
-	float actualAngle = angle_abs;
+	float actualAngle = angle_free_move;
 
 	if (actualAngle > 180)
 	{
@@ -288,7 +288,7 @@ void Objeto::frenar(double time)
 void Objeto::freeStep_b(double time)
 {
 	bool izq = true;
-	float actualAngle = angle_abs;
+	float actualAngle = angle_free_move;
 
 	if (actualAngle < -180)
 	{
@@ -332,8 +332,8 @@ void Objeto::setGrabacio(bool grabacio)
 		if (tiempoGrabacion > 0 && numberOfMovements < NUM_OF_MOVEMENTS) { //Si hay un movimiento en curso y queda hueco en el array
 			//Recoger en el array el ultimo movimiento, ya que queda suelto
 			char state = getState();
-			movements[numberOfMovements] = state;
-			movements_time[numberOfMovements] = tiempoGrabacion;
+			movements_record[numberOfMovements] = state;
+			movements_record_time[numberOfMovements] = tiempoGrabacion;
 		}
 
 		//Escribir en el fichero
@@ -342,22 +342,22 @@ void Objeto::setGrabacio(bool grabacio)
 		fprintf(grabacio, "%d\n", numberOfMovements + 1);
 		for (int i = 0; i < numberOfMovements + 1; i++)
 		{
-			if (movements[i] != 'A' && movements[i] != 'Z')
+			if (movements_record[i] != 'A' && movements_record[i] != 'Z')
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
-					fprintf(grabacio, "%c%lf", movements[i], movements_time[i]);					//Si es el ultimo le quita el salto de linea
+					fprintf(grabacio, "%c%lf", movements_record[i], movements_record_time[i]);					//Si es el ultimo le quita el salto de linea
 				}
 				else {
-					fprintf(grabacio, "%c%lf\n", movements[i], movements_time[i]);
+					fprintf(grabacio, "%c%lf\n", movements_record[i], movements_record_time[i]);
 				}
 			}
 			else
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
-					fprintf(grabacio, "%c%lf %d", movements[i], movements_time[i], HURAKAN_ACELERACION);					//Si es el ultimo le quita el salto de linea
+					fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION);					//Si es el ultimo le quita el salto de linea
 				}
 				else {
-					fprintf(grabacio, "%c%lf %d\n", movements[i], movements_time[i], HURAKAN_ACELERACION);
+					fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION);
 				}
 			}
 		}
@@ -417,8 +417,8 @@ void Objeto::write_moves()
 			tiempoGrabacion = instant - lastGrabacioInstant;
 			lastGrabacioInstant = instant;
 			char state = getState();
-			movements[numberOfMovements] = state;
-			movements_time[numberOfMovements] = tiempoGrabacion;
+			movements_record[numberOfMovements] = state;
+			movements_record_time[numberOfMovements] = tiempoGrabacion;
 			numberOfMovements++;
 			tiempoGrabacion = 0;	//Reinicia el tiempo
 			lastEstado = estado;

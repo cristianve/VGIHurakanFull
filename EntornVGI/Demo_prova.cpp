@@ -288,13 +288,14 @@ void Demo_prova::reset_demo()
 	seient.set_v_angular(0);
 };
 
-void Demo_prova::start_demo()
+void Demo_prova::start_demo(char* brac_moves,char* seient_moves)
 {
 	set_start();
 	demo_on = true;
 	//inicialitzant direccio moviments
-	brac.read_moves("grabacio_brac.txt", instant);
-	seient.read_moves("grabacio_seients.txt", instant);
+	brac.read_moves(brac_moves, instant);
+	seient.read_moves(seient_moves, instant);
+
 	dur_pausa = 0;
 
 	brac.set_desp_origen(0.5, 0.067, 8.93);

@@ -114,7 +114,9 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 	ON_COMMAND(ID_PARTESHURAKAN_FLOOR, &CEntornVGIView::OnHurakanFloor)
 
 
-		END_MESSAGE_MAP()
+	ON_COMMAND(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnCiclosPruebagrabada)
+	ON_UPDATE_COMMAND_UI(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnUpdateCiclosPruebagrabada)
+END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // Construcción o destrucción de CEntornVGIView
@@ -3268,7 +3270,7 @@ void CEntornVGIView::OnCiclosPrueba1()
 
 		if (demo_on) {
 			d1.reset_demo();
-			d1.start_demo();
+			d1.start_demo("brac_moves.txt","seient_moves.txt");
 		}
 		else {
 
@@ -3278,7 +3280,7 @@ void CEntornVGIView::OnCiclosPrueba1()
 			demo_on = true;
 			textura = true;
 			d1.mode = 1;
-			d1.start_demo();
+			d1.start_demo("brac_moves.txt", "seient_moves.txt");
 			anima = true;
 		}
 
@@ -3293,6 +3295,47 @@ void CEntornVGIView::OnCiclosPrueba1()
 
 void CEntornVGIView::OnUpdateCiclosPrueba1(CCmdUI* pCmdUI)
 {
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+	if (demo_on) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+
+
+void CEntornVGIView::OnCiclosPruebagrabada()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	if (objecte == HURAKAN) {
+		//PERSPECTIVA
+
+
+		if (demo_on) {
+			d1.reset_demo();
+			d1.start_demo("grabacio_brac.txt","grabacio_seients.txt");
+		}
+		else {
+
+			//OBJ
+			//objecte = OBJOBJ;	
+
+			demo_on = true;
+			textura = true;
+			d1.mode = 1;
+			d1.start_demo("grabacio_brac.txt", "grabacio_seients.txt");
+			anima = true;
+		}
+
+		//  Modificar R per centrar la Vista a la mida de l'objecte (Perspectiva)
+		//	Canviar l'escala per a centrar la vista (Ortogràfica)
+
+		// Crida a OnPaint() per redibuixar l'escena
+		InvalidateRect(NULL, false);
+	}
+}
+
+
+void CEntornVGIView::OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
 	if (demo_on) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);

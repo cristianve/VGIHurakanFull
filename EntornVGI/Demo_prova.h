@@ -16,7 +16,7 @@ private:
 	bool textura = false;
 	Objeto brac;
 	Objeto seient;
-	
+	 
 public:
 	int mode = 0;
 	double interval = 10; // en ms (no cal canviar, resolucio de l'animaci�(afecta a la velocitat))
@@ -28,6 +28,7 @@ public:
 	double dur_pausa;
 	bool pausa = false;
 	bool demo_on;
+	bool play_grabacio = false;
 	
 	Demo_prova()
 	{
@@ -60,7 +61,7 @@ public:
 	void set_start() {start = std::clock();}
 	clock_t get_start() {return start;}
 
-	void start_demo();
+	void start_demo(char* brac_moves,char*seient_moves);
 	void dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 	void move_step();
 
