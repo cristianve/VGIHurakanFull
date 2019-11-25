@@ -38,11 +38,17 @@ public:
 	CEntornVGIDoc* GetDocument() const;
 
 
-	//Control por teclado 
+	//Control por teclado
+	bool RB_active = false;
 	bool isBrazoClavado = false;
+	bool isBrazoSoltado = true;
+	bool isAsientoSoltado = true;
 	bool isAsientoClavado = false;
 	bool isWaiting = false;
+	bool isnotWaiting = true;
 	bool isGrabando = false;
+	bool isnotGrabando = true;
+	bool istambaleo = false;
 
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
@@ -179,6 +185,7 @@ public:
 	Demo_prova d1;
 	bool demo_on = false;
 	CXBOXController* Player1;
+	
 
 // Operaciones
 public:

@@ -18,6 +18,14 @@ XINPUT_STATE CXBOXController::GetState()
 	return _controllerState;
 }
 
+XINPUT_KEYSTROKE CXBOXController::GetKey()
+{
+	ZeroMemory(&_controllerKeyStroke, sizeof(XINPUT_KEYSTROKE));
+	DWORD *reserved = new DWORD;
+	XInputGetKeystroke(_controllerNum, *reserved, &_controllerKeyStroke);
+	return _controllerKeyStroke;
+}
+
 bool CXBOXController::IsConnected()
 {
 	// Zeroise the state

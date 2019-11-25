@@ -17,10 +17,12 @@ class CXBOXController
 {
 private:
 	XINPUT_STATE _controllerState;
+	XINPUT_KEYSTROKE _controllerKeyStroke;
 	int _controllerNum;
 public:
 	CXBOXController(int playerNumber);
 	XINPUT_STATE GetState();
+	XINPUT_KEYSTROKE GetKey();
 	bool IsConnected();
 	void Vibrate(int leftVal = 0, int rightVal = 0);
 };

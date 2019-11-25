@@ -61,16 +61,10 @@ void Objeto::stepTeclado()
 			freeStep_f(time);
 			break;
 		case ACELERAR_POSITIVO:
-			if(velo_angular < MAXIMA_VELOCIDAD_ACELERACION)
-				acelerar(time, true);
-			else
-				freeStep_f(time);
+			acelerar(time, true);
 			break;
 		case ACELERAR_NEGATIVO:
-			if (velo_angular > -MAXIMA_VELOCIDAD_ACELERACION)
-				acelerar(time, false);
-			else
-				freeStep_f(time);
+			acelerar(time, false);
 			break;
 		case CLAVAR_BRAZO:
 			if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR)*(-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR)*(-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
@@ -209,6 +203,9 @@ void Objeto::read_moves(char* filename,double instant) {
 			case 'L':
 				m->setfreemove(time);
 				break;
+			case 'C':
+				m->setMove_wait(time);
+				break;
 			default:
 				break;
 			}
@@ -258,6 +255,9 @@ void Objeto::freeStep_f(double time)
 
 void Objeto::acelerar(double time, bool isPositivo)
 {
+	if (velo_angular < -V_MAXIMA) {
+		velo_angular = -V_MAXIMA;
+	}
 	if (velo_angular > V_MAXIMA) {
 		velo_angular = V_MAXIMA;
 	}
@@ -341,7 +341,7 @@ void Objeto::setGrabacio(bool grabacio)
 		fprintf(grabacio, "%d\n", numberOfMovements + 1);
 		for (int i = 0; i < numberOfMovements + 1; i++)
 		{
-			if (movements_record[i] != 'A' && movements_record[i] != 'Z')
+			if (movements_record[i] != 'A' && movements_record[i] != 'Z' && movements_record[i] != 'F')
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
 					fprintf(grabacio, "%c%lf", movements_record[i], movements_record_time[i]);					//Si es el ultimo le quita el salto de linea
@@ -353,10 +353,12 @@ void Objeto::setGrabacio(bool grabacio)
 			else
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
-					fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION);					//Si es el ultimo le quita el salto de linea
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4);
+					else fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION-2);					//Si es el ultimo le quita el salto de linea
 				}
 				else {
-					fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION);
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4 );
+					else fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION-2);
 				}
 			}
 		}

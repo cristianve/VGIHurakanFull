@@ -907,75 +907,8 @@ void CEntornVGIView::OnPaint()
 
 //  Actualitzar la barra d'estat de l'aplicació amb els valors R,A,B,PVx,PVy,PVz
 	Barra_Estat();
-
-	//Control mando
-	if (Player1->IsConnected())
-	{
-		XINPUT_STATE state = Player1->GetState();
-
-		//RT
-		float brazo_pos = state.Gamepad.bRightTrigger;
-		float brazo_neg = state.Gamepad.bLeftTrigger;
-
-		if (brazo_pos > 0) {
-			d1.setEstadoBrazo(ACELERAR_POSITIVO);
-		}
-		else if (brazo_neg > 0) {
-			d1.setEstadoBrazo(ACELERAR_NEGATIVO);
-		}
-		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
-		{
-			d1.setEstadoBrazo(FRENAR);
-		}
-		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
-		{
-			if (d1.get_estado_brazo() != CLAVAR_BRAZO) {
-				d1.setEstadoBrazo(CLAVAR_BRAZO);
-			}
-			else {
-				d1.setEstadoBrazo(LIBRE);
-			}
-		}
-		else {
-			d1.setEstadoBrazo(LIBRE);
-		}
-
-		//RB
-		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-		{
-			d1.setEstadoAsientos(ACELERAR_POSITIVO);
-		}
-		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-		{
-			d1.setEstadoAsientos(ACELERAR_NEGATIVO);
-		}
-		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
-		{
-			d1.setEstadoAsientos(FRENAR);
-		}
-		else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
-		{
-			if (d1.get_estado_Asiento() != CLAVAR_ASIENTO) {
-				d1.setEstadoAsientos(CLAVAR_ASIENTO);
-			}
-			else {
-				d1.setEstadoAsientos(LIBRE);
-			}
-		}
-		else {
-			d1.setEstadoAsientos(LIBRE);
-		}
-
-		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
-		{
-			exit(0);
-		}
 	
-
-		
-
-
-	}
+	
 }
 
 
@@ -2627,6 +2560,128 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 		d1.move_step();
 		// Crida a OnPaint() per redibuixar l'escena
 		InvalidateRect(NULL, false);
+		//Control mando
+		if (Player1->IsConnected())
+		{
+			XINPUT_STATE state = Player1->GetState();
+			XINPUT_KEYSTROKE key = Player1->GetKey();
+			bool tecla = false;
+
+			//BOTONES BRAZO
+			//Get moves brazo
+			float brazo_pos = state.Gamepad.bRightTrigger;
+			float brazo_neg = state.Gamepad.bLeftTrigger;
+
+			//Right Trigger--> Acelerar Brazo +
+			if (brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+				d1.setEstadoBrazo(ACELERAR_POSITIVO);
+				tecla = true;
+			}
+			//Left Trigger--> Acelerar Brazo -
+			if (brazo_neg > XINPUT_GAMEPAD_TRIGGER_THRESHOLD && !tecla) {
+				d1.setEstadoBrazo(ACELERAR_NEGATIVO);
+				tecla = true;
+			}
+			
+			if ((key.VirtualKey == VK_PAD_START)&&!tecla) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isWaiting) {
+						isWaiting = true;
+						d1.setEstadoAsientos(PAUSAR);
+						d1.setEstadoBrazo(PAUSAR);
+					}
+					else {
+						isWaiting = false;
+					}
+				}
+				
+				tecla = true;
+			}
+
+			if ((key.VirtualKey == VK_PAD_A) && !tecla) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isBrazoClavado) {
+						isBrazoClavado = true;
+						d1.setEstadoBrazo(CLAVAR_BRAZO);
+					}
+					else {
+						isBrazoClavado = false;
+					}
+				}
+
+				tecla = true;
+			}
+
+			if ((key.VirtualKey == VK_PAD_Y) && !tecla) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isAsientoClavado) {
+						isAsientoClavado = true;
+						d1.setEstadoAsientos(CLAVAR_ASIENTO);
+					}
+					else {
+						isAsientoClavado = false;
+					}
+				}
+
+				tecla = true;
+			}
+			
+			if ((key.VirtualKey == VK_PAD_BACK) && !tecla) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isGrabando) {
+						isGrabando = true;
+						d1.initGrabacio();
+					}
+					else {
+						isGrabando = false;
+						d1.stopGrabacio();
+					}
+				}
+
+				tecla = true;
+			}
+
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) && !tecla) {
+				d1.setEstadoAsientos(GIRAR_POSITIVO);
+				tecla = true;
+			}
+
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_B) && !tecla) {
+				d1.setEstadoBrazo(FRENAR);
+				tecla = true;
+			}
+
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_X) && !tecla) {
+				d1.setEstadoAsientos(FRENAR);
+				tecla = true;
+			}
+
+			if ((key.VirtualKey == VK_PAD_DPAD_UP) && !tecla) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!istambaleo) {
+						istambaleo = true;
+						d1.setEstadoAsientos(TAMBALEAR);
+					}
+					else {
+						istambaleo = false;
+					}
+				}
+
+				tecla = true;
+			}
+			
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) && !tecla) {
+				d1.setEstadoAsientos(GIRAR_NEGATIVO);
+				tecla = true;
+			}
+
+			if (!tecla && !isWaiting && !istambaleo) {
+				if (!isAsientoClavado)d1.setEstadoAsientos(LIBRE);
+				if(!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
+			}
+			
+		}
+		
 		}
 	else if (satelit)	{	// OPCIÓ SATÈLIT: Increment OPV segons moviments mouse.
 		//OPV.R = OPV.R + m_EsfeIncEAvall.R;
@@ -3337,7 +3392,7 @@ void CEntornVGIView::OnCiclosPrueba1()
 		//PERSPECTIVA
 		
 
-		if (demo_on) {
+		if (d1.demo_on) {
 			d1.reset_demo();
 			d1.start_demo("brac_moves.txt","seient_moves.txt");
 		}
@@ -3346,7 +3401,7 @@ void CEntornVGIView::OnCiclosPrueba1()
 			//OBJ
 			//objecte = OBJOBJ;	
 
-			demo_on = true;
+			d1.demo_on = true;
 			textura = true;
 			d1.mode = 1;
 			d1.start_demo("brac_moves.txt", "seient_moves.txt");
@@ -3365,7 +3420,7 @@ void CEntornVGIView::OnCiclosPrueba1()
 void CEntornVGIView::OnUpdateCiclosPrueba1(CCmdUI* pCmdUI)
 {
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (demo_on) pCmdUI->SetCheck(1);
+	if (d1.demo_on) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
 
@@ -3377,7 +3432,7 @@ void CEntornVGIView::OnCiclosPruebagrabada()
 		//PERSPECTIVA
 
 
-		if (demo_on) {
+		if (d1.demo_on) {
 			d1.reset_demo();
 			d1.start_demo("grabacio_brac.txt","grabacio_seients.txt");
 		}
@@ -3386,7 +3441,7 @@ void CEntornVGIView::OnCiclosPruebagrabada()
 			//OBJ
 			//objecte = OBJOBJ;	
 
-			demo_on = true;
+			d1.demo_on = true;
 			textura = true;
 			d1.mode = 1;
 			d1.start_demo("grabacio_brac.txt", "grabacio_seients.txt");
@@ -3406,6 +3461,6 @@ void CEntornVGIView::OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI)
 {
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (demo_on) pCmdUI->SetCheck(1);
+	if (d1.demo_on) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
