@@ -93,7 +93,9 @@ public:
 	//Velo
 	void setMoveV(double v_s) { v_rotacional = v_s; };
 	double getMoveV() { return v_rotacional; };
-	
+	void setMoveVMax(double v_max) { v_max_rotacional = v_max; };
+	double getMoveVMax() { return v_max_rotacional; };
+
 	//Type
 	int get_type() { return type; };
 

@@ -12,7 +12,7 @@
 #define INPUT_DEADZONE_R 2
 
 
-#define V_MAXIMA 45
+#define V_MAXIMA 100
 #define CONST_TEMPS 1.66
 
 //--------------- VGI: Tipus de Projecció

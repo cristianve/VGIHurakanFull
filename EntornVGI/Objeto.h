@@ -15,7 +15,7 @@
 #define GIRAR_NEGATIVO 3
 #define TAMBALEAR 4
 
-#define HURAKAN_ACELERACION 10
+#define HURAKAN_ACELERACION 30
 #define HURAKAN_FRENO 20
 
 #define MAXIMA_VELOCIDAD_CLAVAR 0.5
@@ -57,10 +57,10 @@ private:
 	//CONTROL FREE MOVE
 	bool isBrazo = false;
 	bool isLibre = true;
-	float peso = 200;
+	float peso = 1000;
 	double aceleracion = 0;
 	double lastInstant = 0;
-
+	double fricc = 0;
 
 	//CONTROL TECLAT
 	int estado = PAUSAR;
@@ -113,6 +113,7 @@ public:
 	//CONTROL FREE MOVE
 	void set_peso(double peso) { this->peso = peso; };
 	void set_angle_free_move(double angle) { angle_free_move = angle; }
+	void set_fricc(double fact) { fricc = fact; };
 	void freeStep_f(double time);
 	void freeStep_b(double time);
 	

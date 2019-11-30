@@ -138,7 +138,7 @@ void Objeto::tambaleo(double time)
 {
 	isTambaleoTimeSet = true;
 	double tambaleoInstant = instant - startTambaleoTime;
-	if(tambaleoInstant <= 2)
+	if(tambaleoInstant <= 0.7)
 	{ 
 		acelerar(time, true);
 	}
@@ -168,6 +168,7 @@ void Objeto::read_moves(char* filename,double instant) {
 	int n_llegits;
 	double time = 0.0;
 	double acc = 0.0;
+	double vmax = 0.0;
 	duracio = 0;
 	this->instant = instant;
 
@@ -191,13 +192,13 @@ void Objeto::read_moves(char* filename,double instant) {
 				m->set_freno(acc);
 				break;
 			case 'A':
-				n_llegits = fscanf(movements_record, " %lf", &acc);
-				m->setMove_acc(1, V_MAXIMA,time);
+				n_llegits = fscanf(movements_record, " %lf %lf", &acc,&vmax);
+				m->setMove_acc(1, vmax,time);
 				m->set_acc(acc);
 				break;
 			case 'Z':
-				n_llegits = fscanf(movements_record, " %lf", &acc);
-				m->setMove_acc(-1, V_MAXIMA, time);
+				n_llegits = fscanf(movements_record, " %lf %lf", &acc, &vmax);
+				m->setMove_acc(-1, vmax, time);
 				m->set_acc(acc);
 				break;
 			case 'L':
@@ -233,19 +234,27 @@ void Objeto::freeStep_f(double time)
 	}
 	
 
-	float rozamiento = -0.5 * velo_angular;
+	float rozamiento = -fricc * velo_angular;
 	actualAngle = actualAngle * 3.14 / 180;
-	float fuerzaPorPeso = peso * sin(actualAngle);
+	float fuerzaPorPeso = (peso*9.82) * sin(actualAngle);
 
 	if (!izq) fuerzaPorPeso *= -1;
 
 
 	float fuerzaTotal = fuerzaPorPeso + rozamiento;
-	aceleracion = (fuerzaTotal / (peso*0.15))*10;
+	aceleracion = (fuerzaTotal / peso)*15;
 
-
+	if (abs(aceleracion) > 80) {
+		if (aceleracion > 0) {
+			aceleracion = 80;
+		}
+		else {
+			aceleracion = -80;
+		}
+	}
 	velo_angular += (aceleracion)*time;
-	
+	if (velo_angular > V_MAXIMA) velo_angular = V_MAXIMA;
+
 	angle.x = angle.x + (velo_angular * time);
 
 	if (angle.x >= 360) {
@@ -296,18 +305,26 @@ void Objeto::freeStep_b(double time)
 	}
 
 
-	float rozamiento = -0.5 * velo_angular;
+	float rozamiento = -fricc * velo_angular;
 	actualAngle = actualAngle * 3.14 / 180;
-	float fuerzaPorPeso = peso * sin(actualAngle);
+	float fuerzaPorPeso = (peso*9.82) * sin(actualAngle);
 
 	if (!izq) fuerzaPorPeso *= -1;
 
 
 	float fuerzaTotal = fuerzaPorPeso + rozamiento;
-	aceleracion = (fuerzaTotal / (peso * 0.15)) * 10;
-
+	aceleracion = (fuerzaTotal / peso)*15;
+	if (abs(aceleracion) > 80) {
+		if (aceleracion > 0) {
+			aceleracion = 80;
+		}
+		else {
+			aceleracion = -80;
+		}
+	}
 
 	velo_angular += (aceleracion)*time;
+	if (velo_angular > V_MAXIMA) velo_angular = V_MAXIMA;
 
 	angle.x = angle.x - (velo_angular * time);
 
@@ -353,12 +370,12 @@ void Objeto::setGrabacio(bool grabacio)
 			else
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
-					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4);
-					else fprintf(grabacio, "%c%lf %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION-2);					//Si es el ultimo le quita el salto de linea
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4,V_MAXIMA);
+					else fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA);					//Si es el ultimo le quita el salto de linea
 				}
 				else {
-					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4 );
-					else fprintf(grabacio, "%c%lf %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION-2);
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4,V_MAXIMA );
+					else fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA);
 				}
 			}
 		}
