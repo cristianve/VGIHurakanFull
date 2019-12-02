@@ -336,6 +336,8 @@ BEGIN
             MENUITEM "Exterior",                    ID_CAMARAS_EXTERIOR
             MENUITEM "Camara libre",                ID_CAMARAS_CAMARALIBRE
             MENUITEM "Otros",                       ID_CAMARAS_OTROS
+            MENUITEM "Camara1",                     ID_CAMARAS_CAMARA1
+            MENUITEM "Camara2",                     ID_CAMARAS_CAMARA2
         END
         MENUITEM "Texturas",                    ID_HURAKAN_TEXTURAS
     END

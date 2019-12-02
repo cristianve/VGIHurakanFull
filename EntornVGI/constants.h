@@ -22,6 +22,9 @@
 #define PERSPECT 'P'
 #define IMA_PICK 3
 #define PASSEIG_V 4
+#define CAMARA1 'C'
+#define CAMARA2 'c'
+#define PERSONA1 'V'
 
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
@@ -44,6 +47,7 @@
 #define GRASS 'G'
 #define OTHERS 'O'
 #define TEMPLE 'T'
+#define PERSONA 'P'
 
 #define SKYDOME 'S'
 
@@ -69,6 +73,7 @@
 #define OBJECTETEMPLE 13
 #define OBJECTEOTHERS 14
 #define OBJECTEWALLS 15
+#define OBJECTEPERSONA 16
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;

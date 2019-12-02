@@ -299,6 +299,12 @@ public:
 	afx_msg void OnUpdateHurakanFloor(CCmdUI* pCmdUI);
 	afx_msg void OnCiclosPruebagrabada();
 	afx_msg void OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasCamara1();
+	afx_msg void OnUpdateCamarasCamara1(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasCamara2();
+	afx_msg void OnUpdateCamarasCamara2(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasPersona();
+	afx_msg void OnUpdateCamarasPersona(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp
