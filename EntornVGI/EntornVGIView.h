@@ -8,7 +8,7 @@
 #pragma once
 
 #include "MainFrm.h"
-
+#include "CXBOXController.h"
 // Entorn VGI: Constants de l'aplicació entorn VGI
 #include "constants.h"
 #include "Demo_prova.h"
@@ -36,6 +36,19 @@ protected: // Crear sólo a partir de serialización
 // Atributos
 public:
 	CEntornVGIDoc* GetDocument() const;
+
+
+	//Control por teclado
+	bool RB_active = false;
+	bool isBrazoClavado = false;
+	bool isBrazoSoltado = true;
+	bool isAsientoSoltado = true;
+	bool isAsientoClavado = false;
+	bool isWaiting = false;
+	bool isnotWaiting = true;
+	bool isGrabando = false;
+	bool isnotGrabando = true;
+	bool istambaleo = false;
 
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
@@ -171,6 +184,8 @@ public:
 //-------------- Entorn VGI: Fi De Variables globals de CEntornVGIView
 	Demo_prova d1;
 	bool demo_on = false;
+	CXBOXController* Player1;
+	
 
 // Operaciones
 public:
@@ -261,128 +276,13 @@ public:
 	afx_msg void OnArxiuObrirFractal();
 	afx_msg void OnArxiuObrirFitxerObj();
 	afx_msg void OnArxiuObrirFitxer3ds();
-	afx_msg void OnVistaMobil();
-	afx_msg void OnUpdateVistaMobil(CCmdUI *pCmdUI);
-	afx_msg void OnVistaZoom();
-	afx_msg void OnUpdateVistaZoom(CCmdUI *pCmdUI);
-	afx_msg void OnVistaPolarsX();
-	afx_msg void OnUpdateVistaPolarsX(CCmdUI *pCmdUI);
-	afx_msg void OnVistaPolarsY();
-	afx_msg void OnUpdateVistaPolarsY(CCmdUI *pCmdUI);
-	afx_msg void OnVistaPolarsZ();
-	afx_msg void OnUpdateVistaPolarsZ(CCmdUI *pCmdUI);
-	afx_msg void OnVistaPan();
-	afx_msg void OnUpdateVistaPan(CCmdUI *pCmdUI);
-	afx_msg void OnVistaOrigenpan();
-	afx_msg void OnVistaNavega();
-	afx_msg void OnUpdateVistaNavega(CCmdUI *pCmdUI);
-	afx_msg void OnVistaOrigennavega();
-	afx_msg void OnVistaEixos();
-	afx_msg void OnUpdateVistaEixos(CCmdUI *pCmdUI);
-	afx_msg void OnProjeccioPerspectiva();
-	afx_msg void OnUpdateProjeccioPerspectiva(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteCub();
-	afx_msg void OnUpdateObjecteCub(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteEsfera();
-	afx_msg void OnUpdateObjecteEsfera(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteTetera();
-	afx_msg void OnUpdateObjecteTetera(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteTruck();
-	afx_msg void OnUpdateObjecteTruck(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaTraslacio();
-	afx_msg void OnUpdateTransformaTraslacio(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaOrigentraslacio();
-	afx_msg void OnTransformaRotacio();
-	afx_msg void OnUpdateTransformaRotacio(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaOrigenrotacio();
-	afx_msg void OnTransformaEscalat();
-	afx_msg void OnUpdateTransformaEscalat(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaOrigenescalat();
-	afx_msg void OnTransformaMobilx();
-	afx_msg void OnUpdateTransformaMobilx(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaMobily();
-	afx_msg void OnUpdateTransformaMobily(CCmdUI *pCmdUI);
-	afx_msg void OnTransformaMobilz();
-	afx_msg void OnUpdateTransformaMobilz(CCmdUI *pCmdUI);
-	afx_msg void OnOcultacionsTestvis();
-	afx_msg void OnUpdateOcultacionsTestvis(CCmdUI *pCmdUI);
-	afx_msg void OnOcultacionsZbuffer();
-	afx_msg void OnUpdateOcultacionsZbuffer(CCmdUI *pCmdUI);
-	afx_msg void OnOcultacionsBackline();
-	afx_msg void OnUpdateOcultacionsBackline(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioLlumfixe();
-	afx_msg void OnUpdateIluminacioLlumfixe(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioFilferros();
-	afx_msg void OnUpdateIluminacioFilferros(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioPlana();
-	afx_msg void OnUpdateIluminacioPlana(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioGouraud();
-	afx_msg void OnUpdateIluminacioGouraud(CCmdUI *pCmdUI);
-	afx_msg void OnMaterialEmissio();
-	afx_msg void OnUpdateMaterialEmissio(CCmdUI *pCmdUI);
-	afx_msg void OnMaterialAmbient();
-	afx_msg void OnUpdateMaterialAmbient(CCmdUI *pCmdUI);
-	afx_msg void OnMaterialDifusa();
-	afx_msg void OnUpdateMaterialDifusa(CCmdUI *pCmdUI);
-	afx_msg void OnMaterialEspecular();
-	afx_msg void OnUpdateMaterialEspecular(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioTextures();
-	afx_msg void OnUpdateIluminacioTextures(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioTexturaFitxerimatge();
-	afx_msg void OnUpdateIluminacioTexturaFitxerimatge(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlumambient();
-	afx_msg void OnUpdateLlumsLlumambient(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlum0();
-	afx_msg void OnUpdateLlumsLlum0(CCmdUI *pCmdUI);
-	afx_msg void OnShadersSense();
-	afx_msg void OnUpdateShadersSense(CCmdUI *pCmdUI);
-	afx_msg void OnShadersGouraud();
-	afx_msg void OnUpdateShadersGouraud(CCmdUI *pCmdUI);
-	afx_msg void OnShadersPhong();
-	afx_msg void OnUpdateShadersPhong(CCmdUI *pCmdUI);
-	afx_msg void OnVistaSatelit();
-	afx_msg void OnUpdateVistaSatelit(CCmdUI *pCmdUI);
-	afx_msg void OnVistaFullscreen();
-	afx_msg void OnUpdateVistaFullscreen(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteCubRGB();
-	afx_msg void OnUpdateObjecteCubRGB(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteTie();
-	afx_msg void OnUpdateObjecteTie(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacioPunts();
-	afx_msg void OnUpdateIluminacioPunts(CCmdUI *pCmdUI);
-	afx_msg void OnShaderLoadFiles();
-	afx_msg void OnUpdateShaderLoadFiles(CCmdUI *pCmdUI);
-	afx_msg void OnOcultacionsFrontFaces();
-	afx_msg void OnUpdateOcultacionsFrontFaces(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlum1();
-	afx_msg void OnUpdateLlumsLlum1(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlum2();
-	afx_msg void OnUpdateLlumsLlum2(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlum3();
-	afx_msg void OnUpdateLlumsLlum3(CCmdUI *pCmdUI);
-	afx_msg void OnLlumsLlum4();
-	afx_msg void OnUpdateLlumsLlum4(CCmdUI *pCmdUI);
-	afx_msg void OnObjeteCorbaBezier();
-	afx_msg void OnUpdateObjeteCorbaBezier(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteCorbaLemniscata();
-	afx_msg void OnUpdateObjecteCorbaLemniscata(CCmdUI *pCmdUI);
-	afx_msg void OnObjecteCorbaBSpline();
-	afx_msg void OnUpdateObjecteCorbaBSpline(CCmdUI *pCmdUI);
-	afx_msg void OnObjectePuntsControl();
-	afx_msg void OnUpdateObjectePuntsControl(CCmdUI *pCmdUI);
-	afx_msg void OnVistaGridXY();
-	afx_msg void OnUpdateVistaGridXY(CCmdUI *pCmdUI);
-	afx_msg void OnVistaGridXZ();
-	afx_msg void OnUpdateVistaGridXZ(CCmdUI *pCmdUI);
-	afx_msg void OnVistaGridYZ();
-	afx_msg void OnUpdateVistaGridYZ(CCmdUI *pCmdUI);
-	afx_msg void OnVistaGridXYZ();
-	afx_msg void OnUpdateVistaGridXYZ(CCmdUI *pCmdUI);
-	afx_msg void OnIluminacio2Sides();
-	afx_msg void OnUpdateIluminacio2Sides(CCmdUI *pCmdUI);
+	
 	//MODIFIED
-	afx_msg void OnPersonas();
-	afx_msg void OnUpdatePersonas(CCmdUI* pCmdUI);
+
+	afx_msg void OnShadersSense();
+	afx_msg void OnUpdateShadersSense(CCmdUI* pCmdUI);
+	afx_msg void OnShadersGouraud();
+	afx_msg void OnUpdateShadersGouraud(CCmdUI* pCmdUI);
 	afx_msg void OnHurakan();
 	afx_msg void OnUpdateHurakan(CCmdUI* pCmdUI);
 	afx_msg void OnHurakanBrazos();
@@ -393,14 +293,12 @@ public:
 	afx_msg void OnUpdateHurakanAsientos(CCmdUI* pCmdUI);
 	afx_msg void OnCiclosPrueba1();
 	afx_msg void OnUpdateCiclosPrueba1(CCmdUI* pCmdUI);
-	afx_msg void OnProjecci32881();
-	afx_msg void OnUpdateProjecci32881(CCmdUI* pCmdUI);
-	afx_msg void OnCamara1();
-	afx_msg void OnUpdateCamara1(CCmdUI* pCmdUI);
-	afx_msg void OnCamara2();
-	afx_msg void OnUpdateCamara2(CCmdUI* pCmdUI);
-	afx_msg void OnPersona();
-	afx_msg void OnUpdatePersona(CCmdUI* pCmdUI);
+	afx_msg void OnHurakanSkydome();
+	afx_msg void OnUpdateHurakanSkydome(CCmdUI* pCmdUI);
+	afx_msg void OnHurakanFloor();
+	afx_msg void OnUpdateHurakanFloor(CCmdUI* pCmdUI);
+	afx_msg void OnCiclosPruebagrabada();
+	afx_msg void OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp

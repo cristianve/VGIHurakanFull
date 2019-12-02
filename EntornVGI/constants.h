@@ -8,6 +8,11 @@
 #ifndef CONST_H
 #define CONST_H
 
+#define INPUT_DEADZONE_L 100
+#define INPUT_DEADZONE_R 2
+
+
+#define V_MAXIMA 90
 #define CONST_TEMPS 1.66
 
 //--------------- VGI: Tipus de Projecció
@@ -15,9 +20,6 @@
 #define AXONOM 'A'
 #define ORTO 'O'
 #define PERSPECT 'P'
-#define CAMARA1 'C'
-#define CAMARA2 'c'
-#define PERSONA1 'V'
 #define IMA_PICK 3
 #define PASSEIG_V 4
 
@@ -28,29 +30,22 @@
 #define POLARX 'X'
 
 //-------------- VGI: Tipus d'Objectes 
-#define CAMIO 'm'
-#define CILINDRE 'y'
-#define CUB 'c'
-#define CUB_RGB 'C'
-#define C_BEZIER '2'
-#define C_LEMNISCATA 'K'
-#define C_LEMNISCATA2D 'W'
-#define C_BSPLINE 'q'
-#define ESFERA 'e'
+
 #define O_FRACTAL 'f'
-#define HIDROAVIO 'H'
-#define ICOSAEDRE 'i'
-#define ROBOT 'u'
-#define TETERA 't'
-#define TIE 'I'
-#define TORUS 'o'
-#define TRUCK 'T'
-#define VAIXELL 'v'
+
 #define OBJ3DS '3'		// Objecte format 3DS
 #define OBJOBJ '4'		// Objecte format OBJ
-#define PERSONA 'P'
 #define HURAKAN 'h'
 #define BRAZO 'B'
+#define SEIENTS 's'
+#define BASE 'b'
+#define FLOOR 'F'
+#define WALLS 'W'
+#define GRASS 'G'
+#define OTHERS 'O'
+#define TEMPLE 'T'
+
+#define SKYDOME 'S'
 
 //-------------- VGI: Tipus d'Iluminacio
 #define PUNTS 'P'
@@ -68,7 +63,12 @@
 #define OBJECTEBRAC 7
 #define OBJECTEBASE 8
 #define OBJECTESEIENT 9
-#define OBJECTEPERSONA 10
+#define OBJECTESKYDOME 10
+#define OBJECTEFLOOR 11
+#define OBJECTEGRASS 12
+#define OBJECTETEMPLE 13
+#define OBJECTEOTHERS 14
+#define OBJECTEWALLS 15
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;
@@ -82,7 +82,7 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 10
+#define NUM_MAX_TEXTURES 20
 
 // Tipus de textures
 #define CAP ' '
