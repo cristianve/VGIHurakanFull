@@ -10,43 +10,54 @@ void Objeto::reset_moves() {
 
 void Objeto::step() {
 	int d;
-	if (set_velo) {
-		move_act->setMoveV(velo_angular);
-		set_velo = false;
-	}
-	move_act->set_instant(instant);
 	double time = (instant - lastInstant);
-	if (move_act->is_libre && !move_act->is_finished() && move_act->get_type() != 3)
-	{
-		if (move_act->getMoveDir() == 1)freeStep_f(time);
-		else if (move_act->getMoveDir() == -1)freeStep_b(time);
-		else freeStep_f(time);
-	}
-	else
-	{
-		//si el moviment ha acabat i hi ha algun a la cua
-		if (move_act->is_finished() && !moves.empty()) {
+	//si el moviment ha acabat i hi ha algun a la cua
+	if (instant>=move_act->t_fi && !moves.empty()) {
 			
-			velo_angular = move_act->getMoveV();
-			d = move_act->getMoveDir();
-			//s'agafa el nou moviment de la cua
-			moves.pop_mov();
-			if (!moves.empty()) {
-				move_act = moves.top();
-				move_act->set_t_ini(instant);
-				//s'assigna la velocitat angular del moviment anterior al nou moviment
-				move_act->setMoveV(velo_angular);
-				if (move_act->get_type() != 0 && move_act->get_type() != 1) move_act->setMoveDir(d);
-				//Es treu el moviment realitzat de la cua de moviments
+		//s'agafa el nou moviment de la cua
+		moves.pop_mov();
+		if (!moves.empty()) {
+			move_act = moves.top();
+			move_act->t_ini = instant;
+			move_act->t_fi = instant + move_act->dur;
 				
-			}
-		}
-		//si el moviment no ha acabat pero el instant actual es major al seu temps d'inici
-		else if (!move_act->is_finished() && move_act->get_t_ini() <= instant) {
-				//avancem movimen
-			move_act->move_step_rot(angle,time);
 		}
 	}
+	//si el moviment no ha acabat pero el instant actual es major al seu temps d'inici
+	else if (instant<move_act->t_fi && move_act->t_ini <= instant) {
+			//avancem movimen
+		switch (move_act->type)
+		{
+		case 'F':
+			frenar(time,move_act->acc);
+			break;
+		case 'L':
+			freeStep_f(time);
+			break;
+		case 'A':
+			acelerar(time, true,move_act->vmax,move_act->acc);
+			break;
+		case 'Z':
+			acelerar(time, false,move_act->vmax,move_act->acc);
+			break;
+		case 'C':
+			if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR) * (-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR) * (-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
+			{
+				frenar(time,HURAKAN_FRENO);
+			}
+			else
+			{
+				velo_angular = 0;
+				aceleracion = 0;
+			}
+			break;
+		case 'W':
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 
 void Objeto::stepTeclado()
@@ -55,21 +66,21 @@ void Objeto::stepTeclado()
 	switch (estado)
 	{
 		case FRENAR:
-			frenar(time);
+			frenar(time,HURAKAN_FRENO);
 			break;
 		case LIBRE:
 			freeStep_f(time);
 			break;
 		case ACELERAR_POSITIVO:
-			acelerar(time, true);
+			acelerar(time, true,V_MAXIMA,HURAKAN_ACELERACION);
 			break;
 		case ACELERAR_NEGATIVO:
-			acelerar(time, false);
+			acelerar(time, false,V_MAXIMA,HURAKAN_ACELERACION);
 			break;
 		case CLAVAR_BRAZO:
 			if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR)*(-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR)*(-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
 			{
-				frenar(time);
+				frenar(time,HURAKAN_FRENO);
 			}
 			else
 			{
@@ -100,7 +111,7 @@ void Objeto::stepAsientoTeclado()
 		isTambaleoTimeSet = false;
 		if ((velo_angular > MAXIMA_VELOCIDAD_CLAVAR) || (velo_angular < (MAXIMA_VELOCIDAD_CLAVAR) * (-1)) || aceleracion > MAXIMA_ACELERACION_CLAVAR || aceleracion < (MAXIMA_ACELERACION_CLAVAR) * (-1)) //Debe de estar en el rango de aceleracion y velocidad para clavar
 		{
-			frenar(time);
+			frenar(time,HURAKAN_FRENO);
 		}
 		else
 		{
@@ -114,11 +125,11 @@ void Objeto::stepAsientoTeclado()
 		break;
 	case GIRAR_POSITIVO:
 		isTambaleoTimeSet = false;
-		acelerar(time, true);
+		acelerar(time, true,V_MAXIMA,HURAKAN_ACELERACION);
 		break;
 	case GIRAR_NEGATIVO:
 		isTambaleoTimeSet = false;
-		acelerar(time, false);
+		acelerar(time, false,V_MAXIMA,HURAKAN_ACELERACION);
 		break;
 	case TAMBALEAR:
 		if(!isTambaleoTimeSet)
@@ -140,7 +151,7 @@ void Objeto::tambaleo(double time)
 	double tambaleoInstant = instant - startTambaleoTime;
 	if(tambaleoInstant <= 0.7)
 	{ 
-		acelerar(time, true);
+		acelerar(time, true,V_MAXIMA,HURAKAN_ACELERACION);
 	}
 	else
 	{
@@ -150,14 +161,11 @@ void Objeto::tambaleo(double time)
 
 void Objeto::add_move(Move* m) {
 	//actualitza duracio
-	duracio += m->getMoveDur();
+	duracio += m->dur;
 	//afegeix a la cua de moviments
 	moves.push_mov(m);
 	//actualitza l'actual i els seus par�metres.
 	move_act = moves.top();
-	direc = move_act->getMoveDir();
-	accel_dir = move_act->getMoveAccDir();
-	velo_angular = move_act->getMoveV();
 }
 
 void Objeto::read_moves(char* filename,double instant) {
@@ -184,28 +192,36 @@ void Objeto::read_moves(char* filename,double instant) {
 			switch (type)
 			{
 			case 'W':
-				m->setMove_wait(time);
+				m->type = type;
+				m->dur = time;
 				break;
 			case 'F':
 				n_llegits = fscanf(movements_record, " %lf", &acc);
-				m->setMove_freno(moves.top()->getMoveDir(),time);
-				m->set_freno(acc);
+				m->type=type;
+				m->dur = time;
+				m->acc = acc;
 				break;
 			case 'A':
 				n_llegits = fscanf(movements_record, " %lf %lf", &acc,&vmax);
-				m->setMove_acc(1, vmax,time);
-				m->set_acc(acc);
+				m->type = type;
+				m->dur = time;
+				m->acc = acc;
+				m->vmax = vmax;
 				break;
 			case 'Z':
 				n_llegits = fscanf(movements_record, " %lf %lf", &acc, &vmax);
-				m->setMove_acc(-1, vmax, time);
-				m->set_acc(acc);
+				m->acc = acc;
+				m->type = type;
+				m->vmax = vmax;
+				m->dur = time;
 				break;
 			case 'L':
-				m->setfreemove(time);
+				m->type = type;
+				m->dur = time;
 				break;
 			case 'C':
-				m->setMove_wait(time);
+				m->type = type;
+				m->dur = time;
 				break;
 			default:
 				break;
@@ -214,7 +230,8 @@ void Objeto::read_moves(char* filename,double instant) {
 			add_move(m);
 
 		}
-		moves.top()->set_t_ini(instant);
+		moves.top()->t_ini = instant;
+		moves.top()->t_fi = instant + moves.top()->dur;
 		fclose(movements_record);
 	}
 
@@ -244,16 +261,17 @@ void Objeto::freeStep_f(double time)
 	float fuerzaTotal = fuerzaPorPeso + rozamiento;
 	aceleracion = (fuerzaTotal / peso)*15;
 
-	if (abs(aceleracion) > 80) {
+	if (abs(aceleracion) > 90) {
 		if (aceleracion > 0) {
-			aceleracion = 80;
+			aceleracion = 90;
 		}
 		else {
-			aceleracion = -80;
+			aceleracion = -90;
 		}
 	}
 	velo_angular += (aceleracion)*time;
 	if (velo_angular > V_MAXIMA) velo_angular = V_MAXIMA;
+	if (velo_angular < -V_MAXIMA)velo_angular = -V_MAXIMA;
 
 	angle.x = angle.x + (velo_angular * time);
 
@@ -262,16 +280,16 @@ void Objeto::freeStep_f(double time)
 	}
 }
 
-void Objeto::acelerar(double time, bool isPositivo)
+void Objeto::acelerar(double time, bool isPositivo,double vmax,double accel)
 {
-	if (velo_angular < -V_MAXIMA) {
-		velo_angular = -V_MAXIMA;
+	if (velo_angular < -vmax) {
+		velo_angular = -vmax;
 	}
-	if (velo_angular > V_MAXIMA) {
-		velo_angular = V_MAXIMA;
+	if (velo_angular > vmax) {
+		velo_angular = vmax;
 	}
 	else {
-		aceleracion = HURAKAN_ACELERACION;
+		aceleracion = accel;
 		if (!isPositivo)
 			aceleracion *= (-1);
 		velo_angular += aceleracion * time;
@@ -279,16 +297,16 @@ void Objeto::acelerar(double time, bool isPositivo)
 	angle.x = angle.x + (velo_angular * time);
 }
 
-void Objeto::frenar(double time)
+void Objeto::frenar(double time,double freno)
 {
 	if (velo_angular > 0)
 	{
-		velo_angular -= HURAKAN_FRENO * time;
+		velo_angular -= freno * time;
 		if (velo_angular < 0) velo_angular = 0;
 	}
 	else
 	{
-		velo_angular += HURAKAN_FRENO * time;
+		velo_angular += freno * time;
 		if (velo_angular > 0) velo_angular = 0;
 	}
 	angle.x = angle.x + (velo_angular * time);
@@ -314,18 +332,18 @@ void Objeto::freeStep_b(double time)
 
 	float fuerzaTotal = fuerzaPorPeso + rozamiento;
 	aceleracion = (fuerzaTotal / peso)*15;
-	if (abs(aceleracion) > 80) {
+	if (abs(aceleracion) > 90) {
 		if (aceleracion > 0) {
-			aceleracion = 80;
+			aceleracion = 90;
 		}
 		else {
-			aceleracion = -80;
+			aceleracion = -90;
 		}
 	}
 
 	velo_angular += (aceleracion)*time;
 	if (velo_angular > V_MAXIMA) velo_angular = V_MAXIMA;
-
+	if (velo_angular < -V_MAXIMA)velo_angular = -V_MAXIMA;
 	angle.x = angle.x - (velo_angular * time);
 
 	if (angle.x <= -360) {
@@ -370,12 +388,12 @@ void Objeto::setGrabacio(bool grabacio)
 			else
 			{
 				if (i + 1 == NUM_OF_MOVEMENTS) {
-					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4,V_MAXIMA);
-					else fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA);					//Si es el ultimo le quita el salto de linea
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_FRENO,V_MAXIMA-2);
+					else fprintf(grabacio, "%c%lf %d %d", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA-2);					//Si es el ultimo le quita el salto de linea
 				}
 				else {
-					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_FRENO-4,V_MAXIMA );
-					else fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA);
+					if (movements_record[i] == 'F')fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_FRENO,V_MAXIMA-2);
+					else fprintf(grabacio, "%c%lf %d %d\n", movements_record[i], movements_record_time[i], HURAKAN_ACELERACION,V_MAXIMA-2);
 				}
 			}
 		}

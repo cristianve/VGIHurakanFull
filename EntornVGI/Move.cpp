@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Move.h"
-
+/*
 void Move::setMove_acc(int dir,  double vmax, double dur) {
 	v_rotacional = 0;
 	if (dir == 1)type = 1;
@@ -46,9 +46,8 @@ void Move::move_step_rot(coord &angle_obj,double time) {
 		}
 		else if (rot_acc == 1) {
 			//gas
-			if (abs(v_rotacional) > v_max_rotacional) {
-				if (v_rotacional < 0)v_rotacional = -v_max_rotacional;
-				else v_rotacional = v_max_rotacional;
+			if (v_rotacional > v_max_rotacional) {
+				v_rotacional = v_max_rotacional;
 			}
 			else {
 				v_rotacional = v_rotacional + acc_angular_plus*time;
@@ -69,3 +68,4 @@ void Move::move_step_rot(coord &angle_obj,double time) {
 		}
 	}
 }
+*/

@@ -1,0 +1,26 @@
+Testing botones mando:
+-Si se esta en pausa:
+	- No se puede Mover ni Brazo ni Asiento
+	- No se puede Clavar ni Brazo ni Asiento
+	- No se puede Frenar ni Brazo ni Asiento
+	- No se ejecuta el movimiento libre
+-Si se clava el brazo:
+	- No se puede Mover el brazo
+	- No se puede Frenar el brazo
+	- No se ejecuta el movimiento libre
+-Si se clava el asiento:
+	- No se puede Mover el asiento
+	- No se puede Frenar el asiento
+	- No se puede tambalear el asiento
+	- No se ejecuta el movimiento libre
+-Si se pulsa una tecla del brazo:
+	- No se tienen en cuenta mas teclas del brazo
+	- No se ejecuta el movimiento libre
+-Si se pulsa una tecla del asiento:
+	- No se tienen en cuenta mas teclas del asiento
+	- No se ejecuta el movimiento libre
+-Si se tambalean los asientos:
+	- No se pueden mover los asientos
+	- No se pueden clavar los asientos
+	- No se pueden frenar los asientos
+	- No se ejecuta el movimiento libre de los asientos

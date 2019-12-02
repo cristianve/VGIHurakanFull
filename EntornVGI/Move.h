@@ -25,8 +25,16 @@ struct coord {
 	double y=0;
 	double z=0;
 };
+struct Move {
+	char type;
+	double dur;
+	double acc;
+	double vmax;
+	double t_ini;
+	double t_fi;
+};
 
-
+/*
 class Move
 {
 private:
@@ -101,3 +109,4 @@ public:
 
 };
 
+*/

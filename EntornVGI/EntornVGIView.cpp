@@ -2565,7 +2565,8 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 		{
 			XINPUT_STATE state = Player1->GetState();
 			XINPUT_KEYSTROKE key = Player1->GetKey();
-			bool tecla = false;
+			bool tecla_brac = false;
+			bool tecla_seient = false;
 
 			//BOTONES BRAZO
 			//Get moves brazo
@@ -2573,32 +2574,21 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			float brazo_neg = state.Gamepad.bLeftTrigger;
 
 			//Right Trigger--> Acelerar Brazo +
-			if (brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+			if ((brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)&& !isBrazoClavado && !isWaiting) {
 				d1.setEstadoBrazo(ACELERAR_POSITIVO);
-				tecla = true;
+				tecla_brac = true;
 			}
 			//Left Trigger--> Acelerar Brazo -
-			if (brazo_neg > XINPUT_GAMEPAD_TRIGGER_THRESHOLD && !tecla) {
+			if (brazo_neg > XINPUT_GAMEPAD_TRIGGER_THRESHOLD && !tecla_brac && !isBrazoClavado && !isWaiting) {
 				d1.setEstadoBrazo(ACELERAR_NEGATIVO);
-				tecla = true;
+				tecla_brac = true;
 			}
-			
-			if ((key.VirtualKey == VK_PAD_START)&&!tecla) {
-				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!isWaiting) {
-						isWaiting = true;
-						d1.setEstadoAsientos(PAUSAR);
-						d1.setEstadoBrazo(PAUSAR);
-					}
-					else {
-						isWaiting = false;
-					}
-				}
-				
-				tecla = true;
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_B) && !tecla_brac && !isBrazoClavado && !isWaiting) {
+				d1.setEstadoBrazo(FRENAR);
+				tecla_brac = true;
 			}
-
-			if ((key.VirtualKey == VK_PAD_A) && !tecla) {
+			//Clavar Brazo
+			if ((key.VirtualKey == VK_PAD_A) && !tecla_brac && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (!isBrazoClavado) {
 						isBrazoClavado = true;
@@ -2609,10 +2599,42 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 					}
 				}
 
-				tecla = true;
+				tecla_brac = true;
 			}
 
-			if ((key.VirtualKey == VK_PAD_Y) && !tecla) {
+			
+			//Asiento
+			//Girar +
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) && !tecla_seient && !isAsientoClavado && !isWaiting) {
+				d1.setEstadoAsientos(GIRAR_POSITIVO);
+				tecla_seient = true;
+			}
+			//Girar Negativo
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) && !tecla_seient && !isAsientoClavado && !isWaiting) {
+				d1.setEstadoAsientos(GIRAR_NEGATIVO);
+				tecla_seient = true;
+			}
+			//Frenar Asiento
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_X) && !tecla_seient && !isAsientoClavado && !isWaiting) {
+				d1.setEstadoAsientos(FRENAR);
+				tecla_seient = true;
+			}
+			//Tambaleo
+			if ((key.VirtualKey == VK_PAD_DPAD_UP) && !tecla_seient && !isAsientoClavado && !isWaiting) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!istambaleo) {
+						istambaleo = true;
+						d1.setEstadoAsientos(TAMBALEAR);
+					}
+					else {
+						istambaleo = false;
+					}
+				}
+
+				tecla_seient = true;
+			}
+			//Clavar Asiento
+			if ((key.VirtualKey == VK_PAD_Y) && !tecla_seient && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (!isAsientoClavado) {
 						isAsientoClavado = true;
@@ -2623,10 +2645,25 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 					}
 				}
 
-				tecla = true;
+				tecla_seient = true;
 			}
-			
-			if ((key.VirtualKey == VK_PAD_BACK) && !tecla) {
+
+
+			//PAUSA I RECORD
+			if ((key.VirtualKey == VK_PAD_START) && !tecla_brac && !tecla_seient) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isWaiting) {
+						isWaiting = true;
+						d1.setEstadoAsientos(PAUSAR);
+						d1.setEstadoBrazo(PAUSAR);
+					}
+					else {
+						isWaiting = false;
+					}
+				}
+
+			}
+			else if ((key.VirtualKey == VK_PAD_BACK) && !tecla_brac && !tecla_seient && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (!isGrabando) {
 						isGrabando = true;
@@ -2638,46 +2675,10 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 					}
 				}
 
-				tecla = true;
 			}
-
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) && !tecla) {
-				d1.setEstadoAsientos(GIRAR_POSITIVO);
-				tecla = true;
-			}
-
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_B) && !tecla) {
-				d1.setEstadoBrazo(FRENAR);
-				tecla = true;
-			}
-
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_X) && !tecla) {
-				d1.setEstadoAsientos(FRENAR);
-				tecla = true;
-			}
-
-			if ((key.VirtualKey == VK_PAD_DPAD_UP) && !tecla) {
-				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!istambaleo) {
-						istambaleo = true;
-						d1.setEstadoAsientos(TAMBALEAR);
-					}
-					else {
-						istambaleo = false;
-					}
-				}
-
-				tecla = true;
-			}
-			
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) && !tecla) {
-				d1.setEstadoAsientos(GIRAR_NEGATIVO);
-				tecla = true;
-			}
-
-			if (!tecla && !isWaiting && !istambaleo) {
+			else if (!tecla_seient && !tecla_brac && !isWaiting && !istambaleo) {
 				if (!isAsientoClavado)d1.setEstadoAsientos(LIBRE);
-				if(!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
+				if (!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
 			}
 			
 		}

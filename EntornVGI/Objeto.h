@@ -15,7 +15,7 @@
 #define GIRAR_NEGATIVO 3
 #define TAMBALEAR 4
 
-#define HURAKAN_ACELERACION 30
+#define HURAKAN_ACELERACION 20
 #define HURAKAN_FRENO 20
 
 #define MAXIMA_VELOCIDAD_CLAVAR 0.5
@@ -50,8 +50,7 @@ private:
 	//CONTROL DEMO
 	MoveQueue moves;
 	Move* move_act;
-	double direc = 0;
-	double accel_dir = -1;
+	
 
 
 	//CONTROL FREE MOVE
@@ -123,8 +122,8 @@ public:
 	void stepAsiento();
 	void stepAsientoTeclado();
 	void tambaleo(double time);
-	void acelerar(double time, bool isPositivo);
-	void frenar(double time);
+	void acelerar(double time, bool isPositivo,double vmax,double accel);
+	void frenar(double time,double freno);
 	char getState();
 	void set_grabacio_filename(char* filename);
 	void setGrabacio(bool grabacio);
