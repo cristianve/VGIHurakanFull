@@ -7,6 +7,7 @@
 #ifndef GLVIS_H
 #define GLVIS_H
 
+
 /* ------------------------------------------------------------------------- */
 /*                                Funcions                                   */
 /* ------------------------------------------------------------------------- */
@@ -72,4 +73,27 @@ static void __gluMakeIdentityf(GLfloat m[16]);
 static void __gluMakeIdentityd(GLdouble m[16]);
 static void normalize(float v[3]);
 static void cross(float v1[3], float v2[3], float result[3]);
+
+void Projeccio_Camara1(int minx, int miny, GLsizei w, GLsizei h, float zoom);
+void Vista_Camara1(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+	CColor col_fons, CColor col_object, char objecte, double mida, int step,
+	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
+	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
+	bool eix, CMask3D reixa, CPunt3D hreixa);
+
+void Projeccio_Camara2(int minx, int miny, GLsizei w, GLsizei h, float zoom);
+void Vista_Camara2(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+	CColor col_fons, CColor col_object, char objecte, double mida, int step,
+	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
+	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
+	bool eix, CMask3D reixa, CPunt3D hreixa);
+
+void Projeccio_Persona1(int minx, int miny, GLsizei w, GLsizei h, float zoom);
+void Vista_Persona1(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+	CColor col_fons, CColor col_object, char objecte, double mida, int step,
+	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
+	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
+	bool eix, CMask3D reixa, CPunt3D hreixa);
+
+
 #endif
