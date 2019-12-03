@@ -45,6 +45,8 @@ extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
 extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/Walls.jpg"));
 extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/others.png"));
 extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
+extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
+extern const CString PATH_TEXTURE_MANDO_OFF = CString(_T("textures/mando_desc.png"));
 
 
 
@@ -122,6 +124,8 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 	ON_UPDATE_COMMAND_UI(ID_CAMARAS_CAMARA2, &CEntornVGIView::OnUpdateCamarasCamara2)
 	ON_COMMAND(ID_CAMARAS_PERSONA, &CEntornVGIView::OnCamarasPersona)
 	ON_UPDATE_COMMAND_UI(ID_CAMARAS_PERSONA, &CEntornVGIView::OnUpdateCamarasPersona)
+	ON_COMMAND(ID_CAMARAS_EXTERIOR, &CEntornVGIView::OnCamarasExterior)
+	ON_UPDATE_COMMAND_UI(ID_CAMARAS_EXTERIOR, &CEntornVGIView::OnUpdateCamarasExterior)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -287,7 +291,7 @@ CEntornVGIView::CEntornVGIView()
 // Entorn VGI: Variables que controlen paràmetres visualització: Mides finestra Windows i PV
 	w = 0;				h = 0;								// Mides finestra
 	w_old = 0;			h_old = 0;							// Copia mides finestre per a FullScreen
-	OPV.R = 15.0;		OPV.alfa = 0.0;		OPV.beta = 0.0;	// Origen PV en esfèriques
+	OPV.R = 30.0;		OPV.alfa = 0.0;		OPV.beta = 0.0;	// Origen PV en esfèriques
 	Vis_Polar = POLARZ;
 
 // Entorn VGI: Color de fons i de l'objecte
@@ -666,8 +670,10 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_temple = CString2Char(PATH_TEMPLE);
 	char* nom_walls = CString2Char(PATH_WALLS);
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
+	
 
-
+	char* nomTextureMandoOn = CString2Char(PATH_TEXTURE_MANDO_ON);
+	char* nomTextureMandoOff = CString2Char(PATH_TEXTURE_MANDO_OFF);
 	char* nomTextureArm = CString2Char(PATH_TEXTURE_ARM);
 	char* nomTextureBase = CString2Char(PATH_TEXTURE_BASE);
 	char* nomTextureSeient = CString2Char(PATH_TEXTURE_SEIENTS);
@@ -708,6 +714,8 @@ void CEntornVGIView::OnInitialUpdate()
 	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass);
 	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple);
 	texturesID[OBJECTEOTHERS] = loadIMA_SOIL(nomTextureOthers);
+	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
+	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
 
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
@@ -875,7 +883,37 @@ void CEntornVGIView::OnPaint()
 		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
 		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 		glPopMatrix();
-
+		glViewport(0, 0, 0.1 * w, w * 0.1);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 500, 0, 300, 0, 200);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
+		if (Player1->IsConnected()) {
+			glActiveTexture(texturesID[OBJECTEPAD_ON]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+		}
+		else {
+			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+		}
+		glEnable(GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
+		//glColor3f(1, 0, 0);
+		glTexCoord2i(0, 0);
+		glVertex2i(100, 100);
+		glTexCoord2i(0, 1);
+		glVertex2i(100, 300);
+		glTexCoord2i(1, 1);
+		glVertex2i(500, 300);
+		glTexCoord2i(1, 0);
+		glVertex2i(500, 100);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
 		// Intercanvia l'escena al front de la pantalla
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
@@ -898,10 +936,86 @@ void CEntornVGIView::OnPaint()
 		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 		glPopMatrix();
 
+		glViewport(0, 0, 0.1 * w, w * 0.1);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 500, 0, 300, 0, 200);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
+		if (Player1->IsConnected()) {
+			glActiveTexture(texturesID[OBJECTEPAD_ON]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+		}
+		else {
+			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+		}
+		glEnable(GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
+		//glColor3f(1, 0, 0);
+		glTexCoord2i(0, 0);
+		glVertex2i(100, 100);
+		glTexCoord2i(0, 1);
+		glVertex2i(100, 300);
+		glTexCoord2i(1, 1);
+		glVertex2i(500, 300);
+		glTexCoord2i(1, 0);
+		glVertex2i(500, 100);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
 		// Intercanvia l'escena al front de la pantalla
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
+	case EXTERIOR:
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+		glDisable(GL_SCISSOR_TEST);
+		Projeccio_Perspectiva(0, 0, w, h, OPV.R);
+		n[0] = 0;		n[1] = 0;		n[2] = 0;
+		Vista_Exterior(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+			front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
+		// Dibuix de l'Objecte o l'Escena
+		glPushMatrix();
+		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+		glPopMatrix();
 
+		glViewport(0, 0, 0.1 * w, w * 0.1);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 500, 0, 300, 0, 200);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
+		if (Player1->IsConnected()) {
+			glActiveTexture(texturesID[OBJECTEPAD_ON]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+		}
+		else {
+			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+		}
+		glEnable(GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
+		//glColor3f(1, 0, 0);
+		glTexCoord2i(0, 0);
+		glVertex2i(100, 100);
+		glTexCoord2i(0, 1);
+		glVertex2i(100, 300);
+		glTexCoord2i(1, 1);
+		glVertex2i(500, 300);
+		glTexCoord2i(1, 0);
+		glVertex2i(500, 100);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		SwapBuffers(m_pDC->GetSafeHdc());
+		break;
 	case PERSONA1:
 		// PROJECCI� CAMARA1
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
@@ -920,6 +1034,37 @@ void CEntornVGIView::OnPaint()
 		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 		glPopMatrix();
 
+		glViewport(0, 0, 0.1 * w, w * 0.1);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 500, 0, 300, 0, 200);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
+		if (Player1->IsConnected()) {
+			glActiveTexture(texturesID[OBJECTEPAD_ON]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+		}
+		else {
+			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+		}
+		glEnable(GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
+		//glColor3f(1, 0, 0);
+		glTexCoord2i(0, 0);
+		glVertex2i(100, 100);
+		glTexCoord2i(0, 1);
+		glVertex2i(100, 300);
+		glTexCoord2i(1, 1);
+		glVertex2i(500, 300);
+		glTexCoord2i(1, 0);
+		glVertex2i(500, 100);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
 		// Intercanvia l'escena al front de la pantalla
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
@@ -948,26 +1093,45 @@ void CEntornVGIView::OnPaint()
 		glPopMatrix();
 
 // Intercanvia l'escena al front de la pantalla
-		glViewport(0, 0, W_MANDO, H_MANDO);
+		//SwapBuffers(m_pDC->GetSafeHdc());
+		glViewport(0, 0, 0.1*w, w*0.1);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, W_MANDO, 0, H_MANDO, 0, 1);
-		gluLookAt(W_MANDO/2 , H_MANDO / 2, 10, W_MANDO/2, H_MANDO/2, 0, 0, 1, 0);
+		glOrtho(0, 500, 0,300, 0, 200);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt( 100, 100, 199, 100, 100, 0, 0, 1, 0);
 		glPushMatrix();
-		//glTranslatef(0, 0, 0);
-		glBegin(GL_QUADS);
-		glColor3f(1, 0, 0);
-		glVertex3f(0, 0,0);
-		glVertex3f(0, H_MANDO/2,0);
-		glVertex3f(W_MANDO/2, H_MANDO/2,0);
-		glVertex3f(W_MANDO/2, 0,0);
-		glEnd();
+			glEnable(GL_TEXTURE_2D);
+			if (Player1->IsConnected()) {
+				glActiveTexture(texturesID[OBJECTEPAD_ON]);
+				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+			}
+			else {
+				glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+			}
+			glEnable(GL_TEXTURE_2D);
+			glBegin(GL_QUADS);
+				//glColor3f(1, 0, 0);
+				glTexCoord2i(0, 0);
+				glVertex2i(100, 100);
+				glTexCoord2i(0,1);
+				glVertex2i(100, 300);
+				glTexCoord2i(1, 1);
+				glVertex2i(500,300);
+				glTexCoord2i(1, 0);
+				glVertex2i(500, 100);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
+
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
 
 	default:
 // Entorn VGI: Creació de la llista que dibuixarà els eixos Coordenades Món. Funció on està codi per dibuixar eixos	
+		
 		glNewList(EIXOS, GL_COMPILE);
 		  // Dibuix dels eixos sense il.luminació
 		  glDisable(GL_LIGHTING);
@@ -2411,8 +2575,14 @@ void CEntornVGIView::OnMouseMove(UINT nFlags, CPoint point)
 //				horitzontal i vertical de la posició del mouse.
 		CSize gir = m_PosEAvall - point;
 		m_PosEAvall = point;
-		OPV.beta = OPV.beta - gir.cx / 2;
-		OPV.alfa = OPV.alfa + gir.cy / 2;
+		if (projeccio == EXTERIOR) {
+			OPV.beta = OPV.beta + gir.cx / 2;
+			OPV.alfa = OPV.alfa + gir.cy / 2;
+		}
+		else {
+			OPV.beta = OPV.beta - gir.cx / 2;
+			OPV.alfa = OPV.alfa + gir.cy / 2;
+		}
 
 // Entorn VGI: Control per evitar el creixement desmesurat dels angles.
 		if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
@@ -2658,6 +2828,53 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			//Get moves brazo
 			float brazo_pos = state.Gamepad.bRightTrigger;
 			float brazo_neg = state.Gamepad.bLeftTrigger;
+
+			if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) {
+				if (projeccio == EXTERIOR) {
+					OPV.beta = OPV.beta - 1;
+				}
+				else {
+					OPV.beta = OPV.beta + 1;
+				}
+				
+				if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
+				if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				InvalidateRect(NULL, false);
+				
+			}
+			if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+				if (projeccio == EXTERIOR) {
+					OPV.beta = OPV.beta + 1;
+				}
+				else {
+					OPV.beta = OPV.beta - 1;
+				}
+
+				if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
+				if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				InvalidateRect(NULL, false);
+
+			}
+			
+			if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+				
+				OPV.alfa = OPV.alfa + 1;
+				
+				if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
+				if (OPV.alfa < 0)		OPV.alfa = OPV.alfa + 360;
+				InvalidateRect(NULL, false);
+
+			}
+			if (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+
+				OPV.alfa = OPV.alfa - 1;
+
+				if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
+				if (OPV.alfa < 0)		OPV.alfa = OPV.alfa + 360;
+				InvalidateRect(NULL, false);
+
+			}
+			
 
 			//Right Trigger--> Acelerar Brazo +
 			if ((brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)&& !isBrazoClavado && !isWaiting) {
@@ -3606,5 +3823,23 @@ void CEntornVGIView::OnUpdateCamarasPersona(CCmdUI* pCmdUI)
 {
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
 	if (projeccio == PERSONA1) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+
+
+void CEntornVGIView::OnCamarasExterior()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	projeccio = EXTERIOR;
+	mobil = true;
+	zzoom = true;
+	InvalidateRect(NULL, false);
+}
+
+
+void CEntornVGIView::OnUpdateCamarasExterior(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+	if (projeccio == EXTERIOR) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }

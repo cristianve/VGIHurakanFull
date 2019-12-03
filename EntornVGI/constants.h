@@ -25,7 +25,7 @@
 #define CAMARA1 'C'
 #define CAMARA2 'c'
 #define PERSONA1 'V'
-
+#define EXTERIOR 'E'
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
 #define POLARZ 'Z'
@@ -74,6 +74,8 @@
 #define OBJECTEOTHERS 14
 #define OBJECTEWALLS 15
 #define OBJECTEPERSONA 16
+#define OBJECTEPAD_ON 17
+#define OBJECTEPAD_OFF 18
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;
@@ -81,6 +83,8 @@ const double p_far=50000.0;
 
 #define H_MANDO 300
 #define W_MANDO 600
+#define W_MANDO_PANTALLA 80
+#define H_MANDO_PANTALLA 80
 
 //-------------- VGI: Tipus d'Objectes Picking
 #define PICKCAP 0

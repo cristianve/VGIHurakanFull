@@ -431,7 +431,77 @@ void Vista_Esferica(CEsfe3D opv,char VPol,bool pant,CPunt3D tr,CPunt3D trF,
 // Dibuixa el grid actiu
 	if ((reixa.x) || (reixa.y) || (reixa.z) || (reixa.w)) draw_Grid(reixa, hreixa);
 }
+void Vista_Exterior(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+	CColor col_fons, CColor col_object, char objecte, double mida, int step,
+	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
+	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
+	bool eix, CMask3D reixa, CPunt3D hreixa)
+{
+	GLfloat cam[3], up[3];
 
+	// Conversió angles radians -> graus
+	opv.alfa = opv.alfa * pi / 180;
+	opv.beta = opv.beta * pi / 180;
+
+	if (opv.R < 1.0) opv.R = 1.0;
+	// Neteja dels buffers de color i profunditat
+	Fons(col_fons);
+
+	// Posició càmera i vector cap amunt
+	if (VPol == POLARZ) {
+		cam[0] = opv.R * cos(opv.beta) * cos(opv.alfa);
+		cam[1] = opv.R * sin(opv.beta) * cos(opv.alfa);
+		cam[2] = opv.R * sin(opv.alfa);
+		up[0] = -cos(opv.beta) * sin(opv.alfa);
+		up[1] = -sin(opv.beta) * sin(opv.alfa);
+		up[2] = cos(opv.alfa);
+	}
+	else if (VPol == POLARY) {
+		cam[0] = opv.R * sin(opv.beta) * cos(opv.alfa);
+		cam[1] = opv.R * sin(opv.alfa);
+		cam[2] = opv.R * cos(opv.beta) * cos(opv.alfa);
+		up[0] = -sin(opv.beta) * sin(opv.alfa);
+		up[1] = cos(opv.alfa);
+		up[2] = -cos(opv.beta) * sin(opv.alfa);
+	}
+	else {
+		cam[0] = opv.R * sin(opv.alfa);
+		cam[1] = opv.R * cos(opv.beta) * cos(opv.alfa);
+		cam[2] = opv.R * sin(opv.beta) * cos(opv.alfa);
+		up[0] = cos(opv.alfa);
+		up[1] = -cos(opv.beta) * sin(opv.alfa);
+		up[2] = -sin(opv.beta) * sin(opv.alfa);
+	}
+
+	// Iluminacio movent-se amb la camara (abans glLookAt)
+	if (!ifix) Iluminacio(iluminacio, ifix, il2sides, llum_amb, lumi, objecte, frnt_fcs, bck_ln, step);
+
+	
+	//glTranslatef(-5, 10, 3);	// Traslació fixada amb la INSERT dins l'opció pan
+
+// Especificació del punt de vista
+	gluLookAt(0,10,3,cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+
+	// Iluminacio fixe respecte la camara (després glLookAt)
+	if (ifix) Iluminacio(iluminacio, ifix, il2sides, llum_amb, lumi, objecte, frnt_fcs, bck_ln, step);
+
+	// Test de Visibilitat
+	if (testv) glEnable(GL_CULL_FACE);
+	else glDisable(GL_CULL_FACE);
+
+	// Ocultacions (Z-buffer)
+	if (oculta) glEnable(GL_DEPTH_TEST);
+	else glDisable(GL_DEPTH_TEST);
+
+	// Dibuix de les cares back com a línies en Il.luminacio PLANA i SUAU
+	if (bck_ln) glPolygonMode(GL_BACK, GL_LINE);
+
+	//  Dibuix dels eixos
+	if (eix) glCallList(EIXOS);
+
+	// Dibuixa el grid actiu
+	if ((reixa.x) || (reixa.y) || (reixa.z) || (reixa.w)) draw_Grid(reixa, hreixa);
+}
 
 //Vista_Navega: Definició gluLookAt directament per paràmetre, sense esfèriques.
 //              amb possibilitat de moure el punt de vista interactivament amb les

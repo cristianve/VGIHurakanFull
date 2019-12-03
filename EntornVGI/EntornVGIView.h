@@ -49,7 +49,10 @@ public:
 	bool isGrabando = false;
 	bool isnotGrabando = true;
 	bool istambaleo = false;
-
+	bool iscamaravert = false;
+	double gir_vert = 0;
+	bool iscamarahoritz = false;
+	double gir_horitz = 0;
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
 
@@ -305,6 +308,8 @@ public:
 	afx_msg void OnUpdateCamarasCamara2(CCmdUI* pCmdUI);
 	afx_msg void OnCamarasPersona();
 	afx_msg void OnUpdateCamarasPersona(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasExterior();
+	afx_msg void OnUpdateCamarasExterior(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp
