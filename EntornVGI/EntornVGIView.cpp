@@ -923,7 +923,7 @@ void CEntornVGIView::OnPaint()
 		// Intercanvia l'escena al front de la pantalla
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
-
+		
 	case PERSPECT:
 // PROJECCIÓ PERSPECTIVA
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
@@ -948,6 +948,21 @@ void CEntornVGIView::OnPaint()
 		glPopMatrix();
 
 // Intercanvia l'escena al front de la pantalla
+		glViewport(0, 0, W_MANDO, H_MANDO);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, W_MANDO, 0, H_MANDO, 0, 1);
+		gluLookAt(W_MANDO/2 , H_MANDO / 2, 10, W_MANDO/2, H_MANDO/2, 0, 0, 1, 0);
+		glPushMatrix();
+		//glTranslatef(0, 0, 0);
+		glBegin(GL_QUADS);
+		glColor3f(1, 0, 0);
+		glVertex3f(0, 0,0);
+		glVertex3f(0, H_MANDO/2,0);
+		glVertex3f(W_MANDO/2, H_MANDO/2,0);
+		glVertex3f(W_MANDO/2, 0,0);
+		glEnd();
+		glPopMatrix();
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
 

@@ -79,6 +79,9 @@
 const double p_near=1.0;
 const double p_far=50000.0;
 
+#define H_MANDO 300
+#define W_MANDO 600
+
 //-------------- VGI: Tipus d'Objectes Picking
 #define PICKCAP 0
 #define PICKFAR 1
