@@ -225,13 +225,15 @@
 #define ID_CICLOS_PRUEBAGRABADA         32900
 #define ID_CAMARAS_CAMARA1              32901
 #define ID_CAMARAS_CAMARA2              32902
+#define ID_CAMARAS_EXTERIOR_FRONTAL     32903
+#define ID_CAMARAS_TEMPLE               32904
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32903
+#define _APS_NEXT_COMMAND_VALUE         32905
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

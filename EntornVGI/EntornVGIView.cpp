@@ -118,14 +118,10 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 
 	ON_COMMAND(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnCiclosPruebagrabada)
 	ON_UPDATE_COMMAND_UI(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnUpdateCiclosPruebagrabada)
-	ON_COMMAND(ID_CAMARAS_CAMARA1, &CEntornVGIView::OnCamarasCamara1)
-	ON_UPDATE_COMMAND_UI(ID_CAMARAS_CAMARA1, &CEntornVGIView::OnUpdateCamarasCamara1)
-	ON_COMMAND(ID_CAMARAS_CAMARA2, &CEntornVGIView::OnCamarasCamara2)
-	ON_UPDATE_COMMAND_UI(ID_CAMARAS_CAMARA2, &CEntornVGIView::OnUpdateCamarasCamara2)
-	ON_COMMAND(ID_CAMARAS_PERSONA, &CEntornVGIView::OnCamarasPersona)
-	ON_UPDATE_COMMAND_UI(ID_CAMARAS_PERSONA, &CEntornVGIView::OnUpdateCamarasPersona)
-	ON_COMMAND(ID_CAMARAS_EXTERIOR, &CEntornVGIView::OnCamarasExterior)
-	ON_UPDATE_COMMAND_UI(ID_CAMARAS_EXTERIOR, &CEntornVGIView::OnUpdateCamarasExterior)
+	ON_COMMAND(ID_CAMARAS_EXTERIOR_FRONTAL, &CEntornVGIView::OnCamarasExteriorFrontal)
+	ON_UPDATE_COMMAND_UI(ID_CAMARAS_EXTERIOR_FRONTAL, &CEntornVGIView::OnUpdateCamarasExteriorFrontal)
+	ON_COMMAND(ID_CAMARAS_TEMPLE, &CEntornVGIView::OnCamarasTemple)
+	ON_UPDATE_COMMAND_UI(ID_CAMARAS_TEMPLE, &CEntornVGIView::OnUpdateCamarasTemple)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,7 +155,8 @@ CEntornVGIView::CEntornVGIView()
 	angleZ = 0.0;
 
 // Entorn VGI: Variables de control per les opcions de menú Projecció, Objecte
-	projeccio = CAP;			objecte = CAP;
+	projeccio = CAP; cam = DEFAULT_CAM;
+	objecte = CAP;
 
 // Entorn VGI: Variables de control del menú Transforma
 	transf = false;		trasl = false;		rota = false;		escal = false;
@@ -291,7 +288,7 @@ CEntornVGIView::CEntornVGIView()
 // Entorn VGI: Variables que controlen paràmetres visualització: Mides finestra Windows i PV
 	w = 0;				h = 0;								// Mides finestra
 	w_old = 0;			h_old = 0;							// Copia mides finestre per a FullScreen
-	OPV.R = 30.0;		OPV.alfa = 0.0;		OPV.beta = 0.0;	// Origen PV en esfèriques
+	OPV.R = 30.0;		OPV.alfa = 0.0;		OPV.beta = 90.0;	// Origen PV en esfèriques
 	Vis_Polar = POLARZ;
 
 // Entorn VGI: Color de fons i de l'objecte
@@ -770,305 +767,6 @@ void CEntornVGIView::OnPaint()
 // seleccionat una projecció o un altra
 	switch (projeccio)
 	{
-	case AXONOM:
-// PROJECCIÓ AXONOMÈTRICA
-// Activació del retall de pantalla
-		glEnable(GL_SCISSOR_TEST);
-
-// Retall
-		glScissor(0, 0, w, h);
-		glViewport(0, 0, w, h);
-
-// Aquí farem les crides per a definir Viewport, Projecció i Càmara: INICI -------------------------
-
-// Aquí farem les cridesper a definir Viewport, Projecció i Càmara:: FI -------------------------
-		// Dibuixar Model (escena)
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes
-			// glScalef();			// Escalat d'objectes, per adequar-los a les vistes ortogràfiques
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// Intercanvia l'escena al front de la pantalla
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-
-	case ORTO:
-// PROJECCIÓ ORTOGRÀFICA
-// Activació del retall de pantalla
-		glEnable(GL_SCISSOR_TEST);
-
-// Retall
-		glScissor(0, 0, w, h);
-		glViewport(0, 0, w, h);
-
-// Fons condicionat al color de fons
-		if ((c_fons.r < 0.5) || (c_fons.g < 0.5) || (c_fons.b<0.5))
-			FonsB();
-		else
-			FonsN();
-
-// Aquí farem les quatre crides a ProjeccioOrto i Ortografica per obtenir 
-// les quatre vistes ortogràfiques
-// ---------- Entorn VGI: DESCOMENTAR QUAN S'IMPLEMENTI PROJECCIO ORTOGRÀFICA
-// PLANTA (Inferior Esquerra)
-		// Definició de Viewport, Projecció i Càmara
-		Projeccio_Orto();
-		Vista_Ortografica(0, OPV.R, c_fons, col_obj, objecte, mida, pas, front_faces, oculta,
-			test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-			eixos, grid, hgrid);
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes
-			// glScalef();			// Escalat d'objectes, per adequar-los a les vistes ortogràfiques (Pràctica 2)
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// ISOMÈTRICA (Inferior Dreta)
-		// Definició de Viewport, Projecció i Càmara
-		Projeccio_Orto();
-		Vista_Ortografica(3, OPV.R, c_fons, col_obj, objecte, mida, pas, front_faces, oculta,
-			test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-			eixos, grid, hgrid);
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes
-			// glScalef();			// Escalat d'objectes, per adequar-los a les vistes ortogràfiques (Pràctica 2)
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// ALÇAT (Superior Esquerra)
-		// Definició de Viewport, Projecció i Càmara
-		Projeccio_Orto();
-		Vista_Ortografica(1, OPV.R, c_fons, col_obj, objecte, mida, pas, front_faces, oculta,
-			test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-			eixos, grid, hgrid);
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geom?triques segons persiana Transformacio i configurar objectes
-			//glScalef();			// Escalat d'objectes, per adequar-los a les vistes ortogràfiques (Pràctica 2)
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// PERFIL (Superior Dreta)
-		// Definició de Viewport, Projecció i Càmara
-		Projeccio_Orto();
-		Vista_Ortografica(2, OPV.R, c_fons, col_obj, objecte, mida, pas, front_faces, oculta,
-			test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-			eixos, grid, hgrid);
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geom?triques segons persiana Transformacio i configurar objectes
- 			// glScalef();			// Escalat d'objectes, per adequar-los a les vistes ortogràfiques (Pràctica 2)
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// Intercanvia l'escena al front de la pantalla
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-	case CAMARA1:
-		// PROJECCI� CAMARA1
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-		glDisable(GL_SCISSOR_TEST);		// Desactivaci� del retall de pantalla
-
-		// Definici� de Viewport, Projecci� i C�mara
-		Projeccio_Camara1(0, 0, w, h, OPV.R);
-
-		n[0] = 0;		n[1] = 0;		n[2] = 0;
-		Vista_Camara1(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-			front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
-		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-		glViewport(0, 0, 0.1 * w, w * 0.1);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 500, 0, 300, 0, 200);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
-		glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		if (Player1->IsConnected()) {
-			glActiveTexture(texturesID[OBJECTEPAD_ON]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-		}
-		else {
-			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-		}
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		//glColor3f(1, 0, 0);
-		glTexCoord2i(0, 0);
-		glVertex2i(100, 100);
-		glTexCoord2i(0, 1);
-		glVertex2i(100, 300);
-		glTexCoord2i(1, 1);
-		glVertex2i(500, 300);
-		glTexCoord2i(1, 0);
-		glVertex2i(500, 100);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		// Intercanvia l'escena al front de la pantalla
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-
-	case CAMARA2:
-		// PROJECCI� CAMARA1
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-		glDisable(GL_SCISSOR_TEST);		// Desactivaci� del retall de pantalla
-
-		// Definici� de Viewport, Projecci� i C�mara
-		Projeccio_Camara2(0, 0, w, h, OPV.R);
-
-		n[0] = 0;		n[1] = 0;		n[2] = 0;
-		Vista_Camara2(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-			front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
-		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-		glViewport(0, 0, 0.1 * w, w * 0.1);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 500, 0, 300, 0, 200);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
-		glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		if (Player1->IsConnected()) {
-			glActiveTexture(texturesID[OBJECTEPAD_ON]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-		}
-		else {
-			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-		}
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		//glColor3f(1, 0, 0);
-		glTexCoord2i(0, 0);
-		glVertex2i(100, 100);
-		glTexCoord2i(0, 1);
-		glVertex2i(100, 300);
-		glTexCoord2i(1, 1);
-		glVertex2i(500, 300);
-		glTexCoord2i(1, 0);
-		glVertex2i(500, 100);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		// Intercanvia l'escena al front de la pantalla
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-	case EXTERIOR:
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-		glDisable(GL_SCISSOR_TEST);
-		Projeccio_Perspectiva(0, 0, w, h, OPV.R);
-		n[0] = 0;		n[1] = 0;		n[2] = 0;
-		Vista_Exterior(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-			front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
-		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-		glViewport(0, 0, 0.1 * w, w * 0.1);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 500, 0, 300, 0, 200);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
-		glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		if (Player1->IsConnected()) {
-			glActiveTexture(texturesID[OBJECTEPAD_ON]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-		}
-		else {
-			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-		}
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		//glColor3f(1, 0, 0);
-		glTexCoord2i(0, 0);
-		glVertex2i(100, 100);
-		glTexCoord2i(0, 1);
-		glVertex2i(100, 300);
-		glTexCoord2i(1, 1);
-		glVertex2i(500, 300);
-		glTexCoord2i(1, 0);
-		glVertex2i(500, 100);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-	case PERSONA1:
-		// PROJECCI� CAMARA1
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-		glDisable(GL_SCISSOR_TEST);		// Desactivaci� del retall de pantalla
-
-		// Definici� de Viewport, Projecci� i C�mara
-		Projeccio_Camara1(0, 0, w, h, OPV.R);
-
-		n[0] = 0;		n[1] = 0;		n[2] = 0;
-		Vista_Persona1(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-			front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
-		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-		glViewport(0, 0, 0.1 * w, w * 0.1);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 500, 0, 300, 0, 200);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
-		glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		if (Player1->IsConnected()) {
-			glActiveTexture(texturesID[OBJECTEPAD_ON]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-		}
-		else {
-			glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-			glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-		}
-		glEnable(GL_TEXTURE_2D);
-		glBegin(GL_QUADS);
-		//glColor3f(1, 0, 0);
-		glTexCoord2i(0, 0);
-		glVertex2i(100, 100);
-		glTexCoord2i(0, 1);
-		glVertex2i(100, 300);
-		glTexCoord2i(1, 1);
-		glVertex2i(500, 300);
-		glTexCoord2i(1, 0);
-		glVertex2i(500, 100);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		// Intercanvia l'escena al front de la pantalla
-		SwapBuffers(m_pDC->GetSafeHdc());
-		break;
-		
 	case PERSPECT:
 // PROJECCIÓ PERSPECTIVA
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
@@ -1076,16 +774,18 @@ void CEntornVGIView::OnPaint()
 
 		// Definició de Viewport, Projecció i Càmara
 		Projeccio_Perspectiva(0, 0, w, h, OPV.R);
-		if (navega)	{	Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-							front_faces, oculta, test_vis, back_line, 
-							ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-							eixos, grid, hgrid);
-					}
-		else {	n[0] = 0;		n[1] = 0;		n[2] = 0;
-				Vista_Esferica(OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-			}
-
+		if (navega) {
+			Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+				front_faces, oculta, test_vis, back_line,
+				ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+				eixos, grid, hgrid);
+		}
+		else {
+			n[0] = 0;		n[1] = 0;		n[2] = 0;
+			Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+				front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
+		}
+		
 		// Dibuix de l'Objecte o l'Escena
 		glPushMatrix();
 			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
@@ -2575,7 +2275,7 @@ void CEntornVGIView::OnMouseMove(UINT nFlags, CPoint point)
 //				horitzontal i vertical de la posició del mouse.
 		CSize gir = m_PosEAvall - point;
 		m_PosEAvall = point;
-		if (projeccio == EXTERIOR) {
+		if (projeccio == EXTERIOR_FRONTAL) {
 			OPV.beta = OPV.beta + gir.cx / 2;
 			OPV.alfa = OPV.alfa + gir.cy / 2;
 		}
@@ -2830,28 +2530,53 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			float brazo_neg = state.Gamepad.bLeftTrigger;
 
 			if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) {
-				if (projeccio == EXTERIOR) {
+				if (cam != DEFAULT_CAM) {
 					OPV.beta = OPV.beta - 1;
 				}
 				else {
 					OPV.beta = OPV.beta + 1;
 				}
-				
-				if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
-				if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				if (cam == TEMPLE_CAM) {
+					if (OPV.beta >= 190)	OPV.beta = 190;
+					if (OPV.beta < 0) {
+						if (OPV.beta < -10) {
+							OPV.beta = -10 + 360;
+						}
+						else {
+							OPV.beta = OPV.beta + 360;
+						}
+					}
+				}
+				else {
+					if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
+					if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				}
 				InvalidateRect(NULL, false);
 				
 			}
 			if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
-				if (projeccio == EXTERIOR) {
+				if (cam != DEFAULT_CAM) {
 					OPV.beta = OPV.beta + 1;
 				}
 				else {
 					OPV.beta = OPV.beta - 1;
 				}
 
-				if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
-				if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				if (cam == TEMPLE_CAM) {
+					if (OPV.beta >= 100)	OPV.beta =100;
+					if (OPV.beta < 0){
+						if (OPV.beta < -100) {
+							OPV.beta = -100 + 360;
+						}
+						else {
+							OPV.beta = OPV.beta + 360;
+						}
+					}
+				}
+				else {
+					if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
+					if (OPV.beta < 0)		OPV.beta = OPV.beta + 360;
+				}
 				InvalidateRect(NULL, false);
 
 			}
@@ -2874,8 +2599,40 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				InvalidateRect(NULL, false);
 
 			}
-			
+			//Camara next
+			if (key.VirtualKey == VK_PAD_DPAD_RIGHT) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (cam == DEFAULT_CAM) {
+						cam = TEMPLE_CAM;
+					}
+					else if (cam == TEMPLE_CAM) {
+						cam = EXTERIOR_FRONTAL;
+						OPV.beta = -90;
+					}
+					else if (cam == EXTERIOR_FRONTAL) {
+						cam = DEFAULT_CAM;
+						OPV.beta = 90;
+					}
+				}
 
+			}
+			//Camara ant
+			if (key.VirtualKey == VK_PAD_DPAD_LEFT) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (cam == DEFAULT_CAM) {
+						cam = EXTERIOR_FRONTAL;
+						OPV.beta = -90;
+					}
+					else if (cam == EXTERIOR_FRONTAL) {
+						cam = TEMPLE_CAM;
+						OPV.beta = 90;
+					}
+					else if (cam == TEMPLE_CAM) {
+						cam = DEFAULT_CAM;
+					}
+				}
+
+			}
 			//Right Trigger--> Acelerar Brazo +
 			if ((brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)&& !isBrazoClavado && !isWaiting) {
 				d1.setEstadoBrazo(ACELERAR_POSITIVO);
@@ -3770,76 +3527,39 @@ void CEntornVGIView::OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI)
 }
 
 
-void CEntornVGIView::OnCamarasCamara1()
+
+void CEntornVGIView::OnCamarasExteriorFrontal()
 {
 	// TODO: Agregue aquí su código de controlador de comandos
-	projeccio = CAMARA1;
-	mobil = true;			zzoom = true;
-
-	// Crida a OnPaint() per redibuixar l'escena
+	cam = EXTERIOR_FRONTAL;
+	mobil = true;
+	zzoom = false;
 	InvalidateRect(NULL, false);
 }
 
 
-void CEntornVGIView::OnUpdateCamarasCamara1(CCmdUI* pCmdUI)
+void CEntornVGIView::OnUpdateCamarasExteriorFrontal(CCmdUI* pCmdUI)
 {
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (projeccio == CAMARA1) pCmdUI->SetCheck(1);
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+	if (cam == EXTERIOR_FRONTAL) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
 
 
-void CEntornVGIView::OnCamarasCamara2()
+void CEntornVGIView::OnCamarasTemple()
 {
 	// TODO: Agregue aquí su código de controlador de comandos
-	projeccio = CAMARA2;
-	mobil = true;			zzoom = true;
-
-	// Crida a OnPaint() per redibuixar l'escena
-	InvalidateRect(NULL, false);
-}
-
-
-void CEntornVGIView::OnUpdateCamarasCamara2(CCmdUI* pCmdUI)
-{
-	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (projeccio == CAMARA2) pCmdUI->SetCheck(1);
-	else pCmdUI->SetCheck(0);
-}
-
-
-void CEntornVGIView::OnCamarasPersona()
-{
-	// TODO: Agregue aquí su código de controlador de comandos
-	projeccio = PERSONA1;
-	mobil = true;			zzoom = true;
-
-	// Crida a OnPaint() per redibuixar l'escena
-	InvalidateRect(NULL, false);
-}
-
-
-void CEntornVGIView::OnUpdateCamarasPersona(CCmdUI* pCmdUI)
-{
-	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (projeccio == PERSONA1) pCmdUI->SetCheck(1);
-	else pCmdUI->SetCheck(0);
-}
-
-
-void CEntornVGIView::OnCamarasExterior()
-{
-	// TODO: Agregue aquí su código de controlador de comandos
-	projeccio = EXTERIOR;
+	cam = TEMPLE_CAM;
 	mobil = true;
 	zzoom = true;
 	InvalidateRect(NULL, false);
 }
 
 
-void CEntornVGIView::OnUpdateCamarasExterior(CCmdUI* pCmdUI)
+void CEntornVGIView::OnUpdateCamarasTemple(CCmdUI* pCmdUI)
 {
 	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
-	if (projeccio == EXTERIOR) pCmdUI->SetCheck(1);
+	if (cam == TEMPLE_CAM) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }

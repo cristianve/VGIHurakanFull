@@ -83,6 +83,7 @@ public:
 
 // Entorn VGI: Variables de control per les opcions de menú Projecció, Objecte
 	char projeccio;	// Menú Projecció: Tipus de projeccio 
+	char cam;
 	char objecte;	// Menú Objecte: Tipus d'Objecte
 
 // Entorn VGI: Variables de control del menú Transforma
@@ -302,14 +303,10 @@ public:
 	afx_msg void OnUpdateHurakanFloor(CCmdUI* pCmdUI);
 	afx_msg void OnCiclosPruebagrabada();
 	afx_msg void OnUpdateCiclosPruebagrabada(CCmdUI* pCmdUI);
-	afx_msg void OnCamarasCamara1();
-	afx_msg void OnUpdateCamarasCamara1(CCmdUI* pCmdUI);
-	afx_msg void OnCamarasCamara2();
-	afx_msg void OnUpdateCamarasCamara2(CCmdUI* pCmdUI);
-	afx_msg void OnCamarasPersona();
-	afx_msg void OnUpdateCamarasPersona(CCmdUI* pCmdUI);
-	afx_msg void OnCamarasExterior();
-	afx_msg void OnUpdateCamarasExterior(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasExteriorFrontal();
+	afx_msg void OnUpdateCamarasExteriorFrontal(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasTemple();
+	afx_msg void OnUpdateCamarasTemple(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp

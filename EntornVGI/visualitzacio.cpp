@@ -431,7 +431,7 @@ void Vista_Esferica(CEsfe3D opv,char VPol,bool pant,CPunt3D tr,CPunt3D trF,
 // Dibuixa el grid actiu
 	if ((reixa.x) || (reixa.y) || (reixa.z) || (reixa.w)) draw_Grid(reixa, hreixa);
 }
-void Vista_Exterior(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
 	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
@@ -480,7 +480,19 @@ void Vista_Exterior(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
 	//glTranslatef(-5, 10, 3);	// Traslació fixada amb la INSERT dins l'opció pan
 
 // Especificació del punt de vista
-	gluLookAt(0,10,3,cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+	if (camara == DEFAULT_CAM) {
+		if (pant) glTranslatef(tr.x, tr.y, tr.z);
+		glTranslatef(trF.x, trF.y, trF.z);	// Traslació fixada amb la INSERT dins l'opció pan
+
+	// Especificació del punt de vista
+		gluLookAt(cam[0], cam[1], cam[2], 0., 0., 0., up[0], up[1], up[2]);
+	}
+	else if (camara == EXTERIOR_FRONTAL) {
+		gluLookAt(0, 10, 3, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+	}
+	else if (camara == TEMPLE_CAM) {
+		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+	}
 
 	// Iluminacio fixe respecte la camara (després glLookAt)
 	if (ifix) Iluminacio(iluminacio, ifix, il2sides, llum_amb, lumi, objecte, frnt_fcs, bck_ln, step);

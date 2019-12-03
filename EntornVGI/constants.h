@@ -22,10 +22,11 @@
 #define PERSPECT 'P'
 #define IMA_PICK 3
 #define PASSEIG_V 4
-#define CAMARA1 'C'
-#define CAMARA2 'c'
-#define PERSONA1 'V'
-#define EXTERIOR 'E'
+
+//cameras
+#define EXTERIOR_FRONTAL 'F'
+#define TEMPLE_CAM 'T'
+#define DEFAULT_CAM 'D'
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
 #define POLARZ 'Z'

@@ -33,7 +33,11 @@ void Vista_Navega(CPunt3D pv,bool pvb,GLfloat n[3],GLfloat v[3], bool pant,CPunt
 				  bool ifix, bool il2sides,bool eix, CMask3D reixa, CPunt3D hreixa);
 
 void Projeccio_Camara1(int minx, int miny, GLsizei w, GLsizei h, float zoom);
-void Vista_Exterior(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
+	CColor col_fons, CColor col_object, char objecte, double mida, int step,
+	bool frnt_fcs, bool oculta, bool testv, bool bck_ln, char iluminacio, bool llum_amb, LLUM* lumin,
+	bool ifix, bool il2sides, bool eix, CMask3D reixa, CPunt3D hreixa);
+void Vista_Temple(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln, char iluminacio, bool llum_amb, LLUM* lumin,
 	bool ifix, bool il2sides, bool eix, CMask3D reixa, CPunt3D hreixa);

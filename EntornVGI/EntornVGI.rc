@@ -333,11 +333,10 @@ BEGIN
         POPUP "Camaras"
         BEGIN
             MENUITEM "Persona",                     ID_CAMARAS_PERSONA
-            MENUITEM "Exterior",                    ID_CAMARAS_EXTERIOR
+            MENUITEM "Exterior_Frontal",            ID_CAMARAS_EXTERIOR_FRONTAL
             MENUITEM "Camara libre",                ID_CAMARAS_CAMARALIBRE
             MENUITEM "Otros",                       ID_CAMARAS_OTROS
-            MENUITEM "Camara1",                     ID_CAMARAS_CAMARA1
-            MENUITEM "Camara2",                     ID_CAMARAS_CAMARA2
+            MENUITEM "Temple",                      ID_CAMARAS_TEMPLE
         END
         MENUITEM "Texturas",                    ID_HURAKAN_TEXTURAS
     END
