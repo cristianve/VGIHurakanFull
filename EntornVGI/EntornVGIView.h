@@ -53,6 +53,9 @@ public:
 	double gir_vert = 0;
 	bool iscamarahoritz = false;
 	double gir_horitz = 0;
+	double pos_persona_x = POS_PERSONA_INI_X;
+	double pos_persona_y = POS_PERSONA_INI_Y;
+	double altura_persona = ALTURA_PERSONA_INI;
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
 

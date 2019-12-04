@@ -435,7 +435,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
 	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
-	bool eix, CMask3D reixa, CPunt3D hreixa)
+	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona)
 {
 	GLfloat cam[3], up[3];
 
@@ -444,6 +444,9 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	opv.beta = opv.beta * pi / 180;
 
 	if (opv.R < 1.0) opv.R = 1.0;
+	if (camara != DEFAULT_CAM) {
+		opv.R = 400;
+	}
 	// Neteja dels buffers de color i profunditat
 	Fons(col_fons);
 
@@ -488,11 +491,12 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		gluLookAt(cam[0], cam[1], cam[2], 0., 0., 0., up[0], up[1], up[2]);
 	}
 	else if (camara == EXTERIOR_FRONTAL) {
-		gluLookAt(0, 10, 3, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+		gluLookAt(pos_persona_x, pos_persona_y, altura_persona, cam[0]+pos_persona_x, cam[1]+pos_persona_y-10, cam[2], up[0], up[1], up[2]);
 	}
 	else if (camara == TEMPLE_CAM) {
 		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
 	}
+	
 
 	// Iluminacio fixe respecte la camara (després glLookAt)
 	if (ifix) Iluminacio(iluminacio, ifix, il2sides, llum_amb, lumi, objecte, frnt_fcs, bck_ln, step);

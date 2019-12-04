@@ -27,6 +27,10 @@
 #define EXTERIOR_FRONTAL 'F'
 #define TEMPLE_CAM 'T'
 #define DEFAULT_CAM 'D'
+#define SPLIT_CAM 'S'
+#define POS_PERSONA_INI_X 0
+#define POS_PERSONA_INI_Y 10
+#define ALTURA_PERSONA_INI 3
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
 #define POLARZ 'Z'

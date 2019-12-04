@@ -769,63 +769,182 @@ void CEntornVGIView::OnPaint()
 	{
 	case PERSPECT:
 // PROJECCIÓ PERSPECTIVA
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-		glDisable(GL_SCISSOR_TEST);		// Desactivació del retall de pantalla
-
-		// Definició de Viewport, Projecció i Càmara
-		Projeccio_Perspectiva(0, 0, w, h, OPV.R);
-		if (navega) {
-			Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-				front_faces, oculta, test_vis, back_line,
-				ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-				eixos, grid, hgrid);
-		}
-		else {
-			n[0] = 0;		n[1] = 0;		n[2] = 0;
-			Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-				front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid);
-		}
-		
-		// Dibuix de l'Objecte o l'Escena
-		glPushMatrix();
-			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
-			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
-		glPopMatrix();
-
-// Intercanvia l'escena al front de la pantalla
-		//SwapBuffers(m_pDC->GetSafeHdc());
-		glViewport(0, 0, 0.1*w, w*0.1);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 500, 0,300, 0, 200);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt( 100, 100, 199, 100, 100, 0, 0, 1, 0);
-		glPushMatrix();
-			glEnable(GL_TEXTURE_2D);
-			if (Player1->IsConnected()) {
-				glActiveTexture(texturesID[OBJECTEPAD_ON]);
-				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+		if (cam != SPLIT_CAM) {
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+			glDisable(GL_SCISSOR_TEST);		// Desactivació del retall de pantalla
+			eixos = false;
+			// Definició de Viewport, Projecció i Càmara
+			Projeccio_Perspectiva(0, 0, w, h, OPV.R);
+			if (navega) {
+				Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
 			}
 			else {
-				glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+				n[0] = 0;		n[1] = 0;		n[2] = 0;
+				Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona);
 			}
-			glEnable(GL_TEXTURE_2D);
-			glBegin(GL_QUADS);
-				//glColor3f(1, 0, 0);
-				glTexCoord2i(0, 0);
-				glVertex2i(100, 100);
-				glTexCoord2i(0,1);
-				glVertex2i(100, 300);
-				glTexCoord2i(1, 1);
-				glVertex2i(500,300);
-				glTexCoord2i(1, 0);
-				glVertex2i(500, 100);
-			glEnd();
-			glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
 
+			// Dibuix de l'Objecte o l'Escena
+			glPushMatrix();
+				configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+				dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+			glPopMatrix();
+
+			// Intercanvia l'escena al front de la pantalla
+					//SwapBuffers(m_pDC->GetSafeHdc());
+			glViewport(0, 0, 0.1 * w, w * 0.1);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, 500, 0, 300, 0, 200);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+			glPushMatrix();
+				glEnable(GL_TEXTURE_2D);
+				if (Player1->IsConnected()) {
+					glActiveTexture(texturesID[OBJECTEPAD_ON]);
+					glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+				}
+				else {
+					glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+					glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+				}
+				glEnable(GL_TEXTURE_2D);
+				glBegin(GL_QUADS);
+					//glColor3f(1, 0, 0);
+					glTexCoord2i(0, 0);
+					glVertex2i(100, 100);
+					glTexCoord2i(0, 1);
+					glVertex2i(100, 300);
+					glTexCoord2i(1, 1);
+					glVertex2i(500, 300);
+					glTexCoord2i(1, 0);
+					glVertex2i(500, 100);
+				glEnd();
+				glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+		}
+		else {
+			glEnable(GL_SCISSOR_TEST);
+			glScissor(0, 0, w, h);
+			glViewport(0, 0, w, h);
+
+			//avall esq
+			glScissor(0, 0, w / 2, h / 2);
+			//glViewport(0, 0, w / 2, h / 2);
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+			Projeccio_Perspectiva(0, 0, w/2, h/2, OPV.R);
+			if (navega) {
+				Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
+			}
+			else {
+				OPV.alfa = 30;
+				OPV.beta = 270;
+				pos_persona_x = 0;
+				pos_persona_y = 15;
+				altura_persona = 0.5;
+				n[0] = 0;		n[1] = 0;		n[2] = 0;
+				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona);
+				altura_persona = ALTURA_PERSONA_INI;
+			}
+			
+			// Dibuix de l'Objecte o l'Escena
+			glPushMatrix();
+			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+			glPopMatrix();
+
+			//avall dreta
+			glScissor(w/2, 0, w/2 , h / 2);
+			//glViewport(w/2, 0, w/2 , h / 2);
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+			Projeccio_Perspectiva(w/2, 0, w/2 , h/2, OPV.R);
+			if (navega) {
+				Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
+			}
+			else {
+				n[0] = 0;		n[1] = 0;		n[2] = 0;
+
+				OPV.alfa = 325;
+				OPV.beta = 90;
+				altura_persona = 17;
+				pos_persona_x = 0;
+				pos_persona_y = -15;
+				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona);
+				altura_persona = ALTURA_PERSONA_INI;
+			}
+
+			// Dibuix de l'Objecte o l'Escena
+			glPushMatrix();
+			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+			glPopMatrix();
+
+			//amunt esq
+			glScissor(0, h / 2, w / 2, h / 2);
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+			Projeccio_Perspectiva(0, h/2, w / 2, h / 2, OPV.R);
+			if (navega) {
+				Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
+			}
+			else {
+				n[0] = 0;		n[1] = 0;		n[2] = 0;
+				OPV.beta = 300;
+				OPV.alfa = 20;
+				pos_persona_y = 20;
+				pos_persona_x = -10;
+				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona);
+			}
+
+			// Dibuix de l'Objecte o l'Escena
+			glPushMatrix();
+			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+			glPopMatrix();
+
+			//amunt dreta
+			glScissor(w/2, h / 2, w / 2, h / 2);
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+			Projeccio_Perspectiva(w/2, h / 2, w / 2, h / 2, OPV.R);
+			if (navega) {
+				Vista_Navega(opvN, false, n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
+			}
+			else {
+				n[0] = 0;		n[1] = 0;		n[2] = 0;
+				OPV.beta = 120;
+				OPV.alfa = 60;
+				OPV.R = 30;
+				Vista_Nuestra(DEFAULT_CAM, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona);
+			}
+
+			// Dibuix de l'Objecte o l'Escena
+			glPushMatrix();
+			configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+			dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+			glPopMatrix();
+
+			glDisable(GL_SCISSOR_TEST);
+
+		}
 		SwapBuffers(m_pDC->GetSafeHdc());
 		break;
 
@@ -2523,29 +2642,130 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			XINPUT_KEYSTROKE key = Player1->GetKey();
 			bool tecla_brac = false;
 			bool tecla_seient = false;
-
 			//BOTONES BRAZO
 			//Get moves brazo
 			float brazo_pos = state.Gamepad.bRightTrigger;
 			float brazo_neg = state.Gamepad.bLeftTrigger;
+			bool refresh_pos = false;
 
-			if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ) {
+			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) {
+				if (cam != DEFAULT_CAM) {
+						
+				}
+				else {
+					OPV.R = OPV.R - 1;
+				}
+			}
+			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) {
+				if (cam != DEFAULT_CAM) {
+
+				}
+				else {
+					OPV.R = OPV.R + 1;
+				}
+			}
+
+			if (cam == EXTERIOR_FRONTAL) {
+				double ang = 270-OPV.beta;
+				if (ang < 0) ang = ang + 360;
+				if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+					
+					if (ang >= 0 && ang <= 90) {
+						pos_persona_x = pos_persona_x - (1-ang/90) * 0.2;
+						pos_persona_y = pos_persona_y + (ang/90)* 0.2;
+					}
+					else if (ang > 90 && ang <= 180) {
+						pos_persona_y = pos_persona_y + (1-(ang-90)/90) * 0.2;
+						pos_persona_x = pos_persona_x + ((ang - 90) / 90) * 0.2;
+					}
+					else if (ang > 180 && ang <= 270) {
+						pos_persona_x = pos_persona_x + (1- (ang - 180) / 90) * 0.2;
+						pos_persona_y = pos_persona_y - ((ang -180) / 90) * 0.2;
+					}
+					else if(ang > 270 && ang <= 360){
+						pos_persona_y = pos_persona_y - (1 - (ang - 270) / 90) * 0.2;
+						pos_persona_x = pos_persona_x - ((ang - 270) / 90) * 0.2;
+					}
+					refresh_pos = true;
+
+				}
+				if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+					
+					if (ang >= 0 && ang <= 90) {
+						pos_persona_x = pos_persona_x + (1-(ang / 90)) * 0.2;
+						pos_persona_y = pos_persona_y - (ang/90) * 0.2;
+					}
+					else if (ang > 90 && ang <= 180) {
+						pos_persona_y = pos_persona_y - (1 - (ang - 90) / 90)*0.2;
+						pos_persona_x = pos_persona_x - ((ang - 90) / 90) * 0.2;
+					}
+					else if (ang > 180 && ang <= 270) {
+						pos_persona_x = pos_persona_x - (1 - (ang - 180) / 90)*0.2;
+						pos_persona_y = pos_persona_y + ((ang - 180) / 90) * 0.2;
+					}
+					else if(ang>270 && ang<=360){
+						pos_persona_y = pos_persona_y + (1-(ang - 270) / 90) * 0.2;
+						pos_persona_x = pos_persona_x + ((ang - 270) / 90) * 0.2;
+					}
+					refresh_pos = true;
+
+				}
+
+				if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+
+					if (ang >= 0 && ang <= 90) {
+						pos_persona_y = pos_persona_y - (1-(ang / 90)) * 0.2;
+						pos_persona_x = pos_persona_x - (ang / 90) * 0.2;
+					}
+					else if (ang > 90 && ang <= 180) {
+						pos_persona_x = pos_persona_x - (1 - ((ang-90) / 90)) * 0.2;
+						pos_persona_y = pos_persona_y + ((ang - 90) / 90) * 0.2;
+					}
+					else if (ang > 180 && ang <= 270) {
+						pos_persona_y = pos_persona_y + (1-((ang - 180) / 90)) * 0.2;
+						pos_persona_x = pos_persona_x + ((ang - 180) / 90) * 0.2;
+					}
+					else if (ang > 270 && ang <= 360) {
+						pos_persona_x = pos_persona_x + (1-((ang - 270) / 90)) * 0.2;
+						pos_persona_y = pos_persona_y - ((ang - 270) / 90) * 0.2;
+					}
+					refresh_pos = true;
+				}
+				if (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+
+					if (ang >= 0 && ang <= 90) {
+						pos_persona_y = pos_persona_y + (1 - (ang / 90)) * 0.2;
+						pos_persona_x = pos_persona_x + (ang/90) * 0.2;
+					}
+					else if (ang > 90 && ang <= 180) {
+						pos_persona_x = pos_persona_x + (1-(ang-90)/90) * 0.2;
+						pos_persona_y = pos_persona_y - ((ang - 90) / 90) * 0.2;
+					}
+					else if (ang > 180 && ang <= 270) {
+						pos_persona_y = pos_persona_y - (1 - (ang - 180) / 90) * 0.2;
+						pos_persona_x = pos_persona_x - ((ang - 180) / 90) * 0.2;
+					}
+					else if(ang>270 && ang<=360) {
+						pos_persona_x = pos_persona_x - (1 - (ang - 270) / 90) * 0.2;
+						pos_persona_y = pos_persona_y + ((ang - 270) / 90) * 0.2;
+					}
+					refresh_pos = true;
+				}
+				if (refresh_pos) {
+					InvalidateRect(NULL, false);
+				}
+			}
+
+			if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				if (cam != DEFAULT_CAM) {
 					OPV.beta = OPV.beta - 1;
 				}
 				else {
-					OPV.beta = OPV.beta + 1;
+					OPV.beta = OPV.beta + 2;
 				}
 				if (cam == TEMPLE_CAM) {
-					if (OPV.beta >= 190)	OPV.beta = 190;
-					if (OPV.beta < 0) {
-						if (OPV.beta < -10) {
-							OPV.beta = -10 + 360;
-						}
-						else {
-							OPV.beta = OPV.beta + 360;
-						}
-					}
+					if (OPV.beta >= 140)	OPV.beta = 140;
+					if (OPV.beta <= 40) OPV.beta = 40;
 				}
 				else {
 					if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
@@ -2554,24 +2774,17 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				InvalidateRect(NULL, false);
 				
 			}
-			if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+			if (state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				if (cam != DEFAULT_CAM) {
 					OPV.beta = OPV.beta + 1;
 				}
 				else {
-					OPV.beta = OPV.beta - 1;
+					OPV.beta = OPV.beta - 2;
 				}
 
 				if (cam == TEMPLE_CAM) {
-					if (OPV.beta >= 100)	OPV.beta =100;
-					if (OPV.beta < 0){
-						if (OPV.beta < -100) {
-							OPV.beta = -100 + 360;
-						}
-						else {
-							OPV.beta = OPV.beta + 360;
-						}
-					}
+					if (OPV.beta >= 140)	OPV.beta =140;
+					if (OPV.beta <= 40) OPV.beta = 40;
 				}
 				else {
 					if (OPV.beta >= 360)	OPV.beta = OPV.beta - 360;
@@ -2581,21 +2794,39 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			}
 			
-			if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+			if (state.Gamepad.sThumbRY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				
-				OPV.alfa = OPV.alfa + 1;
-				
-				if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
-				if (OPV.alfa < 0)		OPV.alfa = OPV.alfa + 360;
+				OPV.alfa = OPV.alfa + 2;
+				if (cam == TEMPLE_CAM) {
+					if (OPV.alfa >= 45)	OPV.alfa = 45;
+					if (OPV.alfa <= -45) OPV.alfa = -45;
+				}
+				else if (cam==DEFAULT_CAM){
+					if (OPV.alfa >= 180)	OPV.alfa = 180;
+					if (OPV.alfa < 0)		OPV.alfa = 0;
+				}
+				else {
+					if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
+					if (OPV.alfa < 0)		OPV.alfa= OPV.alfa + 360;
+				}
 				InvalidateRect(NULL, false);
 
 			}
-			if (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+			if (state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM ) {
 
-				OPV.alfa = OPV.alfa - 1;
-
-				if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
-				if (OPV.alfa < 0)		OPV.alfa = OPV.alfa + 360;
+				OPV.alfa = OPV.alfa - 2;
+				if (cam == TEMPLE_CAM) {
+					if (OPV.alfa >= 45)	OPV.alfa = 45;
+					if (OPV.alfa <= -45) OPV.alfa = -45;
+				}
+				else if (cam == DEFAULT_CAM) {
+					if (OPV.alfa >= 180)	OPV.alfa = 180;
+					if (OPV.alfa < 0)		OPV.alfa = 0;
+				}
+				else {
+					if (OPV.alfa >= 360)	OPV.alfa = OPV.alfa - 360;
+					if (OPV.alfa < 0)		OPV.alfa = OPV.alfa + 360;
+				}
 				InvalidateRect(NULL, false);
 
 			}
@@ -2603,14 +2834,23 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			if (key.VirtualKey == VK_PAD_DPAD_RIGHT) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (cam == DEFAULT_CAM) {
+						cam = SPLIT_CAM;
+					}
+					else if (cam == SPLIT_CAM) {
 						cam = TEMPLE_CAM;
+						OPV.alfa = 0;
+						OPV.beta = 90;
 					}
 					else if (cam == TEMPLE_CAM) {
 						cam = EXTERIOR_FRONTAL;
-						OPV.beta = -90;
+						pos_persona_x = POS_PERSONA_INI_X;
+						pos_persona_y = POS_PERSONA_INI_Y;
+						OPV.alfa = 0;
+						OPV.beta = 270;
 					}
 					else if (cam == EXTERIOR_FRONTAL) {
 						cam = DEFAULT_CAM;
+						OPV.alfa = 10;
 						OPV.beta = 90;
 					}
 				}
@@ -2621,14 +2861,23 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (cam == DEFAULT_CAM) {
 						cam = EXTERIOR_FRONTAL;
-						OPV.beta = -90;
+						OPV.alfa = 0;
+						OPV.beta = 270;
+						pos_persona_x = POS_PERSONA_INI_X;
+						pos_persona_y = POS_PERSONA_INI_Y;
 					}
 					else if (cam == EXTERIOR_FRONTAL) {
 						cam = TEMPLE_CAM;
+						OPV.alfa = 0;
 						OPV.beta = 90;
 					}
 					else if (cam == TEMPLE_CAM) {
+						cam = SPLIT_CAM;
+					}
+					else if (cam == SPLIT_CAM) {
 						cam = DEFAULT_CAM;
+						OPV.alfa = 10;
+						OPV.beta = 90;
 					}
 				}
 
