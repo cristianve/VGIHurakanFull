@@ -82,7 +82,7 @@ private:
 public:
 
 	//Constructor
-	Objeto() {};
+	Objeto() { angle.x = 0; };
 	
 	//GENERAL OBJECTE
 
@@ -112,6 +112,7 @@ public:
 	//CONTROL FREE MOVE
 	void set_peso(double peso) { this->peso = peso; };
 	void set_angle_free_move(double angle) { angle_free_move = angle; }
+	double get_angle_free_move() { return angle_free_move; }
 	void set_fricc(double fact) { fricc = fact; };
 	void freeStep_f(double time);
 	void freeStep_b(double time);

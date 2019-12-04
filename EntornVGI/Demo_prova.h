@@ -5,6 +5,7 @@
 #include "constants.h"
 #include <iostream>
 #include <ctime>
+#include <cmath>
 
 #define LIBRE 1
 
@@ -16,6 +17,7 @@ private:
 	bool textura = false;
 	Objeto brac;
 	Objeto seient;
+	double angle_abs_brac;
 	 
 public:
 	int mode = 0;
@@ -32,6 +34,7 @@ public:
 	
 	Demo_prova()
 	{
+		angle_abs_brac = 0;
 		demo_on = false;
 		seient.set_peso(7000);
 		brac.set_fricc(12);
@@ -56,6 +59,7 @@ public:
 	};
 	void setEstadoBrazo(int estado) { brac.set_estado(estado); }
 	void setEstadoAsientos(int estado) { seient.set_estado(estado); }
+	void get_pos_asientos(double& pos_x, double& pos_y, double& pos_z);
 	void dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 	int get_estado_brazo() { return brac.getState(); };
 	int get_estado_Asiento() { return seient.getState(); };

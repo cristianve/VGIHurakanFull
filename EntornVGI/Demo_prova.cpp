@@ -1,12 +1,39 @@
 #include "stdafx.h"
 #include "Demo_prova.h"
 
+
+void Demo_prova::get_pos_asientos(double& pos_x, double& pos_y, double& pos_z) {
+
+	double l = 0.05;
+	double z = 0.05;
+	pos_x = 0;
+	double ang = brac.get_angle().x / 360+360;
+	if (brac.get_angle().x >= -90 && brac.get_angle().x <90) {
+		pos_y = l * brac.get_angle().x;
+	}
+	else if(brac.get_angle().x >=90 && brac.get_angle().x < 90) {
+		pos_y = -l * brac.get_angle().x;
+	}
+	
+	//pos_z = l-cos(brac.get_angle().x)*40+3;
+	
+	if (brac.get_angle().x >= 0 && brac.get_angle().x <180) {
+		pos_z = z * brac.get_angle().x + 3;
+	}
+	else {
+		pos_z = -(z * brac.get_angle().x) + 3;
+	}
+	
+}
+
 void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 
 	coord pos_brac_origen = brac.get_desp_origen();
 	coord pos_seient_origen = seient.get_desp_origen();
 	coord angle_brac = brac.get_angle();
 	coord angle_seient = seient.get_angle();
+	angle_abs_brac = angle_abs_brac +brac.get_angle().x;
+
 
 	glEnable(GL_TEXTURE_2D);
 

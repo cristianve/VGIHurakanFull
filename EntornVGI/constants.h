@@ -31,6 +31,7 @@
 #define POS_PERSONA_INI_X 0
 #define POS_PERSONA_INI_Y 10
 #define ALTURA_PERSONA_INI 3
+#define CAM_ASIENTOS 'A'
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
 #define POLARZ 'Z'
