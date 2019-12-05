@@ -32,7 +32,7 @@ extern const CString PATH_ASIENTO = CString(_T("obj/hurakan_seients.obj"));
 extern const CString PATH_FLOOR = CString(_T("obj/floor.obj"));
 extern const CString PATH_SKYDOME = CString(_T("obj/skydome.obj"));
 extern const CString PATH_GRASS = CString(_T("obj/Background_grass.obj"));
-extern const CString PATH_WALLS = CString(_T("obj/Backgroud_walls.obj"));
+extern const CString PATH_WALLS = CString(_T("obj/Background_walls.obj"));
 extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
 extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
 //TEXTURES
@@ -42,7 +42,7 @@ extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
 extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.jpg"));
 extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
 extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
-extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/Walls.jpg"));
+extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/wall.jpg"));
 extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/others.png"));
 extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
 extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
@@ -690,6 +690,7 @@ void CEntornVGIView::OnInitialUpdate()
 	ilumina = PLANA;
 	oculta = true;
 	textura = true;
+	cam = DEFAULT_CAM;
 	demo_on = false;
 	anima = true;
 	if (d1.instant != 0 && demo_on) {
@@ -770,8 +771,10 @@ void CEntornVGIView::OnPaint()
 	case PERSPECT:
 // PROJECCIÓ PERSPECTIVA
 		if (cam != SPLIT_CAM) {
+			glEnable(GL_SCISSOR_TEST);
+			glScissor(0, 0, w, h);
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
-			glDisable(GL_SCISSOR_TEST);		// Desactivació del retall de pantalla
+					// Desactivació del retall de pantalla
 			eixos = false;
 			// Definició de Viewport, Projecció i Càmara
 			Projeccio_Perspectiva(0, 0, w, h, OPV.R);
@@ -783,11 +786,9 @@ void CEntornVGIView::OnPaint()
 			}
 			else {
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
-				if (cam == CAM_ASIENTOS) {
-					d1.get_pos_asientos(pos_asiento_x,pos_asiento_y,pos_asiento_z);
-				}
+				
 				Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,d1.get_angle_brac());
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -795,9 +796,7 @@ void CEntornVGIView::OnPaint()
 				configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
 				dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 			glPopMatrix();
-
-			// Intercanvia l'escena al front de la pantalla
-					//SwapBuffers(m_pDC->GetSafeHdc());
+			glScissor(0, 0, 0.1 * w, 0.1 * w);
 			glViewport(0, 0, 0.1 * w, w * 0.1);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
@@ -806,29 +805,34 @@ void CEntornVGIView::OnPaint()
 			glLoadIdentity();
 			gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
 			glPushMatrix();
-				glEnable(GL_TEXTURE_2D);
-				if (Player1->IsConnected()) {
-					glActiveTexture(texturesID[OBJECTEPAD_ON]);
-					glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-				}
-				else {
-					glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-					glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-				}
-				glEnable(GL_TEXTURE_2D);
-				glBegin(GL_QUADS);
-					//glColor3f(1, 0, 0);
-					glTexCoord2i(0, 0);
-					glVertex2i(100, 100);
-					glTexCoord2i(0, 1);
-					glVertex2i(100, 300);
-					glTexCoord2i(1, 1);
-					glVertex2i(500, 300);
-					glTexCoord2i(1, 0);
-					glVertex2i(500, 100);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
+			glEnable(GL_TEXTURE_2D);
+			if (Player1->IsConnected()) {
+				glActiveTexture(texturesID[OBJECTEPAD_ON]);
+				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+			}
+			else {
+				glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+			}
+			glEnable(GL_TEXTURE_2D);
+			glBegin(GL_QUADS);
+			//glColor3f(1, 0, 0);
+			glTexCoord2i(0, 0);
+			glVertex2i(100, 100);
+			glTexCoord2i(0, 1);
+			glVertex2i(100, 300);
+			glTexCoord2i(1, 1);
+			glVertex2i(500, 300);
+			glTexCoord2i(1, 0);
+			glVertex2i(500, 100);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_SCISSOR_TEST);
 			glPopMatrix();
+			
+			// Intercanvia l'escena al front de la pantalla
+					//SwapBuffers(m_pDC->GetSafeHdc());
+			
 		}
 		else if (cam == SPLIT_CAM) {
 			glEnable(GL_SCISSOR_TEST);
@@ -854,7 +858,7 @@ void CEntornVGIView::OnPaint()
 				altura_persona = 0.5;
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,d1.get_angle_brac());
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 			
@@ -884,7 +888,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_x = 0;
 				pos_persona_y = -15;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 
@@ -911,7 +915,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_y = 20;
 				pos_persona_x = -10;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -936,7 +940,7 @@ void CEntornVGIView::OnPaint()
 				OPV.alfa = 60;
 				OPV.R = 30;
 				Vista_Nuestra(DEFAULT_CAM, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -2654,7 +2658,7 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) {
 				if (cam != DEFAULT_CAM) {
-						
+					
 				}
 				else {
 					OPV.R = OPV.R - 1;

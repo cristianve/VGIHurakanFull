@@ -435,7 +435,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
 	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
-	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double pos_asiento_x, double pos_asiento_y, double pos_asiento_z)
+	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double angle_seient)
 {
 	GLfloat cam[3], up[3];
 
@@ -497,7 +497,11 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
 	}
 	else if (camara == CAM_ASIENTOS) {
-		gluLookAt(pos_asiento_x, pos_asiento_y, pos_asiento_z, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
+
+		glTranslatef(-DESP_ORIGEN_BRAC_X, -1, -DESP_ORIGEN_BRAC_Z+2);
+		glRotatef(angle_seient, 1, 0, 0);
+		glTranslatef(DESP_ORIGEN_BRAC_X, +1, DESP_ORIGEN_BRAC_Z -2);
+		gluLookAt(POS_ASIENTO_X, POS_ASIENTO_Y, POS_ASIENTO_Z, cam[0]+POS_ASIENTO_X, cam[1]+POS_ASIENTO_Y, cam[2]+POS_ASIENTO_Z, up[0], up[1], up[2]);
 	}
 	
 

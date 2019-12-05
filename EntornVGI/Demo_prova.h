@@ -41,13 +41,13 @@ public:
 		seient.set_fricc(8);
 		//Iniciamos el brazo
 		brac.set_estado(LIBRE);
-		brac.set_desp_origen(0.5, 0.067, 8.93);
+		brac.set_desp_origen(DESP_ORIGEN_BRAC_X, DESP_ORIGEN_BRAC_Y, DESP_ORIGEN_BRAC_Z);
 		brac.set_angle(0, 0, 0);
 		brac.set_v_angular(0);
 
 		//Iniciamos los asientos
 		seient.set_estado(LIBRE);
-		seient.set_desp_origen(0.5, 0, 2.64);
+		seient.set_desp_origen(DESP_ORIGEN_ASIENTO_X,DESP_ORIGEN_ASIENTO_Y,DESP_ORIGEN_ASIENTO_Z);
 		seient.set_angle(0, 0, 0);
 		seient.set_v_angular(0);
 		if (brac.get_duracio() > seient.get_duracio()) duracion_total = brac.get_duracio();
@@ -59,6 +59,7 @@ public:
 	};
 	void setEstadoBrazo(int estado) { brac.set_estado(estado); }
 	void setEstadoAsientos(int estado) { seient.set_estado(estado); }
+	double get_angle_brac() { return brac.get_angle().x; };
 	void get_pos_asientos(double& pos_x, double& pos_y, double& pos_z);
 	void dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);
 	int get_estado_brazo() { return brac.getState(); };

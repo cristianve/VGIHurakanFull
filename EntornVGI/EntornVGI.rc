@@ -309,49 +309,33 @@ BEGIN
     MENUITEM SEPARATOR
     POPUP "Hurakan"
     BEGIN
-        MENUITEM "Activar/Desactivar Texturas", ID_HURAKAN_HURAKAN, CHECKED
-        POPUP "Partes Hurakan"
-        BEGIN
-            MENUITEM "Brazo",                       ID_PARTESHURAKAN_BRAZO
-            MENUITEM "Asientos",                    ID_PARTESHURAKAN_ASIENTOS
-            MENUITEM "Base",                        ID_PARTESHURAKAN_BASE
-            MENUITEM "Skydome",                     ID_PARTESHURAKAN_SKYDOME
-            MENUITEM "Floor",                       ID_PARTESHURAKAN_FLOOR
-        END
-        POPUP "Ciclos"
-        BEGIN
-            MENUITEM "Prueba1",                     ID_CICLOS_PRUEBA1, CHECKED
-            MENUITEM "Prueba2",                     ID_CICLOS_PRUEBA2
-            MENUITEM "Ciclo completo",              ID_CICLOS_CICLOCOMPLETO
-            MENUITEM "Prueba Grabada",              ID_CICLOS_PRUEBAGRABADA, CHECKED
-        END
-        POPUP "Entorno"
-        BEGIN
-            MENUITEM "Agua",                        ID_ENTORNO_AGUA
-            MENUITEM "Iluminacion",                 ID_ENTORNO_ILUMINACION
-        END
-        POPUP "Camaras"
-        BEGIN
-            MENUITEM "Persona",                     ID_CAMARAS_PERSONA
-            MENUITEM "Exterior_Frontal",            ID_CAMARAS_EXTERIOR_FRONTAL
-            MENUITEM "Camara libre",                ID_CAMARAS_CAMARALIBRE
-            MENUITEM "Otros",                       ID_CAMARAS_OTROS
-            MENUITEM "Temple",                      ID_CAMARAS_TEMPLE
-        END
-        MENUITEM "Texturas",                    ID_HURAKAN_TEXTURAS
+        MENUITEM "Escena Programada",           ID_CICLOS_PRUEBA1, CHECKED
+        MENUITEM "Escena Gravada",              ID_CICLOS_PRUEBAGRABADA, CHECKED
+    END
+    POPUP "Camaras"
+    BEGIN
+        MENUITEM "Persona",                     ID_CAMARAS_PERSONA
+        MENUITEM "Exterior_Frontal",            ID_CAMARAS_EXTERIOR_FRONTAL
+        MENUITEM "Camara libre",                ID_CAMARAS_CAMARALIBRE
+        MENUITEM "Otros",                       ID_CAMARAS_OTROS
+        MENUITEM "Temple",                      ID_CAMARAS_TEMPLE
     END
     MENUITEM "Play",                        ID_PLAY
     MENUITEM "Pause",                       ID_PAUSE
     MENUITEM "Stop",                        ID_STOP
-    POPUP "Injecciones Partes"
+    POPUP "Injeccio Parts"
     BEGIN
-        MENUITEM "Parte 1",                     ID_INJECCIONESPARTES_PARTE1
-        MENUITEM "Parte 2",                     ID_INJECCIONESPARTES_PARTE2
-        MENUITEM "Parte 3",                     ID_INJECCIONESPARTES_PARTE3
+        MENUITEM "Brazo",                       ID_PARTESHURAKAN_BRAZO
+        MENUITEM "Asientos",                    ID_PARTESHURAKAN_ASIENTOS
+        MENUITEM "Base",                        ID_PARTESHURAKAN_BASE
+        MENUITEM "Skydome",                     ID_PARTESHURAKAN_SKYDOME
+        MENUITEM "Floor",                       ID_PARTESHURAKAN_FLOOR
     END
-    MENUITEM "Projeccion",                  ID_PROJECCION
     MENUITEM "Iluminacion",                 ID_ILUMINACION
-    MENUITEM "Texturas",                    ID_TEXTURAS
+    POPUP "Texturas"
+    BEGIN
+        MENUITEM "Activar/Desactivar Texturas", ID_HURAKAN_HURAKAN, CHECKED
+    END
     POPUP "Control"
     BEGIN
         MENUITEM "Bloquear Asientos",           ID_CONTROL_BLOQUEARASIENTOS

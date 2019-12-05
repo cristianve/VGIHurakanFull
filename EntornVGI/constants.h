@@ -14,6 +14,15 @@
 
 #define V_MAXIMA 90
 #define CONST_TEMPS 1.66
+#define DESP_ORIGEN_BRAC_X 0.5 
+#define DESP_ORIGEN_BRAC_Y 0.067
+#define DESP_ORIGEN_BRAC_Z 8.93
+#define LONGITUD_BRAC 0
+
+#define DESP_ORIGEN_ASIENTO_X 0.5 
+#define DESP_ORIGEN_ASIENTO_Y 0
+#define DESP_ORIGEN_ASIENTO_Z 2.64
+
 
 //--------------- VGI: Tipus de Projecció
 #define CAP ' '
@@ -28,6 +37,9 @@
 #define TEMPLE_CAM 'T'
 #define DEFAULT_CAM 'D'
 #define SPLIT_CAM 'S'
+#define POS_ASIENTO_X 0
+#define POS_ASIENTO_Y 0
+#define POS_ASIENTO_Z 3
 #define POS_PERSONA_INI_X 0
 #define POS_PERSONA_INI_Y 10
 #define ALTURA_PERSONA_INI 3
@@ -78,7 +90,7 @@
 #define OBJECTEGRASS 12
 #define OBJECTETEMPLE 13
 #define OBJECTEOTHERS 14
-#define OBJECTEWALLS 15
+#define OBJECTEWALLS 19
 #define OBJECTEPERSONA 16
 #define OBJECTEPAD_ON 17
 #define OBJECTEPAD_OFF 18

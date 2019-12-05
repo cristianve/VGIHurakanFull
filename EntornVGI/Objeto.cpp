@@ -275,7 +275,10 @@ void Objeto::freeStep_f(double time)
 
 	angle.x = angle.x + (velo_angular * time);
 
-	if (angle.x >= 360) {
+	if (angle.x <= -360) {
+		angle.x = angle.x + 360;
+	}
+	else if (angle.x >= 360) {
 		angle.x = angle.x - 360;
 	}
 }
@@ -295,6 +298,12 @@ void Objeto::acelerar(double time, bool isPositivo,double vmax,double accel)
 		velo_angular += aceleracion * time;
 	}
 	angle.x = angle.x + (velo_angular * time);
+	if (angle.x <= -360) {
+		angle.x = angle.x + 360;
+	}
+	else if (angle.x >= 360) {
+		angle.x = angle.x - 360;
+	}
 }
 
 void Objeto::frenar(double time,double freno)
@@ -310,6 +319,12 @@ void Objeto::frenar(double time,double freno)
 		if (velo_angular > 0) velo_angular = 0;
 	}
 	angle.x = angle.x + (velo_angular * time);
+	if (angle.x <= -360) {
+		angle.x = angle.x + 360;
+	}
+	else if (angle.x >= 360) {
+		angle.x = angle.x - 360;
+	}
 }
 void Objeto::freeStep_b(double time)
 {
@@ -348,6 +363,9 @@ void Objeto::freeStep_b(double time)
 
 	if (angle.x <= -360) {
 		angle.x = angle.x + 360;
+	}
+	else if (angle.x >= 360) {
+		angle.x = angle.x - 360;
 	}
 }
 

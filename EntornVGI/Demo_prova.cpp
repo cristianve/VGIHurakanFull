@@ -2,29 +2,6 @@
 #include "Demo_prova.h"
 
 
-void Demo_prova::get_pos_asientos(double& pos_x, double& pos_y, double& pos_z) {
-
-	double l = 0.05;
-	double z = 0.05;
-	pos_x = 0;
-	double ang = brac.get_angle().x / 360+360;
-	if (brac.get_angle().x >= -90 && brac.get_angle().x <90) {
-		pos_y = l * brac.get_angle().x;
-	}
-	else if(brac.get_angle().x >=90 && brac.get_angle().x < 90) {
-		pos_y = -l * brac.get_angle().x;
-	}
-	
-	//pos_z = l-cos(brac.get_angle().x)*40+3;
-	
-	if (brac.get_angle().x >= 0 && brac.get_angle().x <180) {
-		pos_z = z * brac.get_angle().x + 3;
-	}
-	else {
-		pos_z = -(z * brac.get_angle().x) + 3;
-	}
-	
-}
 
 void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 
@@ -87,6 +64,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu) 
 	{
+		glActiveTexture(OBJECTEBASE);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -101,6 +79,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 		//TEXURES
 		if (textu) 
 		{
+			glActiveTexture(OBJECTEFLOOR);
 			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -117,6 +96,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu)
 	{
+		glActiveTexture(OBJECTEGRASS);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -135,6 +115,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu)
 	{
+		glActiveTexture(OBJECTEWALLS);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -151,6 +132,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu)
 	{
+		glActiveTexture(OBJECTEOTHERS);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -167,6 +149,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu)
 	{
+		glActiveTexture(OBJECTETEMPLE);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -182,6 +165,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	//TEXURES
 	if (textu) 
 	{
+		glActiveTexture(OBJECTESKYDOME);
 		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -190,6 +174,8 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 		glEnable(GL_TEXTURE_2D);
 	}//
 	glCallList(OBJECTESKYDOME);
+
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }
 
