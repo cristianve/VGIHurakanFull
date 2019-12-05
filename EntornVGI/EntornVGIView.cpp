@@ -118,6 +118,13 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 
 	ON_COMMAND(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnCiclosPruebagrabada)
 	ON_UPDATE_COMMAND_UI(ID_CICLOS_PRUEBAGRABADA, &CEntornVGIView::OnUpdateCiclosPruebagrabada)
+	//CAMARAS
+	ON_COMMAND(ID_CAMARAS_PERSONA, &CEntornVGIView::OnCamarasSeients)
+	ON_UPDATE_COMMAND_UI(ID_CAMARAS_PERSONA, &CEntornVGIView::OnUpdateCamarasSeients)
+	ON_COMMAND(ID_CAMARA_SPLIT, &CEntornVGIView::OnCamarasSplit)
+	ON_UPDATE_COMMAND_UI(ID_CAMARA_SPLIT, &CEntornVGIView::OnUpdateCamarasSplit)
+	ON_COMMAND(ID_CAMARAS_DEFAULT, &CEntornVGIView::OnCamarasDefault)
+	ON_UPDATE_COMMAND_UI(ID_CAMARAS_DEFAULT, &CEntornVGIView::OnUpdateCamarasDefault)
 	ON_COMMAND(ID_CAMARAS_EXTERIOR_FRONTAL, &CEntornVGIView::OnCamarasExteriorFrontal)
 	ON_UPDATE_COMMAND_UI(ID_CAMARAS_EXTERIOR_FRONTAL, &CEntornVGIView::OnUpdateCamarasExteriorFrontal)
 	ON_COMMAND(ID_CAMARAS_TEMPLE, &CEntornVGIView::OnCamarasTemple)
@@ -3830,3 +3837,54 @@ void CEntornVGIView::OnUpdateCamarasTemple(CCmdUI* pCmdUI)
 	if (cam == TEMPLE_CAM) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
+
+void CEntornVGIView::OnCamarasSeients()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	cam = CAM_ASIENTOS;
+	mobil = true;
+	zzoom = false;
+	InvalidateRect(NULL, false);
+}
+
+void CEntornVGIView::OnUpdateCamarasSeients(CCmdUI* pCmdUI)
+{
+
+	if (cam == CAM_ASIENTOS) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+
+void CEntornVGIView::OnCamarasSplit()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	cam = SPLIT_CAM;
+	mobil = true;
+	zzoom = false;
+	InvalidateRect(NULL, false);
+}
+
+void CEntornVGIView::OnUpdateCamarasSplit(CCmdUI* pCmdUI)
+{
+
+	if (cam == SPLIT_CAM) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+
+void CEntornVGIView::OnCamarasDefault()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	cam = DEFAULT_CAM;
+	mobil = true;
+	zzoom = false;
+	InvalidateRect(NULL, false);
+}
+
+void CEntornVGIView::OnUpdateCamarasDefault(CCmdUI* pCmdUI)
+{
+
+	if (cam == DEFAULT_CAM) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
+}
+
+
+

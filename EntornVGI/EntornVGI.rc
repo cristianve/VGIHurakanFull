@@ -54,8 +54,8 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)\r\n"
     "LANGUAGE 10, 3\r\n"
     "#include ""res\\EntornVGI.rc2""  // recursos editados que no son de Microsoft Visual C++\r\n"
-    "#include ""l.ESN\\afxres.rc""      // Componentes estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ndar\r\n"
-    "#include ""l.ESN\\afxprint.rc""    // Recursos de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n y vista previa de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n\r\n"
+    "#include ""l.ESN\\afxres.rc""      // Componentes estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ndar\r\n"
+    "#include ""l.ESN\\afxprint.rc""    // Recursos de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n y vista previa de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n\r\n"
     "#if !defined(_AFXDLL)\r\n"
     "#include ""l.ESN\\afxribbon.rc""        // Recursos de barra de control y cinta MFC\r\n"
     "#endif\r\n"
@@ -312,37 +312,39 @@ BEGIN
         MENUITEM "Escena Programada",           ID_CICLOS_PRUEBA1, CHECKED
         MENUITEM "Escena Gravada",              ID_CICLOS_PRUEBAGRABADA, CHECKED
     END
-    POPUP "Camaras"
+    POPUP "Càmeres"
     BEGIN
-        MENUITEM "Persona",                     ID_CAMARAS_PERSONA
-        MENUITEM "Exterior_Frontal",            ID_CAMARAS_EXTERIOR_FRONTAL
-        MENUITEM "Camara libre",                ID_CAMARAS_CAMARALIBRE
-        MENUITEM "Otros",                       ID_CAMARAS_OTROS
+        MENUITEM "Default",                     ID_CAMARAS_DEFAULT
         MENUITEM "Temple",                      ID_CAMARAS_TEMPLE
+        MENUITEM "Exterior frontal",            ID_CAMARAS_EXTERIOR_FRONTAL
+        MENUITEM "Persona (seients)",           ID_CAMARAS_PERSONA
+        MENUITEM "Camara lliure",               ID_CAMARAS_SPLITCAM
+        MENUITEM "Split Cam",                   ID_CAMARA_SPLIT
+        MENUITEM "Altres",                      ID_CAMERA_ALTRES
     END
     MENUITEM "Play",                        ID_PLAY
     MENUITEM "Pause",                       ID_PAUSE
     MENUITEM "Stop",                        ID_STOP
-    POPUP "Injeccio Parts"
+    POPUP "Injecció Parts"
     BEGIN
-        MENUITEM "Brazo",                       ID_PARTESHURAKAN_BRAZO
-        MENUITEM "Asientos",                    ID_PARTESHURAKAN_ASIENTOS
+        MENUITEM "Braç",                        ID_PARTESHURAKAN_BRAZO
+        MENUITEM "Seients",                     ID_PARTESHURAKAN_ASIENTOS
         MENUITEM "Base",                        ID_PARTESHURAKAN_BASE
         MENUITEM "Skydome",                     ID_PARTESHURAKAN_SKYDOME
         MENUITEM "Floor",                       ID_PARTESHURAKAN_FLOOR
     END
-    MENUITEM "Iluminacion",                 ID_ILUMINACION
-    POPUP "Texturas"
+    MENUITEM "Il·luminació",                ID_ILUMINACION
+    POPUP "Textures"
     BEGIN
-        MENUITEM "Activar/Desactivar Texturas", ID_HURAKAN_HURAKAN, CHECKED
+        MENUITEM "Activar/Desactivar Textures", ID_HURAKAN_HURAKAN, CHECKED
     END
     POPUP "Control"
     BEGIN
-        MENUITEM "Bloquear Asientos",           ID_CONTROL_BLOQUEARASIENTOS
-        MENUITEM "Añadir Movimiento",           ID_CONTROL_A32886
-        MENUITEM "Velocidad Asiento",           ID_CONTROL_VELOCIDADASIENTO
-        MENUITEM "Frenar Asiento",              ID_CONTROL_FRENARASIENTO
-        MENUITEM "Frenar Brazo",                ID_CONTROL_FRENARBRAZO
+        MENUITEM "Bloquejar Seients",           ID_CONTROL_BLOQUEARASIENTOS
+        MENUITEM "Afegir moviment",             ID_CONTROL_A32886
+        MENUITEM "Velocitat Seient",            ID_CONTROL_VELOCIDADASIENTO
+        MENUITEM "Frenar Seients",              ID_CONTROL_FRENARASIENTO
+        MENUITEM "Frenar Braç",                 ID_CONTROL_FRENARBRAZO
     END
 END
 
@@ -718,8 +720,8 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
 LANGUAGE 10, 3
 #include "res\EntornVGI.rc2"  // recursos editados que no son de Microsoft Visual C++
-#include "l.ESN\afxres.rc"      // Componentes estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ndar
-#include "l.ESN\afxprint.rc"    // Recursos de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n y vista previa de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n
+#include "l.ESN\afxres.rc"      // Componentes estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ndar
+#include "l.ESN\afxprint.rc"    // Recursos de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n y vista previa de impresiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n
 #if !defined(_AFXDLL)
 #include "l.ESN\afxribbon.rc"        // Recursos de barra de control y cinta MFC
 #endif

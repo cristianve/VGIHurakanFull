@@ -313,6 +313,13 @@ public:
 	afx_msg void OnUpdateCamarasExteriorFrontal(CCmdUI* pCmdUI);
 	afx_msg void OnCamarasTemple();
 	afx_msg void OnUpdateCamarasTemple(CCmdUI* pCmdUI);
+	
+	afx_msg void OnCamarasSeients();
+	afx_msg void OnUpdateCamarasSeients(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasSplit();
+	afx_msg void OnUpdateCamarasSplit(CCmdUI* pCmdUI);
+	afx_msg void OnCamarasDefault();
+	afx_msg void OnUpdateCamarasDefault(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp
