@@ -29,10 +29,7 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 		glRotatef(angle_brac.x, 1, 0, 0);
 		glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
 		glCallList(OBJECTEBRAC);
-	glPopMatrix();
-
-	//Seient
-	glPushMatrix();
+	
 		//TEXURES
 		if (textu)
 		{

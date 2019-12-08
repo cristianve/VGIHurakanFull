@@ -21,7 +21,8 @@ private:
 	 
 public:
 	int mode = 0;
-	double interval = 10; // en ms (no cal canviar, resolucio de l'animaci�(afecta a la velocitat))
+	double interval = 10;
+	double last_instant = 0;// en ms (no cal canviar, resolucio de l'animaci�(afecta a la velocitat))
 	double duracion_total; // en sec
 	double instant = 0;
 	std::clock_t start;

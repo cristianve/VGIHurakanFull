@@ -2644,7 +2644,8 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 	if (anima)	{
 		// Codi de tractament de l'animació quan transcorren els ms. del crono.
 		// Codi de tractament de l'animació quan transcorren els ms. del crono.
-		
+
+		d1.last_instant = d1.instant;
 		d1.instant = (std::clock() - (double)d1.get_t_base()) / (double)CLOCKS_PER_SEC;
 		if (d1.demo_on) {
 			double aux = (std::clock() - (double)d1.get_start())/(double)CLOCKS_PER_SEC;
@@ -2668,21 +2669,21 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			float brazo_pos = state.Gamepad.bRightTrigger;
 			float brazo_neg = state.Gamepad.bLeftTrigger;
 			bool refresh_pos = false;
-
+			double time = d1.instant- d1.last_instant;
 			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) {
 				if (cam != DEFAULT_CAM) {
-					
+					altura_persona = altura_persona - 2 * time;
 				}
 				else {
-					OPV.R = OPV.R - 1;
+					OPV.R = OPV.R - 8*time;
 				}
 			}
 			if (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) {
 				if (cam != DEFAULT_CAM) {
-
+					altura_persona = altura_persona + 2 * time;
 				}
 				else {
-					OPV.R = OPV.R + 1;
+					OPV.R = OPV.R + 8*time;
 				}
 			}
 
@@ -2692,20 +2693,20 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 					
 					if (ang >= 0 && ang <= 90) {
-						pos_persona_x = pos_persona_x - (1-ang/90) * 0.2;
-						pos_persona_y = pos_persona_y + (ang/90)* 0.2;
+						pos_persona_x = pos_persona_x - (1-ang/90) * (2*time);
+						pos_persona_y = pos_persona_y + (ang/90)* (2*time);
 					}
 					else if (ang > 90 && ang <= 180) {
-						pos_persona_y = pos_persona_y + (1-(ang-90)/90) * 0.2;
-						pos_persona_x = pos_persona_x + ((ang - 90) / 90) * 0.2;
+						pos_persona_y = pos_persona_y + (1-(ang-90)/90) * (3.5* time);
+						pos_persona_x = pos_persona_x + ((ang - 90) / 90) * (3.5* time);
 					}
 					else if (ang > 180 && ang <= 270) {
-						pos_persona_x = pos_persona_x + (1- (ang - 180) / 90) * 0.2;
-						pos_persona_y = pos_persona_y - ((ang -180) / 90) * 0.2;
+						pos_persona_x = pos_persona_x + (1- (ang - 180) / 90) * (3.5* time);
+						pos_persona_y = pos_persona_y - ((ang -180) / 90) * (3.5* time);
 					}
 					else if(ang > 270 && ang <= 360){
-						pos_persona_y = pos_persona_y - (1 - (ang - 270) / 90) * 0.2;
-						pos_persona_x = pos_persona_x - ((ang - 270) / 90) * 0.2;
+						pos_persona_y = pos_persona_y - (1 - (ang - 270) / 90) * (3.5* time);
+						pos_persona_x = pos_persona_x - ((ang - 270) / 90) * (3.5* time);
 					}
 					refresh_pos = true;
 
@@ -2713,20 +2714,20 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				if (state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 					
 					if (ang >= 0 && ang <= 90) {
-						pos_persona_x = pos_persona_x + (1-(ang / 90)) * 0.2;
-						pos_persona_y = pos_persona_y - (ang/90) * 0.2;
+						pos_persona_x = pos_persona_x + (1-(ang / 90)) * (3.5* time);
+						pos_persona_y = pos_persona_y - (ang/90) * (3.5* time);
 					}
 					else if (ang > 90 && ang <= 180) {
-						pos_persona_y = pos_persona_y - (1 - (ang - 90) / 90)*0.2;
-						pos_persona_x = pos_persona_x - ((ang - 90) / 90) * 0.2;
+						pos_persona_y = pos_persona_y - (1 - (ang - 90) / 90)* (3.5* time);
+						pos_persona_x = pos_persona_x - ((ang - 90) / 90) * (3.5* time);
 					}
 					else if (ang > 180 && ang <= 270) {
-						pos_persona_x = pos_persona_x - (1 - (ang - 180) / 90)*0.2;
-						pos_persona_y = pos_persona_y + ((ang - 180) / 90) * 0.2;
+						pos_persona_x = pos_persona_x - (1 - (ang - 180) / 90)* (3.5* time);
+						pos_persona_y = pos_persona_y + ((ang - 180) / 90) * (3.5* time);
 					}
 					else if(ang>270 && ang<=360){
-						pos_persona_y = pos_persona_y + (1-(ang - 270) / 90) * 0.2;
-						pos_persona_x = pos_persona_x + ((ang - 270) / 90) * 0.2;
+						pos_persona_y = pos_persona_y + (1-(ang - 270) / 90) * (3.5* time);
+						pos_persona_x = pos_persona_x + ((ang - 270) / 90) * (3.5* time);
 					}
 					refresh_pos = true;
 
@@ -2735,40 +2736,40 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				if (state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 
 					if (ang >= 0 && ang <= 90) {
-						pos_persona_y = pos_persona_y - (1-(ang / 90)) * 0.2;
-						pos_persona_x = pos_persona_x - (ang / 90) * 0.2;
+						pos_persona_y = pos_persona_y - (1-(ang / 90)) * (3.5* time);
+						pos_persona_x = pos_persona_x - (ang / 90) * (3.5* time);
 					}
 					else if (ang > 90 && ang <= 180) {
-						pos_persona_x = pos_persona_x - (1 - ((ang-90) / 90)) * 0.2;
-						pos_persona_y = pos_persona_y + ((ang - 90) / 90) * 0.2;
+						pos_persona_x = pos_persona_x - (1 - ((ang-90) / 90)) * (3.5* time);
+						pos_persona_y = pos_persona_y + ((ang - 90) / 90) * (3.5* time);
 					}
 					else if (ang > 180 && ang <= 270) {
-						pos_persona_y = pos_persona_y + (1-((ang - 180) / 90)) * 0.2;
-						pos_persona_x = pos_persona_x + ((ang - 180) / 90) * 0.2;
+						pos_persona_y = pos_persona_y + (1-((ang - 180) / 90)) * (3.5* time);
+						pos_persona_x = pos_persona_x + ((ang - 180) / 90) * (3.5* time);
 					}
 					else if (ang > 270 && ang <= 360) {
-						pos_persona_x = pos_persona_x + (1-((ang - 270) / 90)) * 0.2;
-						pos_persona_y = pos_persona_y - ((ang - 270) / 90) * 0.2;
+						pos_persona_x = pos_persona_x + (1-((ang - 270) / 90)) * (3.5* time);
+						pos_persona_y = pos_persona_y - ((ang - 270) / 90) * (3.5* time);
 					}
 					refresh_pos = true;
 				}
 				if (state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
 
 					if (ang >= 0 && ang <= 90) {
-						pos_persona_y = pos_persona_y + (1 - (ang / 90)) * 0.2;
-						pos_persona_x = pos_persona_x + (ang/90) * 0.2;
+						pos_persona_y = pos_persona_y + (1 - (ang / 90)) * (3.5* time);
+						pos_persona_x = pos_persona_x + (ang/90) * (3.5* time);
 					}
 					else if (ang > 90 && ang <= 180) {
-						pos_persona_x = pos_persona_x + (1-(ang-90)/90) * 0.2;
-						pos_persona_y = pos_persona_y - ((ang - 90) / 90) * 0.2;
+						pos_persona_x = pos_persona_x + (1-(ang-90)/90) * (3.5* time);
+						pos_persona_y = pos_persona_y - ((ang - 90) / 90) * (3.5* time);
 					}
 					else if (ang > 180 && ang <= 270) {
-						pos_persona_y = pos_persona_y - (1 - (ang - 180) / 90) * 0.2;
-						pos_persona_x = pos_persona_x - ((ang - 180) / 90) * 0.2;
+						pos_persona_y = pos_persona_y - (1 - (ang - 180) / 90) * (3.5* time);
+						pos_persona_x = pos_persona_x - ((ang - 180) / 90) * (3.5* time);
 					}
 					else if(ang>270 && ang<=360) {
-						pos_persona_x = pos_persona_x - (1 - (ang - 270) / 90) * 0.2;
-						pos_persona_y = pos_persona_y + ((ang - 270) / 90) * 0.2;
+						pos_persona_x = pos_persona_x - (1 - (ang - 270) / 90) * (3.5* time);
+						pos_persona_y = pos_persona_y + ((ang - 270) / 90) * (3.5* time);
 					}
 					refresh_pos = true;
 				}
@@ -2779,10 +2780,10 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				if (cam != DEFAULT_CAM) {
-					OPV.beta = OPV.beta - 1;
+					OPV.beta = OPV.beta - 40*time;
 				}
 				else {
-					OPV.beta = OPV.beta + 2;
+					OPV.beta = OPV.beta + 40*time;
 				}
 				if (cam == TEMPLE_CAM) {
 					if (OPV.beta >= 140)	OPV.beta = 140;
@@ -2797,10 +2798,10 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			}
 			if (state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				if (cam != DEFAULT_CAM) {
-					OPV.beta = OPV.beta + 1;
+					OPV.beta = OPV.beta + 40*time;
 				}
 				else {
-					OPV.beta = OPV.beta - 2;
+					OPV.beta = OPV.beta - 40*time;
 				}
 
 				if (cam == TEMPLE_CAM) {
@@ -2817,7 +2818,7 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			
 			if (state.Gamepad.sThumbRY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
 				
-				OPV.alfa = OPV.alfa + 2;
+				OPV.alfa = OPV.alfa + 30*time;
 				if (cam == TEMPLE_CAM) {
 					if (OPV.alfa >= 45)	OPV.alfa = 45;
 					if (OPV.alfa <= -45) OPV.alfa = -45;
@@ -2834,8 +2835,7 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			}
 			if (state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM ) {
-
-				OPV.alfa = OPV.alfa - 2;
+				OPV.alfa = OPV.alfa - 30*time;
 				if (cam == TEMPLE_CAM) {
 					if (OPV.alfa >= 45)	OPV.alfa = 45;
 					if (OPV.alfa <= -45) OPV.alfa = -45;
