@@ -491,7 +491,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		gluLookAt(cam[0], cam[1], cam[2], 0., 0., 0., up[0], up[1], up[2]);
 	}
 	else if (camara == EXTERIOR_FRONTAL) {
-		gluLookAt(pos_persona_x, pos_persona_y, altura_persona, cam[0]+pos_persona_x, cam[1]+pos_persona_y-10, cam[2], up[0], up[1], up[2]);
+		gluLookAt(pos_persona_x, pos_persona_y, altura_persona, cam[0]+pos_persona_x, cam[1]+pos_persona_y-10,cam[2]+altura_persona, up[0], up[1], up[2]);
 	}
 	else if (camara == TEMPLE_CAM) {
 		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);

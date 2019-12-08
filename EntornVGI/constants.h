@@ -42,7 +42,7 @@
 #define POS_ASIENTO_Z 3
 #define POS_PERSONA_INI_X 0
 #define POS_PERSONA_INI_Y 10
-#define ALTURA_PERSONA_INI 3
+#define ALTURA_PERSONA_INI 1.5
 #define CAM_ASIENTOS 'A'
 
 //--------------- VGI: Tipus de Polars (per la Visualització Interactiva)
@@ -90,7 +90,7 @@
 #define OBJECTEGRASS 12
 #define OBJECTETEMPLE 13
 #define OBJECTEOTHERS 14
-#define OBJECTEWALLS 19
+#define OBJECTEWALLS 15
 #define OBJECTEPERSONA 16
 #define OBJECTEPAD_ON 17
 #define OBJECTEPAD_OFF 18
@@ -112,7 +112,7 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 20
+#define NUM_MAX_TEXTURES 30
 
 // Tipus de textures
 #define CAP ' '

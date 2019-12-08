@@ -12,70 +12,63 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	angle_abs_brac = angle_abs_brac +brac.get_angle().x;
 
 
-	glEnable(GL_TEXTURE_2D);
 
-	glPushMatrix();
-
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	}
-	//
-	glEnable(GL_TEXTURE_2D);
-	
-
-
-	glTranslatef(-pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
-	glRotatef(angle_brac.x, 1, 0, 0);
-	glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
-	glCallList(OBJECTEBRAC);
-
-	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-
-	glTranslatef(-pos_seient_origen.x, pos_seient_origen.y, pos_seient_origen.z);
-	glRotatef(angle_seient.x, 1, 0, 0);
-	glTranslatef(pos_seient_origen.x, pos_seient_origen.y, -pos_seient_origen.z);
-	glCallList(OBJECTESEIENT);
-	glPopMatrix();
-
-	glPopMatrix();
-
-
-
-	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu) 
-	{
-		glActiveTexture(OBJECTEBASE);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	glCallList(OBJECTEBASE);
-	glPopMatrix();
+	//Brac
 	glPushMatrix();
 		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTEBRAC);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
+		glTranslatef(-pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
+		glRotatef(angle_brac.x, 1, 0, 0);
+		glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
+		glCallList(OBJECTEBRAC);
+	glPopMatrix();
+
+	//Seient
+	glPushMatrix();
+		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTESEIENT);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+
+		glTranslatef(-pos_seient_origen.x, pos_seient_origen.y, pos_seient_origen.z);
+		glRotatef(angle_seient.x, 1, 0, 0);
+		glTranslatef(pos_seient_origen.x, pos_seient_origen.y, -pos_seient_origen.z);
+		glCallList(OBJECTESEIENT);
+	glPopMatrix();
+
+	//Base
+	glPushMatrix();
+		//TEXURES
+		if (textu) 
+		{
+			glActiveTexture(OBJECTEBASE);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		glCallList(OBJECTEBASE);
+	glPopMatrix();
+
+	//Floor
+	glPushMatrix();
 		//TEXURES
 		if (textu) 
 		{
@@ -91,92 +84,90 @@ void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 		glCallList(OBJECTEFLOOR);
 	glPopMatrix();
 
+	//Grass
 	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glActiveTexture(OBJECTEGRASS);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	//glTranslatef(0, 0, -0.35);
-	glCallList(OBJECTEGRASS);
+		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTEGRASS);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		//glTranslatef(0, 0, -0.35);
+		glCallList(OBJECTEGRASS);
 	glPopMatrix();
 
+	//Walls
 	glPushMatrix();
-
-	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glActiveTexture(OBJECTEWALLS);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	//glTranslatef(0, 0, -0.35);
-	glCallList(OBJECTEWALLS);
+		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTEWALLS);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		//glTranslatef(0, 0, -0.35);
+		glCallList(OBJECTEWALLS);
 	glPopMatrix();
 
+	//Others
 	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glActiveTexture(OBJECTEOTHERS);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	//glTranslatef(0, 0, -0.35);
-	glCallList(OBJECTEOTHERS);
+		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTEOTHERS);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		//glTranslatef(0, 0, -0.35);
+		glCallList(OBJECTEOTHERS);
 	glPopMatrix();
 
+	//Temple
 	glPushMatrix();
-	//TEXURES
-	//TEXURES
-	if (textu)
-	{
-		glActiveTexture(OBJECTETEMPLE);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	//glTranslatef(0, 0, -0.35);
-	glCallList(OBJECTETEMPLE);
+		//TEXURES
+		if (textu)
+		{
+			glActiveTexture(OBJECTETEMPLE);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		//glTranslatef(0, 0, -0.35);
+		glCallList(OBJECTETEMPLE);
 	glPopMatrix();
 
-	//TEXURES
-	//TEXURES
-	if (textu) 
-	{
-		glActiveTexture(OBJECTESKYDOME);
-		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glEnable(GL_TEXTURE_2D);
-	}//
-	glCallList(OBJECTESKYDOME);
-
-	glDisable(GL_TEXTURE_2D);
+	//Skydome
+	glPushMatrix();
+		//TEXURES
+		if (textu) 
+		{
+			glActiveTexture(OBJECTESKYDOME);
+			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glEnable(GL_TEXTURE_2D);
+		}//
+		glCallList(OBJECTESKYDOME);
 	glPopMatrix();
+
 }
 
 void Demo_prova::dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES])

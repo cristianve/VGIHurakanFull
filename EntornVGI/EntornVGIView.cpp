@@ -35,6 +35,7 @@ extern const CString PATH_GRASS = CString(_T("obj/Background_grass.obj"));
 extern const CString PATH_WALLS = CString(_T("obj/Background_walls.obj"));
 extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
 extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
+extern const CString PATH_PERSONA = CString(_T("obj/hombre.obj"));
 //TEXTURES
 extern const CString PATH_TEXTURE_ARM = CString(_T("textures/Arm.png"));
 extern const CString PATH_TEXTURE_BASE = CString(_T("textures/Base.png"));
@@ -42,12 +43,12 @@ extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
 extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.jpg"));
 extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
 extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
-extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/wall.jpg"));
+extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/wall.png"));
 extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/others.png"));
 extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
 extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
 extern const CString PATH_TEXTURE_MANDO_OFF = CString(_T("textures/mando_desc.png"));
-
+//extern const CString PATH_TEXTURE_PERSONA = CString(_T("textures/hombre.obj"));
 
 
 
@@ -674,6 +675,7 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_temple = CString2Char(PATH_TEMPLE);
 	char* nom_walls = CString2Char(PATH_WALLS);
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
+	char* nom_persona = CString2Char(PATH_PERSONA);
 	
 
 	char* nomTextureMandoOn = CString2Char(PATH_TEXTURE_MANDO_ON);
@@ -709,28 +711,30 @@ void CEntornVGIView::OnInitialUpdate()
 	
 
 
-
+	
 	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm);
 	texturesID[OBJECTEBASE] = loadIMA_SOIL(nomTextureBase);
 	texturesID[OBJECTESEIENT] = loadIMA_SOIL(nomTextureSeient);
 	texturesID[OBJECTESKYDOME] = loadIMA_SOIL(nomTextureSkydome);
 	texturesID[OBJECTEFLOOR] = loadIMA_SOIL(nomTextureFloor);
-	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
 	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass);
 	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple);
 	texturesID[OBJECTEOTHERS] = loadIMA_SOIL(nomTextureOthers);
 	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
 	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
-
+	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
+		
 		ObOBJ->LoadModel(nom_braç, OBJECTEBRAC, true);
 		ObOBJ->LoadModel(nom_base, OBJECTEBASE, true);
 		ObOBJ->LoadModel(nom_asiento, OBJECTESEIENT, true);
 		ObOBJ->LoadModel(nom_floor, OBJECTEFLOOR, true);
 		ObOBJ->LoadModel(nom_skydome, OBJECTESKYDOME, true);
 		ObOBJ->LoadModel(nom_grass, OBJECTEGRASS, true);
+		
 		ObOBJ->LoadModel(nom_walls, OBJECTEWALLS, true);
+		
 		ObOBJ->LoadModel(nom_temple, OBJECTETEMPLE, true);
 		ObOBJ->LoadModel(nom_others, OBJECTEOTHERS, true);
 	
@@ -803,40 +807,42 @@ void CEntornVGIView::OnPaint()
 				configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
 				dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 			glPopMatrix();
-			glScissor(0, 0, 0.1 * w, 0.1 * w);
-			glViewport(0, 0, 0.1 * w, w * 0.1);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(0, 500, 0, 300, 0, 200);
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
-			gluLookAt(100, 100, 199, 100, 100, 0, 0, 1, 0);
+
 			glPushMatrix();
-			glEnable(GL_TEXTURE_2D);
-			if (Player1->IsConnected()) {
-				glActiveTexture(texturesID[OBJECTEPAD_ON]);
-				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
-			}
-			else {
-				glActiveTexture(texturesID[OBJECTEPAD_OFF]);
-				glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
-			}
-			glEnable(GL_TEXTURE_2D);
-			glBegin(GL_QUADS);
-			//glColor3f(1, 0, 0);
-			glTexCoord2i(0, 0);
-			glVertex2i(100, 100);
-			glTexCoord2i(0, 1);
-			glVertex2i(100, 300);
-			glTexCoord2i(1, 1);
-			glVertex2i(500, 300);
-			glTexCoord2i(1, 0);
-			glVertex2i(500, 100);
-			glEnd();
-			glDisable(GL_TEXTURE_2D);
-			glDisable(GL_SCISSOR_TEST);
+				glScissor(0, 0, 0.08 * w, 0.08 * w);
+				glViewport(0, 0, 0.08 * w, w * 0.08);
+				glMatrixMode(GL_PROJECTION);
+				glLoadIdentity();
+				glOrtho(0,0.08*w,0, 0.08*w, 0, 2);
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
+				gluLookAt(0, 0, 1.99, 0, 0, 0, 0, 1, 0);
+				glEnable(GL_TEXTURE_2D);
+
+				glPushMatrix();
+					if (Player1->IsConnected()) {
+						glActiveTexture(texturesID[OBJECTEPAD_ON]);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+					}
+					else {
+						glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+					}
+					glBegin(GL_QUADS);
+						//glColor3f(1, 0, 0);
+						glTexCoord2i(0, 0);
+						glVertex2i(0, 0);
+						glTexCoord2i(0, 1);
+						glVertex2i(0, 0.08*w);
+						glTexCoord2i(1, 1);
+						glVertex2i(0.08*w, 0.08*w);
+						glTexCoord2i(1, 0);
+						glVertex2i(0.08*w, 0);
+					glEnd();
+				glPopMatrix();
+				glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
-			
+			glDisable(GL_SCISSOR_TEST);
 			// Intercanvia l'escena al front de la pantalla
 					//SwapBuffers(m_pDC->GetSafeHdc());
 			
@@ -3807,6 +3813,8 @@ void CEntornVGIView::OnCamarasExteriorFrontal()
 	// TODO: Agregue aquí su código de controlador de comandos
 	cam = EXTERIOR_FRONTAL;
 	mobil = true;
+	OPV.alfa = 0;
+	OPV.beta = 270;
 	zzoom = false;
 	InvalidateRect(NULL, false);
 }
@@ -3827,6 +3835,8 @@ void CEntornVGIView::OnCamarasTemple()
 	cam = TEMPLE_CAM;
 	mobil = true;
 	zzoom = true;
+	OPV.alfa = 0;
+	OPV.beta = 90;
 	InvalidateRect(NULL, false);
 }
 
@@ -3844,6 +3854,8 @@ void CEntornVGIView::OnCamarasSeients()
 	cam = CAM_ASIENTOS;
 	mobil = true;
 	zzoom = false;
+	OPV.alfa = 0;
+	OPV.beta = 90;
 	InvalidateRect(NULL, false);
 }
 
@@ -3876,6 +3888,8 @@ void CEntornVGIView::OnCamarasDefault()
 	cam = DEFAULT_CAM;
 	mobil = true;
 	zzoom = false;
+	OPV.alfa = 10;
+	OPV.beta = 90;
 	InvalidateRect(NULL, false);
 }
 
