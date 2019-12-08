@@ -2,6 +2,15 @@
 #include "Demo_prova.h"
 
 
+void Demo_prova::get_pos_asientos(double& pos_x, double& pos_y, double& pos_z) {
+	
+	double ang = brac.get_angle().x * 3.14 / 180;
+	pos_x = POS_ASIENTO_X;
+	
+	pos_y = POS_ASIENTO_Y+ sin(ang)*LONGITUD_BRAC;
+	pos_z = POS_ASIENTO_Z+(LONGITUD_BRAC-(cos(ang)*LONGITUD_BRAC));
+}
+
 
 void Demo_prova::dibuixa_demo1(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 

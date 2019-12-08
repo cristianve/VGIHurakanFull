@@ -797,9 +797,9 @@ void CEntornVGIView::OnPaint()
 			}
 			else {
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
-				
+				if (cam == CAM_ASIENTOS) d1.get_pos_asientos(pos_asiento_x, pos_asiento_y, pos_asiento_z);
 				Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,d1.get_angle_brac());
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -871,7 +871,7 @@ void CEntornVGIView::OnPaint()
 				altura_persona = 0.5;
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,d1.get_angle_brac());
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 			
@@ -901,7 +901,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_x = 0;
 				pos_persona_y = -15;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 
@@ -928,7 +928,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_y = 20;
 				pos_persona_x = -10;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -953,7 +953,7 @@ void CEntornVGIView::OnPaint()
 				OPV.alfa = 60;
 				OPV.R = 30;
 				Vista_Nuestra(DEFAULT_CAM, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, d1.get_angle_brac());
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
