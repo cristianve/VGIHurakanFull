@@ -435,9 +435,9 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
 	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
-	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double pos_seient_x,double pos_seient_y,double pos_seient_z)
+	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double pos_seient_x,double pos_seient_y,double pos_seient_z,CEsfe3D cap_brac,CEsfe3D &cap_seient,double &pan_h,double &pan_v)
 {
-	GLfloat cam[3], up[3];
+	GLfloat cam[3],cam_brac[3],cam_h[3],cam_seient[3], up[3],up_brac[3],up_seient[3],up_h[3];
 
 	// Conversió angles radians -> graus
 	opv.alfa = opv.alfa * pi / 180;
@@ -449,6 +449,27 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	}
 	// Neteja dels buffers de color i profunditat
 	Fons(col_fons);
+	
+	if (camara == CAM_ASIENTOS) {
+		
+		cam_seient[0] = cap_seient.R * cos(cap_seient.beta) * cos(cap_seient.alfa);
+		cam_seient[1] = cap_seient.R * sin(cap_seient.beta) * cos(cap_seient.alfa);
+		cam_seient[2] = cap_seient.R * sin(cap_seient.alfa);
+
+		cam_seient[0] = cam_seient[0] * (1-(cap_seient.beta/(3.14/8))) + cam_seient[1] * (cap_seient.beta / (3.14 / 8));
+		cam_seient[1] = cam_seient[1] * (1 - (cap_seient.beta / (3.14 / 8))) + cam_seient[0] * (cap_seient.beta / (3.14 / 8));
+
+		up_seient[0] = -cos(cap_seient.beta) * sin(cap_seient.alfa);
+		up_seient[1] = -sin(cap_seient.beta) * sin(cap_seient.alfa);
+		up_seient[2] = cos(cap_seient.alfa);
+
+		up_seient[0] = up_seient[0] * (1 - (cap_seient.beta / (3.14 / 8))) + up_seient[1] * (cap_seient.beta / (3.14 / 8));
+		up_seient[1] = up_seient[1] * (1 - (cap_seient.beta / (3.14 / 8))) + up_seient[0] * (cap_seient.beta / (3.14 / 8));
+	
+		
+		
+	}
+	
 
 	// Posició càmera i vector cap amunt
 	if (VPol == POLARZ) {
@@ -497,7 +518,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
 	}
 	else if (camara == CAM_ASIENTOS) {
-		gluLookAt(pos_seient_x, pos_seient_y, pos_seient_z, cam[0]+pos_seient_x, cam[1]+pos_seient_y, cam[2]+pos_seient_z, 0, 0, 1);
+		gluLookAt(pos_seient_x, pos_seient_y, pos_seient_z, pos_seient_x+cam_seient[1], pos_seient_y+ cam_seient[0] , pos_seient_z+cam_seient[2], up_seient[1], up_seient[0], up_seient[2]);
 	}
 	
 

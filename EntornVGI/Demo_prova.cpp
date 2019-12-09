@@ -4,11 +4,21 @@
 
 void Demo_prova::get_pos_asientos(double& pos_x, double& pos_y, double& pos_z) {
 	
+	double ang_seient = seient.get_angle().x * 3.14 / 180;
 	double ang = brac.get_angle().x * 3.14 / 180;
+
 	pos_x = POS_ASIENTO_X;
 	
 	pos_y = POS_ASIENTO_Y+ sin(ang)*LONGITUD_BRAC;
 	pos_z = POS_ASIENTO_Z+(LONGITUD_BRAC-(cos(ang)*LONGITUD_BRAC));
+	cap_seient.R = 0.4;
+	if (pan_alfa > 45) pan_alfa = 45;
+	if (pan_alfa < -30) pan_alfa = -30;
+	if (pan_beta > 90) pan_beta = 90;
+	if (pan_beta < -90) pan_beta = -90;
+	cap_seient.beta = 0 - (pan_beta*3.14/180);
+	cap_seient.alfa = ang_seient+ang+ (pan_alfa*3.14/180);
+	
 }
 
 

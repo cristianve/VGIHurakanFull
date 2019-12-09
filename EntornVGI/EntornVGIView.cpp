@@ -799,7 +799,7 @@ void CEntornVGIView::OnPaint()
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
 				if (cam == CAM_ASIENTOS) d1.get_pos_asientos(pos_asiento_x, pos_asiento_y, pos_asiento_z);
 				Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z,d1.cap_brac,d1.cap_seient,d1.pan_beta,d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -807,7 +807,7 @@ void CEntornVGIView::OnPaint()
 				configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
 				dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 			glPopMatrix();
-
+			glClear(GL_DEPTH_BUFFER_BIT);
 			glPushMatrix();
 				glScissor(0, 0, 0.08 * w, 0.08 * w);
 				glViewport(0, 0, 0.08 * w, w * 0.08);
@@ -871,7 +871,7 @@ void CEntornVGIView::OnPaint()
 				altura_persona = 0.5;
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z,d1.cap_brac,d1.cap_seient,d1.pan_beta, d1.pan_alfa);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 			
@@ -901,7 +901,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_x = 0;
 				pos_persona_y = -15;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z,  d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 
@@ -928,7 +928,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_y = 20;
 				pos_persona_x = -10;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z, d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -953,7 +953,7 @@ void CEntornVGIView::OnPaint()
 				OPV.alfa = 60;
 				OPV.R = 30;
 				Vista_Nuestra(DEFAULT_CAM, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z, d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -2779,8 +2779,11 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			}
 
 			if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
-				if (cam != DEFAULT_CAM) {
+				if (cam != DEFAULT_CAM && cam != CAM_ASIENTOS) {
 					OPV.beta = OPV.beta - 40*time;
+				}
+				else if (cam == CAM_ASIENTOS) {
+					d1.pan_beta = d1.pan_beta - 30 * time;
 				}
 				else {
 					OPV.beta = OPV.beta + 40*time;
@@ -2797,8 +2800,11 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				
 			}
 			if (state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
-				if (cam != DEFAULT_CAM) {
+				if (cam != DEFAULT_CAM && cam != CAM_ASIENTOS) {
 					OPV.beta = OPV.beta + 40*time;
+				}
+				else if (cam == CAM_ASIENTOS) {
+					d1.pan_beta = d1.pan_beta + 30 * time;
 				}
 				else {
 					OPV.beta = OPV.beta - 40*time;
@@ -2817,8 +2823,13 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			}
 			
 			if (state.Gamepad.sThumbRY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM) {
-				
-				OPV.alfa = OPV.alfa + 30*time;
+			
+				if (cam == CAM_ASIENTOS) {
+					d1.pan_alfa = d1.pan_alfa + 30* time;
+				}
+				else {
+					OPV.alfa = OPV.alfa + 30 * time;
+				}
 				if (cam == TEMPLE_CAM) {
 					if (OPV.alfa >= 45)	OPV.alfa = 45;
 					if (OPV.alfa <= -45) OPV.alfa = -45;
@@ -2835,7 +2846,12 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			}
 			if (state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && cam != SPLIT_CAM ) {
-				OPV.alfa = OPV.alfa - 30*time;
+				if (cam == CAM_ASIENTOS) {
+					d1.pan_alfa = d1.pan_alfa - 30 * time;
+				}
+				else {
+					OPV.alfa = OPV.alfa - 30 * time;
+				}
 				if (cam == TEMPLE_CAM) {
 					if (OPV.alfa >= 45)	OPV.alfa = 45;
 					if (OPV.alfa <= -45) OPV.alfa = -45;

@@ -32,10 +32,18 @@ public:
 	bool pausa = false;
 	bool demo_on;
 	bool play_grabacio = false;
+	CEsfe3D cap_seient;
+	CEsfe3D cap_brac;
+	double pan_beta = 0;
+	double pan_alfa = 0;
 	
 	Demo_prova()
 	{
 		angle_abs_brac = 0;
+		cap_seient.alfa = 0;
+		cap_seient.beta = 0;
+		cap_brac.alfa = 0;
+		cap_brac.beta = 0;
 		demo_on = false;
 		seient.set_peso(7000);
 		brac.set_fricc(12);
@@ -60,6 +68,7 @@ public:
 	};
 	void setEstadoBrazo(int estado) { brac.set_estado(estado); }
 	void setEstadoAsientos(int estado) { seient.set_estado(estado); }
+	CEsfe3D get_cap_seient() { return cap_seient; };
 	double get_angle_brac() { return brac.get_angle().x; };
 	void get_pos_asientos(double& pos_x, double& pos_y, double& pos_z);
 	void dibuixa_inicial(bool textu, GLint VTextu[NUM_MAX_TEXTURES]);

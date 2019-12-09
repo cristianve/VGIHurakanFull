@@ -38,8 +38,8 @@
 #define DEFAULT_CAM 'D'
 #define SPLIT_CAM 'S'
 #define POS_ASIENTO_X 0
-#define POS_ASIENTO_Y 0
-#define POS_ASIENTO_Z 3
+#define POS_ASIENTO_Y 0.5
+#define POS_ASIENTO_Z 3.5
 #define POS_PERSONA_INI_X 0
 #define POS_PERSONA_INI_Y 10
 #define ALTURA_PERSONA_INI 1.5
