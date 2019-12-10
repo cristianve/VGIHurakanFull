@@ -18,7 +18,7 @@ void Demo_prova::get_pos_asientos(double& pos_x, double& pos_y, double& pos_z) {
 	if (pan_beta > 90) pan_beta = 90;
 	if (pan_beta < -90) pan_beta = -90;
 	
-	cap_seient.beta = 0*3.14/180;
+	cap_seient.beta = 90*3.14/180;
 	cap_seient.alfa = ang_seient+ang;
 
 

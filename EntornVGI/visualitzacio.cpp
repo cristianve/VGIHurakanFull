@@ -447,40 +447,43 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	
 	// Neteja dels buffers de color i profunditat
 	Fons(col_fons);
-	GLfloat mul[4],mul_up[4];
+	GLfloat mul[4];
 	if (camara == CAM_ASIENTOS) {
 		
+		//Vector VT(donde mira)
 		VT_seient[0] = cap_seient.R * cos(cap_seient.beta)*cos(cap_seient.alfa);
 		VT_seient[1] = cap_seient.R * cos(cap_seient.alfa)*sin(cap_seient.beta);
 		VT_seient[2] = cap_seient.R * sin(cap_seient.alfa);
 
+		//el perpendicular a VT
 		VNP_seient[0] = 0;
 		VNP_seient[1] = -cap_seient.R;
 		VNP_seient[2] = 0;
 
 
-
+		//Vector UP
 		VBN_seient[0] = -cos(cap_seient.beta) * sin(cap_seient.alfa);
 		VBN_seient[1] = -sin(cap_seient.beta) * sin(cap_seient.alfa);
 		VBN_seient[2] = cos(cap_seient.alfa);
 
-		GLfloat canvi_de_base[16];
 
+		GLfloat canvi_de_base[16];
+		//Esta distinto a como lo hacia el profe, he buscado cambios de base en general y esto ha salido jajaj
 		//row 1
 		canvi_de_base[0] = VT_seient[0];
-		canvi_de_base[1] = VT_seient[1];
-		canvi_de_base[2] = VT_seient[2];
+		canvi_de_base[1] = VNP_seient[0];
+		canvi_de_base[2] = VBN_seient[0];
 		canvi_de_base[3] = 0.0f;
 
 		//row 2
-		canvi_de_base[4] = VNP_seient[0];
+		canvi_de_base[4] = VT_seient[1];
 		canvi_de_base[5] = VNP_seient[1];
-		canvi_de_base[6] = VNP_seient[2];
+		canvi_de_base[6] = VBN_seient[1];
 		canvi_de_base[7] = 0.0f;
 
 		//row 3
-		canvi_de_base[8] = VBN_seient[0];
-		canvi_de_base[9] = VBN_seient[1];
+		canvi_de_base[8] = VT_seient[2];
+		canvi_de_base[9] = VNP_seient[2];
 		canvi_de_base[10] = VBN_seient[2];
 		canvi_de_base[11] = 0.0f;
 
@@ -490,26 +493,27 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		canvi_de_base[14] = 0.0f;
 		canvi_de_base[15] = 1.0f;
 
+
+		//Convertimos el paneo a radiants
 		GLfloat pan_vert, pan_horitz;
 		pan_vert = pan_v * 3.1413 / 180;
 		pan_horitz = pan_h * 3.1413 / 180;
 
 		GLfloat cam_seient[4];
-
-		cam_seient[1] = cap_seient.R * cos(pan_vert) * cos(pan_horitz);
-		cam_seient[0] = cap_seient.R * cos(pan_vert) * sin(pan_horitz);
-		cam_seient[2] = cap_seient.R * sin(pan_vert);
+		//Generamos vectorcito
+		cam_seient[0] = cap_seient.R * cos(cap_seient.beta) * cos(cap_seient.alfa);
+		cam_seient[1] = cap_seient.R * cos(cap_seient.beta) * sin(cap_seient.alfa);
+		cam_seient[2] = cap_seient.R * sin(cap_seient.alfa);
 		cam_seient[3] = 1;
 
-		for (int j = 0; j < 4; ++j) {
-			mul[j] = 0;
-			mul_up[j] = 0;
+		//MatMult
+		for (int i = 0; i < 4; ++i)
+		{
+			mul[i] = 0;
 			for (int k = 0; k < 4; ++k) {
-				mul[j] += cam_seient[j] * canvi_de_base[k*4+j];
+				mul[i] += cam_seient[k] * canvi_de_base[k * 4 + i];
 			}
-			
 		}
-		
 	}
 	
 
@@ -560,7 +564,8 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 		gluLookAt(0,-10,8, cam[0], cam[1], cam[2], up[0], up[1], up[2]);
 	}
 	else if (camara == CAM_ASIENTOS) {
-		gluLookAt(pos_seient_x, pos_seient_y, pos_seient_z, pos_seient_x+VT_seient[1], pos_seient_y+ VT_seient[0] , pos_seient_z+ VT_seient[2], VBN_seient[1], VBN_seient[0], VBN_seient[2]);
+		//Se puede mantener el up de las otras esfericas en teoria debido a que solo nos movemos horizontalmente(creo xD)
+		gluLookAt(pos_seient_x, pos_seient_y, pos_seient_z, pos_seient_x+mul[0], pos_seient_y+ mul[1] , pos_seient_z+mul[2], VBN_seient[0], VBN_seient[1], VBN_seient[2]);
 	}
 	
 
