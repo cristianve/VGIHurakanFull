@@ -786,7 +786,7 @@ void CEntornVGIView::OnPaint()
 			glScissor(0, 0, w, h);
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
 					// Desactivació del retall de pantalla
-			eixos = false;
+			eixos = true;
 			// Definició de Viewport, Projecció i Càmara
 			Projeccio_Perspectiva(0, 0, w, h, OPV.R);
 			if (navega) {
@@ -809,11 +809,11 @@ void CEntornVGIView::OnPaint()
 			glPopMatrix();
 			glClear(GL_DEPTH_BUFFER_BIT);
 			glPushMatrix();
-				glScissor(0, 0, 0.08 * w, 0.08 * w);
-				glViewport(0, 0, 0.08 * w, w * 0.08);
+				glScissor(0, 0, TAMANY_QUADRE_MANDO * w, TAMANY_QUADRE_MANDO * w);
+				glViewport(0, 0, TAMANY_QUADRE_MANDO * w, w * TAMANY_QUADRE_MANDO);
 				glMatrixMode(GL_PROJECTION);
 				glLoadIdentity();
-				glOrtho(0,0.08*w,0, 0.08*w, 0, 2);
+				glOrtho(0,TAMANY_QUADRE_MANDO*w,0, TAMANY_QUADRE_MANDO*w, 0, 2);
 				glMatrixMode(GL_MODELVIEW);
 				glLoadIdentity();
 				gluLookAt(0, 0, 1.99, 0, 0, 0, 0, 1, 0);
@@ -833,11 +833,11 @@ void CEntornVGIView::OnPaint()
 						glTexCoord2i(0, 0);
 						glVertex2i(0, 0);
 						glTexCoord2i(0, 1);
-						glVertex2i(0, 0.08*w);
+						glVertex2i(0, TAMANY_QUADRE_MANDO*w);
 						glTexCoord2i(1, 1);
-						glVertex2i(0.08*w, 0.08*w);
+						glVertex2i(TAMANY_QUADRE_MANDO*w, TAMANY_QUADRE_MANDO*w);
 						glTexCoord2i(1, 0);
-						glVertex2i(0.08*w, 0);
+						glVertex2i(TAMANY_QUADRE_MANDO*w, 0);
 					glEnd();
 				glPopMatrix();
 				glDisable(GL_TEXTURE_2D);
@@ -2876,7 +2876,8 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 					else if (cam == SPLIT_CAM) {
 						cam = CAM_ASIENTOS;
 						OPV.alfa = 0;
-						OPV.beta = 90;
+						OPV.beta = 0;
+						d1.pan_beta = 0;
 					}
 					else if (cam == CAM_ASIENTOS) {
 						cam = TEMPLE_CAM;
@@ -2888,6 +2889,7 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 						pos_persona_x = POS_PERSONA_INI_X;
 						pos_persona_y = POS_PERSONA_INI_Y;
 						OPV.alfa = 0;
+						OPV.R = CAMP_VISIO_PERSONA;
 						OPV.beta = 270;
 					}
 					else if (cam == EXTERIOR_FRONTAL) {
@@ -2905,6 +2907,7 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 						cam = EXTERIOR_FRONTAL;
 						OPV.alfa = 0;
 						OPV.beta = 270;
+						OPV.R = CAMP_VISIO_PERSONA;
 						pos_persona_x = POS_PERSONA_INI_X;
 						pos_persona_y = POS_PERSONA_INI_Y;
 					}
@@ -2915,8 +2918,9 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 					}
 					else if (cam == TEMPLE_CAM) {
 						cam = CAM_ASIENTOS;
+						d1.pan_beta = 0;
 						OPV.alfa = 0;
-						OPV.beta = 90;
+						OPV.beta = 0;
 					}
 					else if (cam == CAM_ASIENTOS) {
 						cam = SPLIT_CAM;
