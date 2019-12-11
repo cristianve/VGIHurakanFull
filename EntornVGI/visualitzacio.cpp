@@ -582,7 +582,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 
 	// Dibuix de les cares back com a línies en Il.luminacio PLANA i SUAU
 	if (bck_ln) glPolygonMode(GL_BACK, GL_LINE);
-
+	
 	//  Dibuix dels eixos
 	if (eix) glCallList(EIXOS);
 

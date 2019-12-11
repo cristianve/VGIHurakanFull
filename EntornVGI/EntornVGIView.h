@@ -15,7 +15,6 @@
 // Entorn VGI: Includes shaders GLSL
 #include <gl/glew.h>
 #include <gl/wglew.h>
-
 // Entorn VGI: Llibreries OpenGL
 //#include <gl/gl.h>
 //#include <gl/glu.h>
@@ -59,6 +58,11 @@ public:
 	double pos_asiento_x;
 	double pos_asiento_y;
 	double pos_asiento_z;
+	GLuint fbo_id;
+	GLuint depth_id;
+	// Use to activate/disable shadowShader
+	GLhandleARB shadowShaderId;
+	GLuint shadowMapUniform;
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
 
@@ -237,6 +241,10 @@ public:
 	GLuint CEntornVGIView::loadFileShaders(CString file_Vert, CString file_Frag);
 	char *CEntornVGIView::textFileRead(char *fn);
 	void CEntornVGIView::releaseAllShaders();
+	void CEntornVGIView::generateFBO();
+	void CEntornVGIView::loadShadowShader();
+	GLhandleARB CEntornVGIView::loadShader(char* filename, unsigned int type);
+	void CEntornVGIView::renderScene(void);
 
 // // Entorn VGI: Funcions de tractament de teclat en diferents modus
 	void CEntornVGIView::Teclat_ColorObjecte(UINT nChar, UINT nRepCnt);

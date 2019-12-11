@@ -15,6 +15,8 @@
 #define TAMANY_QUADRE_MANDO 0.06
 #define CAMP_VISIO_SEIENT 0.4
 #define CAMP_VISIO_PERSONA 100
+#define SHADOW_MAP_RATIO 1.5
+
 
 #define V_MAXIMA 90
 #define CONST_TEMPS 1.66
@@ -86,10 +88,10 @@
 #define OBJECTE3DST 4	// Objecte 3DS amb textures
 #define OBJECTEOBJ 5	// Objecte OBJ sense textures
 #define OBJECTEOBJT 6   // Objecte OBJ amb textures
-#define OBJECTEBRAC 7
+#define OBJECTEBRAC 19
 #define OBJECTEBASE 8
 #define OBJECTESEIENT 9
-#define OBJECTESKYDOME 10
+#define OBJECTESKYDOME 20
 #define OBJECTEFLOOR 11
 #define OBJECTEGRASS 12
 #define OBJECTETEMPLE 13

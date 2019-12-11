@@ -660,6 +660,274 @@ void CEntornVGIView::OnSize(UINT nType, int cx, int cy)
 
 }
 
+void CEntornVGIView::generateFBO() {
+	int shadowMapWidth = w * SHADOW_MAP_RATIO;
+	int shadowMapHeight = h * SHADOW_MAP_RATIO;
+
+	GLenum FBOstatus;
+
+	// Try to use a texture depth component
+	glGenTextures(1, &depth_id);
+	glBindTexture(GL_TEXTURE_2D, depth_id);
+
+	// GL_LINEAR does not make sense for depth texture. However, next tutorial shows usage of GL_LINEAR and PCF
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	// Remove artifact on the edges of the shadowmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapWidth, shadowMapHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// create a framebuffer object
+	glGenFramebuffersEXT(1, &fbo_id);
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo_id);
+
+	// Instruct openGL that we won't bind a color texture with the currently bound FBO
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	// attach the texture to FBO depth attachment point
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth_id,0);
+
+	// check FBO status
+	FBOstatus = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	if (FBOstatus != GL_FRAMEBUFFER_COMPLETE_EXT)
+		printf("GL_FRAMEBUFFER_COMPLETE_EXT failed, CANNOT use FBO\n");
+
+	// switch back to window-system-provided framebuffer
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+}
+void setTextureMatrix(void)
+{
+	static double modelView[16];
+	static double projection[16];
+
+	// Moving from unit cube [-1,1] to [0,1]  
+	const GLdouble bias[16] = {
+		0.5, 0.0, 0.0, 0.0,
+		0.0, 0.5, 0.0, 0.0,
+		0.0, 0.0, 0.5, 0.0,
+	0.5, 0.5, 0.5, 1.0 };
+
+	// Grab modelview and transformation matrices
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelView);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+
+	glMatrixMode(GL_TEXTURE);
+	glActiveTextureARB(GL_TEXTURE15_ARB);
+
+	glLoadIdentity();
+	glLoadMatrixd(bias);
+
+	// concatating all matrices into one.
+	glMultMatrixd(projection);
+	glMultMatrixd(modelView);
+
+	// Go back to normal matrix mode
+	glMatrixMode(GL_MODELVIEW);
+}
+GLhandleARB CEntornVGIView::loadShader(char* filename, unsigned int type)
+{
+	FILE* pfile;
+	GLhandleARB handle;
+	const GLcharARB* files[1];
+
+	// shader Compilation variable
+	GLint result;				// Compilation code result
+	GLint errorLoglength;
+	char* errorLogText = "hula";
+	GLsizei actualErrorLogLength;
+
+	char buffer[400000];
+	memset(buffer, 0, 400000);
+
+	// This will raise a warning on MS compiler
+	pfile = fopen(filename, "rb");
+	if (!pfile)
+	{
+		printf("Sorry, can't open file: '%s'.\n", filename);
+		exit(0);
+	}
+
+	fread(buffer, sizeof(char), 400000, pfile);
+	//printf("%s\n",buffer);
+
+
+	fclose(pfile);
+
+	handle = glCreateShaderObjectARB(type);
+	if (!handle)
+	{
+		//We have failed creating the vertex shader object.
+		printf("Failed creating vertex shader object from file: %s.", filename);
+		exit(0);
+	}
+
+	files[0] = (const GLcharARB*)buffer;
+	glShaderSourceARB(
+		handle, //The handle to our shader
+		1, //The number of files.
+		files, //An array of const char * data, which represents the source code of theshaders
+		NULL);
+
+	glCompileShaderARB(handle);
+
+	//Compilation checking.
+	glGetObjectParameterivARB(handle, GL_OBJECT_COMPILE_STATUS_ARB, &result);
+
+	// If an error was detected.
+	if (!result)
+	{
+		//We failed to compile.
+		printf("Shader '%s' failed compilation.\n", filename);
+
+		//Attempt to get the length of our error log.
+		glGetObjectParameterivARB(handle, GL_OBJECT_INFO_LOG_LENGTH_ARB, &errorLoglength);
+
+		//Create a buffer to read compilation error message
+		//errorLogText = malloc(sizeof(char) * errorLoglength);
+
+		//Used to get the final length of the log.
+		glGetInfoLogARB(handle, errorLoglength, &actualErrorLogLength, errorLogText);
+
+		// Display errors.
+		printf("%s\n", errorLogText);
+
+		// Free the buffer malloced earlier
+		free(errorLogText);
+	}
+
+	return handle;
+}
+void CEntornVGIView::loadShadowShader()
+{
+	GLhandleARB vertexShaderHandle;
+	GLhandleARB fragmentShaderHandle;
+
+	vertexShaderHandle = loadShader("shaders/VertexShader.c", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader("shaders/FragmentShader.c", GL_FRAGMENT_SHADER);
+
+	shadowShaderId = glCreateProgramObjectARB();
+
+	glAttachObjectARB(shadowShaderId, vertexShaderHandle);
+	glAttachObjectARB(shadowShaderId, fragmentShaderHandle);
+	glLinkProgramARB(shadowShaderId);
+
+	shadowMapUniform = glGetUniformLocationARB(shadowShaderId, "ShadowMap");
+}
+void update(void)
+{
+
+
+}
+
+void CEntornVGIView::renderScene(void)
+{
+	
+	//First step: Render from the light POV to a FBO, story depth values only
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo_id);
+	//Using the fixed pipeline to render to the depthbuffer
+	glUseProgramObjectARB(0);
+	// In the case we render the shadowmap to a hi
+	glViewport(0, 0, w * SHADOW_MAP_RATIO, h * SHADOW_MAP_RATIO);
+	// Clear previous frame values
+	glClear(GL_DEPTH_BUFFER_BIT);
+	
+	//Disable color rendering, we only want to write to the Z-Buffer
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	// Desactivació del retall de pantalla
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	// PROJECCIO PERSPECTIVA.Definim volum de visualització adaptant-lo
+	//	 a les mides actuals de la finestra windows
+	// Amb gluPerspective
+	if (w >= h) 	gluPerspective(60.0, 1.0 * w / h, p_near, p_far + OPV.R);
+	else gluPerspective(60.0 * h / w, 1.0 * w / h, p_near, p_far + OPV.R);
+	// Activació matriu MODELVIEW (tancar matriu PROJECTION)
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(5, 0, 35, 5, 0, 0, 1, 0, 0);
+	// Culling switching, rendering only backface, this is done to avoid self-shadowing
+	glCullFace(GL_FRONT);
+	configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+	dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+	//Save modelview/projection matrice into texture7, also add a biais
+	setTextureMatrix();
+	
+	// Now rendering from the camera POV, using the FBO to generate shadows
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+	
+	glViewport(0, 0, w, h);
+	//Enabling color write (previously disabled for light POV z-buffer rendering)
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	// Clear previous frame values
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	
+	//Using the shadow shader
+	glUseProgramObjectARB(shadowShaderId);
+	glUniform1iARB(shadowMapUniform, 15);
+	glActiveTextureARB(GL_TEXTURE15_ARB);
+	glBindTexture(GL_TEXTURE_2D, depth_id);
+	
+	// Desactivació del retall de pantalla
+	eixos = true;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	// PROJECCIO PERSPECTIVA.Definim volum de visualització adaptant-lo 
+	//	 a les mides actuals de la finestra windows	
+
+	// Amb gluPerspective
+	if (w >= h) 	gluPerspective(60.0, 1.0 * w / h, p_near, p_far + OPV.R);
+	else gluPerspective(60.0 * h / w, 1.0 * w / h, p_near, p_far + OPV.R);
+
+	// Activació matriu MODELVIEW (tancar matriu PROJECTION)
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+		front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y, altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z, d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
+
+	// Culling switching, rendering only backface, this is done to avoid self-shadowing
+	glCullFace(GL_BACK);
+	glEnable(GL_TEXTURE_2D);
+	glPushMatrix();
+	configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
+	dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+	
+	// DEBUG only. this piece of code draw the depth buffer onscreen
+	glPushMatrix();
+	 glUseProgramObjectARB(0);
+	 glMatrixMode(GL_PROJECTION);
+	 glLoadIdentity();
+	 glOrtho(-w/2,w/2,-h/2,h/2,1,20);
+	 glMatrixMode(GL_MODELVIEW);
+	 glLoadIdentity();
+	 glColor4f(1,1,1,1);
+	 glActiveTextureARB(GL_TEXTURE0);
+	 glBindTexture(GL_TEXTURE_2D,depth_id);
+	 glEnable(GL_TEXTURE_2D);
+	 glTranslated(0,0,-1);
+	 glBegin(GL_QUADS);
+	 glTexCoord2d(0,0);glVertex3f(0,0,0);
+	 glTexCoord2d(1,0);glVertex3f(w/2,0,0);
+	 glTexCoord2d(1,1);glVertex3f(w/2,h/2,0);
+	 glTexCoord2d(0,1);glVertex3f(0,h/2,0);
+
+
+	 glEnd();
+	 glDisable(GL_TEXTURE_2D);
+	 glPopMatrix();
+	
+}
 
 void CEntornVGIView::OnInitialUpdate()
 {
@@ -690,6 +958,8 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nomTextureGrass = CString2Char(PATH_TEXTURE_GRASS);
 	char* nomTextureOthers = CString2Char(PATH_TEXTURE_OTHERS);
 
+	
+
 	//Grabacio
 	d1.setGrabacio(); //Prepara la grabación
 	
@@ -709,9 +979,9 @@ void CEntornVGIView::OnInitialUpdate()
 	d1.set_t_base();
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 	
-
-
 	
+
+
 	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm);
 	texturesID[OBJECTEBASE] = loadIMA_SOIL(nomTextureBase);
 	texturesID[OBJECTESEIENT] = loadIMA_SOIL(nomTextureSeient);
@@ -723,6 +993,12 @@ void CEntornVGIView::OnInitialUpdate()
 	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
 	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
 	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
+
+	generateFBO();
+	loadShadowShader();
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0, 0, 0, 1.0f);
+	glEnable(GL_CULL_FACE);
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
 		
@@ -741,7 +1017,7 @@ void CEntornVGIView::OnInitialUpdate()
 		//	Pas de textura al shader
 	if (shader_menu != CAP_SHADER) glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
 	OnShadersGouraud();
-
+	
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 	
 
@@ -766,6 +1042,9 @@ void CEntornVGIView::OnDraw(CDC* /*pDC*/)
 }
 
 
+
+
+
 void CEntornVGIView::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
@@ -777,11 +1056,13 @@ void CEntornVGIView::OnPaint()
 
 // Cridem a les funcions de l'escena i la projecció segons s'hagi 
 // seleccionat una projecció o un altra
+	
 	switch (projeccio)
 	{
 	case PERSPECT:
 // PROJECCIÓ PERSPECTIVA
 		if (cam != SPLIT_CAM) {
+			/*
 			glEnable(GL_SCISSOR_TEST);
 			glScissor(0, 0, w, h);
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
@@ -845,7 +1126,8 @@ void CEntornVGIView::OnPaint()
 			glDisable(GL_SCISSOR_TEST);
 			// Intercanvia l'escena al front de la pantalla
 					//SwapBuffers(m_pDC->GetSafeHdc());
-			
+			*/
+			renderScene();
 		}
 		else if (cam == SPLIT_CAM) {
 			glEnable(GL_SCISSOR_TEST);
