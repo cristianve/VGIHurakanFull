@@ -79,6 +79,11 @@ private:
 	bool recienIniciado = false;
 	double lastGrabacioInstant = 0;
 
+	double grabacion_angulo_inicial;
+	double grabacion_velocidad_inicial;
+	double grabacion_aceleracion_inicial;
+	double grabacion_friccion_inicial;
+
 public:
 
 	//Constructor

@@ -139,6 +139,7 @@ CEntornVGIView::CEntornVGIView()
 {
 // TODO: agregar aquí el código de construcción
 	d1 = Demo_prova();
+	last_tecla = 0;
 //	int i = 0;
 
 //------ Entorn VGI: Inicialització de les variables globals de CEntornVGIView
@@ -1535,6 +1536,96 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 // Crida a OnPaint() per redibuixar l'escena
 	InvalidateRect(NULL, false);
 
+	//Cambio de camara (derecha) 
+	if (nChar == 39)
+	{
+		if (cam == DEFAULT_CAM) {
+			cam = SPLIT_CAM;
+		}
+		else if (cam == SPLIT_CAM) {
+			cam = CAM_ASIENTOS;
+			OPV.alfa = 0;
+			OPV.beta = 0;
+			d1.pan_beta = 0;
+		}
+		else if (cam == CAM_ASIENTOS) {
+			cam = TEMPLE_CAM;
+			OPV.alfa = 0;
+			OPV.beta = 90;
+		}
+		else if (cam == TEMPLE_CAM) {
+			cam = EXTERIOR_FRONTAL;
+			pos_persona_x = POS_PERSONA_INI_X;
+			pos_persona_y = POS_PERSONA_INI_Y;
+			OPV.alfa = 0;
+			OPV.R = CAMP_VISIO_PERSONA;
+			OPV.beta = 270;
+		}
+		else if (cam == EXTERIOR_FRONTAL) {
+			cam = DEFAULT_CAM;
+			OPV.alfa = 10;
+			OPV.beta = 90;
+		}
+	}
+
+	//Cambio de camara (izquierda)
+	if (nChar == 37)
+	{
+		if (cam == DEFAULT_CAM) {
+			cam = EXTERIOR_FRONTAL;
+			OPV.alfa = 0;
+			OPV.beta = 270;
+			OPV.R = CAMP_VISIO_PERSONA;
+			pos_persona_x = POS_PERSONA_INI_X;
+			pos_persona_y = POS_PERSONA_INI_Y;
+		}
+		else if (cam == EXTERIOR_FRONTAL) {
+			cam = TEMPLE_CAM;
+			OPV.alfa = 0;
+			OPV.beta = 90;
+		}
+		else if (cam == TEMPLE_CAM) {
+			cam = CAM_ASIENTOS;
+			d1.pan_beta = 0;
+			OPV.alfa = 0;
+			OPV.beta = 0;
+		}
+		else if (cam == CAM_ASIENTOS) {
+			cam = SPLIT_CAM;
+		}
+		else if (cam == SPLIT_CAM) {
+			cam = DEFAULT_CAM;
+			OPV.alfa = 10;
+			OPV.beta = 90;
+		}
+	}
+
+	//Grabación
+	if (nChar == 71)	//Se inicia y se para con la G
+	{
+		if (!d1.demo_on)	//Si esta en modo libre permite la grabacion
+		{
+			if (isGrabando)
+			{
+				d1.stopGrabacio();
+				isGrabando = false;
+			}
+			else
+			{
+				d1.initGrabacio();
+				isGrabando = true;
+			}
+			if (last_tecla != 0)
+			{
+				nChar = last_tecla;
+			}
+		}
+		else   //Si esta reproduciendo un .txt permite parar su reproduccion 
+		{
+			d1.reset_demo();
+			d1.demo_on = false;
+		}
+	}
 
 	//Brazo
 	//Si pulsa Q, frena el brazo
@@ -1579,21 +1670,6 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 	}
 
-	//Grabación
-	if (nChar == 71)	//Se inicia y se para con la G
-	{
-		if (isGrabando)
-		{
-			d1.stopGrabacio();
-			isGrabando = false;
-		}
-		else
-		{
-			d1.initGrabacio();
-			isGrabando = true;
-		}
-	}
-
 	//Asientos
 	if (nChar == 77)   //Si pulsas M giras positivamente los asientos
 	{
@@ -1620,6 +1696,10 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		d1.setEstadoAsientos(TAMBALEAR);
 	}
+
+	//Guardamos la tecla, por si pulsa grabar, volverla a poner luego 
+	last_tecla = nChar;
+
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
@@ -1640,6 +1720,11 @@ void CEntornVGIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == 77 || nChar == 66)
 	{
 		d1.setEstadoAsientos(LIBRE);
+	}
+
+	if (nChar == last_tecla)	//Si levanta la ultima tecla pulsada, la borramos de last_tecla porque puede dar errores
+	{
+		last_tecla = 0;
 	}
 }
 
@@ -2647,13 +2732,6 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 		d1.last_instant = d1.instant;
 		d1.instant = (std::clock() - (double)d1.get_t_base()) / (double)CLOCKS_PER_SEC;
-		if (d1.demo_on) {
-			double aux = (std::clock() - (double)d1.get_start())/(double)CLOCKS_PER_SEC;
-			if (aux > d1.duracion_total) {
-				d1.demo_on = false;
-				d1.reset_demo();
-			}
-		}
 		d1.move_step();
 		// Crida a OnPaint() per redibuixar l'escena
 		InvalidateRect(NULL, false);
@@ -2664,6 +2742,46 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			XINPUT_KEYSTROKE key = Player1->GetKey();
 			bool tecla_brac = false;
 			bool tecla_seient = false;
+
+			//PAUSA I RECORD
+			if ((key.VirtualKey == VK_PAD_START) && !tecla_brac && !tecla_seient) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!isWaiting) {
+						isWaiting = true;
+						d1.setEstadoAsientos(PAUSAR);
+						d1.setEstadoBrazo(PAUSAR);
+					}
+					else {
+						isWaiting = false;
+					}
+				}
+
+			}
+			else if ((key.VirtualKey == VK_PAD_BACK) && !tecla_brac && !tecla_seient && !isWaiting) {
+				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
+					if (!d1.demo_on) {	//Si no esta reproduciendo una grabación
+						if (!isGrabando) {
+							isGrabando = true;
+							d1.initGrabacio();
+						}
+						else {
+							isGrabando = false;
+							d1.stopGrabacio();
+						}
+					}
+					else   //Si esta reproduciendo, reinicia la demo y lo deja en modo libre para el usuario
+					{
+						d1.reset_demo();
+						d1.demo_on = false;
+					}
+				}
+
+			}
+			else if (!tecla_seient && !tecla_brac && !isWaiting && !istambaleo) {
+				if (!isAsientoClavado)d1.setEstadoAsientos(LIBRE);
+				if (!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
+			}
+
 			//BOTONES BRAZO
 			//Get moves brazo
 			float brazo_pos = state.Gamepad.bRightTrigger;
@@ -3007,43 +3125,8 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 				tecla_seient = true;
 			}
-
-
-			//PAUSA I RECORD
-			if ((key.VirtualKey == VK_PAD_START) && !tecla_brac && !tecla_seient) {
-				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!isWaiting) {
-						isWaiting = true;
-						d1.setEstadoAsientos(PAUSAR);
-						d1.setEstadoBrazo(PAUSAR);
-					}
-					else {
-						isWaiting = false;
-					}
-				}
-
-			}
-			else if ((key.VirtualKey == VK_PAD_BACK) && !tecla_brac && !tecla_seient && !isWaiting) {
-				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!isGrabando) {
-						isGrabando = true;
-						d1.initGrabacio();
-					}
-					else {
-						isGrabando = false;
-						d1.stopGrabacio();
-					}
-				}
-
-			}
-			else if (!tecla_seient && !tecla_brac && !isWaiting && !istambaleo) {
-				if (!isAsientoClavado)d1.setEstadoAsientos(LIBRE);
-				if (!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
-			}
-			
 		}
-		
-		}
+	}
 	else if (satelit)	{	// OPCIÓ SATÈLIT: Increment OPV segons moviments mouse.
 		//OPV.R = OPV.R + m_EsfeIncEAvall.R;
 		OPV.alfa = OPV.alfa + m_EsfeIncEAvall.alfa;

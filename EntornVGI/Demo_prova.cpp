@@ -324,10 +324,10 @@ void Demo_prova::start_demo(char* brac_moves,char* seient_moves)
 
 	brac.set_desp_origen(0.5, 0.067, 8.93);
 	seient.set_desp_origen(0.5,0,2.64);
-	brac.set_angle(0, 0, 0);
+/*	brac.set_angle(0, 0, 0);
 	seient.set_angle(0, 0, 0);
 	brac.set_v_angular(0);
-	seient.set_v_angular(0);
+	seient.set_v_angular(0);*/
 	duracion_total = brac.get_duracio();
 };
 

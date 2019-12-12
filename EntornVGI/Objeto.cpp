@@ -11,8 +11,10 @@ void Objeto::reset_moves() {
 void Objeto::step() {
 	int d;
 	double time = (instant - lastInstant);
-	//si el moviment ha acabat i hi ha algun a la cua
-	if (instant>=move_act->t_fi && !moves.empty()) {
+
+	if (instant >= move_act->t_fi && moves.get_n_movs() == 1) {
+		freeStep_f(time);
+	}else if (instant>=move_act->t_fi && !moves.empty()) { //si el moviment ha acabat i hi ha algun a la cua
 			
 		//s'agafa el nou moviment de la cua
 		moves.pop_mov();
@@ -183,6 +185,10 @@ void Objeto::read_moves(char* filename,double instant) {
 	movements_record = fopen(filename, "r");
 	if (movements_record != NULL)
 	{
+		n_llegits = fscanf(movements_record, "%lf\n", &angle.x);
+		n_llegits = fscanf(movements_record, "%lf\n", &velo_angular);
+		n_llegits = fscanf(movements_record, "%lf\n", &aceleracion);
+		n_llegits = fscanf(movements_record, "%lf\n", &fricc);
 		n_llegits = fscanf(movements_record, "%d\n", &n_moves);
 		for (int i = 0; i < n_moves; i++) {
 			n_llegits = fscanf(movements_record, "%c", &type);
@@ -391,6 +397,14 @@ void Objeto::setGrabacio(bool grabacio)
 		//Escribir en el fichero
 		FILE* grabacio;
 		grabacio = fopen(grabacioFilename, "w");
+
+		//Grabar posicion inicial
+		fprintf(grabacio, "%lf\n", grabacion_angulo_inicial);
+		fprintf(grabacio, "%lf\n", grabacion_velocidad_inicial);
+		fprintf(grabacio, "%lf\n", grabacion_aceleracion_inicial);
+		fprintf(grabacio, "%lf\n", grabacion_friccion_inicial);
+
+		//Grabar movimientos
 		fprintf(grabacio, "%d\n", numberOfMovements + 1);
 		for (int i = 0; i < numberOfMovements + 1; i++)
 		{
@@ -423,6 +437,12 @@ void Objeto::setGrabacio(bool grabacio)
 		numberOfMovements = 0; //Reiniciem els moviments
 		tiempoGrabacion = 0;
 		lastGrabacioInstant = instant;
+
+		//Guardamos la posicion inicial
+		grabacion_angulo_inicial = angle.x;
+		grabacion_velocidad_inicial = velo_angular;
+		grabacion_aceleracion_inicial = aceleracion;
+		grabacion_friccion_inicial = fricc;
 	}
 	isGrabando = grabacio;
 }

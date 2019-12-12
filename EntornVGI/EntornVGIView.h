@@ -59,6 +59,7 @@ public:
 	double pos_asiento_x;
 	double pos_asiento_y;
 	double pos_asiento_z;
+	UINT last_tecla;
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
 
