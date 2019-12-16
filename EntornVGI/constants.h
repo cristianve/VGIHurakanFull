@@ -109,17 +109,17 @@
 #define OBJECTEOBJ 5	// Objecte OBJ sense textures
 #define OBJECTEOBJT 6   // Objecte OBJ amb textures
 #define OBJECTEBRAC 7
-#define OBJECTEBASE 8
-#define OBJECTESEIENT 9
-#define OBJECTESKYDOME 10
-#define OBJECTEFLOOR 11
-#define OBJECTEGRASS 12
-#define OBJECTETEMPLE 13
-#define OBJECTEOTHERS 14
-#define OBJECTEWALLS 15
-#define OBJECTEPERSONA 16
-#define OBJECTEPAD_ON 17
-#define OBJECTEPAD_OFF 18
+#define OBJECTEBASE 10
+#define OBJECTESEIENT 13
+#define OBJECTESKYDOME 16
+#define OBJECTEFLOOR 19
+#define OBJECTEGRASS 22
+#define OBJECTETEMPLE 25
+#define OBJECTEOTHERS 28
+#define OBJECTEWALLS 31
+#define OBJECTEPERSONA 34
+#define OBJECTEPAD_ON 37
+#define OBJECTEPAD_OFF 38
 
 // -------------- VGI: Definició dels valors del pla near i far del Volum de Visualització en Perspectiva
 const double p_near=1.0;
@@ -138,7 +138,7 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 30
+#define NUM_MAX_TEXTURES 40
 
 // Tipus de textures
 #define CAP ' '
