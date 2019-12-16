@@ -37,17 +37,42 @@ extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
 extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
 extern const CString PATH_PERSONA = CString(_T("obj/hombre.obj"));
 //TEXTURES
-extern const CString PATH_TEXTURE_ARM = CString(_T("textures/Arm.png"));
-extern const CString PATH_TEXTURE_BASE = CString(_T("textures/Base.png"));
-extern const CString PATH_TEXTURE_SEIENTS = CString(_T("textures/Seients.png"));
-extern const CString PATH_TEXTURE_SKYDOME = CString(_T("textures/philo_sky1_2k.jpg"));
-extern const CString PATH_TEXTURE_FLOOR = CString(_T("textures/floor.jpg"));
-extern const CString PATH_TEXTURE_GRASS = CString(_T("textures/grass.jpg"));
-extern const CString PATH_TEXTURE_WALLS = CString(_T("textures/wall.png"));
-extern const CString PATH_TEXTURE_OTHERS = CString(_T("textures/others.png"));
-extern const CString PATH_TEXTURE_TEMPLE = CString(_T("textures/Temple.png"));
-extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
-extern const CString PATH_TEXTURE_MANDO_OFF = CString(_T("textures/mando_desc.png"));
+extern const CString PATH_TEXTURE_ARM_diffuse = CString(_T("textures/Arm_Diffuse.png"));
+extern const CString PATH_TEXTURE_ARM_normalmap = CString(_T("textures/Arm_normalmap.png"));
+extern const CString PATH_TEXTURE_ARM_arm = CString(_T("textures/Arm_ARM.png"));
+
+extern const CString PATH_TEXTURE_BASE_diffuse = CString(_T("textures/Base_Diffuse.png"));
+extern const CString PATH_TEXTURE_BASE_normalmap = CString(_T("textures/Base_normalmap.png"));
+extern const CString PATH_TEXTURE_BASE_arm = CString(_T("textures/Base_ARM.png"));
+
+extern const CString PATH_TEXTURE_SEIENTS_diffuse = CString(_T("textures/Seients_Diffuse.png"));
+extern const CString PATH_TEXTURE_SEIENTS_normalmap = CString(_T("textures/Seients_normalmap.png"));
+extern const CString PATH_TEXTURE_SEIENTS_arm = CString(_T("textures/Seients_ARM.png"));
+
+extern const CString PATH_TEXTURE_SKYDOME_diffuse = CString(_T("textures/philo_sky1_2k_diffuse.jpg"));
+extern const CString PATH_TEXTURE_SKYDOME_normalmap = CString(_T("textures/philo_sky1_2k_normalmap.png"));
+extern const CString PATH_TEXTURE_SKYDOME_arm = CString(_T("textures/philo_sky1_2k_ARM.png"));
+
+
+extern const CString PATH_TEXTURE_FLOOR_diffuse = CString(_T("textures/floor_diffuse.png"));
+extern const CString PATH_TEXTURE_FLOOR_normalmap = CString(_T("textures/floor_normalmap.png"));
+extern const CString PATH_TEXTURE_FLOOR_arm = CString(_T("textures/floor_ARM.png"));
+
+extern const CString PATH_TEXTURE_GRASS_diffuse = CString(_T("textures/grass_diffuse.png"));
+extern const CString PATH_TEXTURE_GRASS_normalmap = CString(_T("textures/grass_normalmap.png"));
+extern const CString PATH_TEXTURE_GRASS_arm = CString(_T("textures/grass_ARM.png"));
+
+extern const CString PATH_TEXTURE_WALLS_diffuse = CString(_T("textures/walls_diffuse.png"));
+extern const CString PATH_TEXTURE_WALLS_normalmap = CString(_T("textures/walls_normalmap.png"));
+extern const CString PATH_TEXTURE_WALLS_arm = CString(_T("textures/walls_ARM.png"));
+
+extern const CString PATH_TEXTURE_OTHERS_diffuse = CString(_T("textures/others_Diffuse.png"));
+extern const CString PATH_TEXTURE_OTHERS_normalmap = CString(_T("textures/others_normalmap.png"));
+extern const CString PATH_TEXTURE_OTHERS_arm = CString(_T("textures/others_ARM.png"));
+
+extern const CString PATH_TEXTURE_TEMPLE_diffuse = CString(_T("textures/Temple_Diffuse.png"));
+extern const CString PATH_TEXTURE_TEMPLE_normalmap = CString(_T("textures/Temple_normalmap.png"));
+extern const CString PATH_TEXTURE_TEMPLE_arm = CString(_T("textures/Temple_ARM.png"));
 //extern const CString PATH_TEXTURE_PERSONA = CString(_T("textures/hombre.obj"));
 
 
@@ -679,17 +704,35 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_persona = CString2Char(PATH_PERSONA);
 	
 
-	char* nomTextureMandoOn = CString2Char(PATH_TEXTURE_MANDO_ON);
-	char* nomTextureMandoOff = CString2Char(PATH_TEXTURE_MANDO_OFF);
-	char* nomTextureArm = CString2Char(PATH_TEXTURE_ARM);
-	char* nomTextureBase = CString2Char(PATH_TEXTURE_BASE);
-	char* nomTextureSeient = CString2Char(PATH_TEXTURE_SEIENTS);
-	char* nomTextureSkydome = CString2Char(PATH_TEXTURE_SKYDOME);
-	char* nomTextureFloor = CString2Char(PATH_TEXTURE_FLOOR);
-	char* nomTextureTemple = CString2Char(PATH_TEXTURE_TEMPLE);
-	char* nomTextureWalls = CString2Char(PATH_TEXTURE_WALLS);
-	char* nomTextureGrass = CString2Char(PATH_TEXTURE_GRASS);
-	char* nomTextureOthers = CString2Char(PATH_TEXTURE_OTHERS);
+	char* nomTextureArm_diffuse = CString2Char(PATH_TEXTURE_ARM_diffuse);
+	char* nomTextureBase_diffuse = CString2Char(PATH_TEXTURE_BASE_diffuse);
+	char* nomTextureSeient_diffuse = CString2Char(PATH_TEXTURE_SEIENTS_diffuse);
+	char* nomTextureSkydome_diffuse = CString2Char(PATH_TEXTURE_SKYDOME_diffuse);
+	char* nomTextureFloor_diffuse = CString2Char(PATH_TEXTURE_FLOOR_diffuse);
+	char* nomTextureTemple_diffuse = CString2Char(PATH_TEXTURE_TEMPLE_diffuse);
+	char* nomTextureWalls_diffuse = CString2Char(PATH_TEXTURE_WALLS_diffuse);
+	char* nomTextureGrass_diffuse = CString2Char(PATH_TEXTURE_GRASS_diffuse);
+	char* nomTextureOthers_diffuse = CString2Char(PATH_TEXTURE_OTHERS_diffuse);
+
+	char* nomTextureArm_normalmap = CString2Char(PATH_TEXTURE_ARM_normalmap);
+	char* nomTextureBase_normalmap = CString2Char(PATH_TEXTURE_BASE_normalmap);
+	char* nomTextureSeient_normalmap = CString2Char(PATH_TEXTURE_SEIENTS_normalmap);
+	char* nomTextureSkydome_normalmap = CString2Char(PATH_TEXTURE_SKYDOME_normalmap);
+	char* nomTextureFloor_normalmap = CString2Char(PATH_TEXTURE_FLOOR_normalmap);
+	char* nomTextureTemple_normalmap = CString2Char(PATH_TEXTURE_TEMPLE_normalmap);
+	char* nomTextureWalls_normalmap = CString2Char(PATH_TEXTURE_WALLS_normalmap);
+	char* nomTextureGrass_normalmap = CString2Char(PATH_TEXTURE_GRASS_normalmap);
+	char* nomTextureOthers_normalmap = CString2Char(PATH_TEXTURE_OTHERS_normalmap);
+
+	char* nomTextureArm_arm = CString2Char(PATH_TEXTURE_ARM_arm);
+	char* nomTextureBase_arm = CString2Char(PATH_TEXTURE_BASE_arm);
+	char* nomTextureSeient_arm = CString2Char(PATH_TEXTURE_SEIENTS_arm);
+	char* nomTextureSkydome_arm = CString2Char(PATH_TEXTURE_SKYDOME_arm);
+	char* nomTextureFloor_arm = CString2Char(PATH_TEXTURE_FLOOR_arm);
+	char* nomTextureTemple_arm = CString2Char(PATH_TEXTURE_TEMPLE_arm);
+	char* nomTextureWalls_arm = CString2Char(PATH_TEXTURE_WALLS_arm);
+	char* nomTextureGrass_arm = CString2Char(PATH_TEXTURE_GRASS_arm);
+	char* nomTextureOthers_arm = CString2Char(PATH_TEXTURE_OTHERS_arm);
 
 	//Grabacio
 	d1.setGravacio(); //Prepara la grabación
@@ -713,17 +756,133 @@ void CEntornVGIView::OnInitialUpdate()
 
 
 	
-	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm);
-	texturesID[OBJECTEBASE] = loadIMA_SOIL(nomTextureBase);
-	texturesID[OBJECTESEIENT] = loadIMA_SOIL(nomTextureSeient);
-	texturesID[OBJECTESKYDOME] = loadIMA_SOIL(nomTextureSkydome);
-	texturesID[OBJECTEFLOOR] = loadIMA_SOIL(nomTextureFloor);
-	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass);
-	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple);
-	texturesID[OBJECTEOTHERS] = loadIMA_SOIL(nomTextureOthers);
-	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
-	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
-	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls);
+	glActiveTexture(GL_TEXTURE0 + 2);
+	lut = SOIL_load_OGL_texture
+	(
+		"textures/2dLut.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	glBindTexture(GL_TEXTURE_2D, lut);
+
+	glActiveTexture(GL_TEXTURE0 + 3);
+	diff_ibl = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_diffuse.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, diff_ibl);
+
+	glActiveTexture(GL_TEXTURE0 + 4);
+	spec_ibl0 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_0.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl0);
+
+	glActiveTexture(GL_TEXTURE0 + 5);
+	spec_ibl1 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_1.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl1);
+
+	glActiveTexture(GL_TEXTURE0 + 6);
+	spec_ibl2 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_2.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl2);
+
+	glActiveTexture(GL_TEXTURE0 + 7);
+	spec_ibl3 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_3.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl3);
+
+	glActiveTexture(GL_TEXTURE0 + 8);
+	spec_ibl4 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_4.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl4);
+
+	glActiveTexture(GL_TEXTURE0 + 9);
+	spec_ibl5 = SOIL_load_OGL_single_cubemap
+	(
+		"textures/ibl_specular_5.dds",
+		SOIL_DDS_CUBEMAP_FACE_ORDER,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_DDS_LOAD_DIRECT
+	);
+	glBindTexture(GL_TEXTURE_2D, spec_ibl5);
+
+
+
+	glActiveTexture(GL_TEXTURE0);
+	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm_diffuse);
+	texturesID[OBJECTEBRAC + 1] = loadIMA_SOIL(nomTextureArm_normalmap);
+	texturesID[OBJECTEBRAC + 2] = loadIMA_SOIL(nomTextureArm_arm);
+
+	texturesID[OBJECTEBASE] = loadIMA_SOIL(nomTextureBase_diffuse);
+	texturesID[OBJECTEBASE + 1] = loadIMA_SOIL(nomTextureBase_normalmap);
+	texturesID[OBJECTEBASE + 2] = loadIMA_SOIL(nomTextureBase_arm);
+
+	texturesID[OBJECTESEIENT] = loadIMA_SOIL(nomTextureSeient_diffuse);
+	texturesID[OBJECTESEIENT + 1] = loadIMA_SOIL(nomTextureSeient_normalmap);
+	texturesID[OBJECTESEIENT + 2] = loadIMA_SOIL(nomTextureSeient_arm);
+
+	texturesID[OBJECTESKYDOME] = loadIMA_SOIL(nomTextureSkydome_diffuse);
+	texturesID[OBJECTESKYDOME + 1] = loadIMA_SOIL(nomTextureSkydome_normalmap);
+	texturesID[OBJECTESKYDOME + 2] = loadIMA_SOIL(nomTextureSkydome_arm);
+
+	texturesID[OBJECTEFLOOR] = loadIMA_SOIL(nomTextureFloor_diffuse);
+	texturesID[OBJECTEFLOOR + 1] = loadIMA_SOIL(nomTextureFloor_normalmap);
+	texturesID[OBJECTEFLOOR + 2] = loadIMA_SOIL(nomTextureFloor_arm);
+
+	texturesID[OBJECTEWALLS] = loadIMA_SOIL(nomTextureWalls_diffuse);
+	texturesID[OBJECTEWALLS + 1] = loadIMA_SOIL(nomTextureWalls_normalmap);
+	texturesID[OBJECTEWALLS + 2] = loadIMA_SOIL(nomTextureWalls_arm);
+
+	texturesID[OBJECTEGRASS] = loadIMA_SOIL(nomTextureGrass_diffuse);
+	texturesID[OBJECTEGRASS + 1] = loadIMA_SOIL(nomTextureGrass_normalmap);
+	texturesID[OBJECTEGRASS + 2] = loadIMA_SOIL(nomTextureGrass_arm);
+
+	texturesID[OBJECTETEMPLE] = loadIMA_SOIL(nomTextureTemple_diffuse);
+	texturesID[OBJECTETEMPLE + 1] = loadIMA_SOIL(nomTextureTemple_normalmap);
+	texturesID[OBJECTETEMPLE + 2] = loadIMA_SOIL(nomTextureTemple_arm);
+
+	texturesID[OBJECTEOTHERS] = loadIMA_SOIL(nomTextureOthers_diffuse);
+	texturesID[OBJECTEOTHERS + 1] = loadIMA_SOIL(nomTextureOthers_normalmap);
+	texturesID[OBJECTEOTHERS + 2] = loadIMA_SOIL(nomTextureOthers_arm);
+
 
 		if (ObOBJ == NULL) ObOBJ = new COBJModel;
 		
@@ -775,6 +934,14 @@ void CEntornVGIView::OnPaint()
 
 // Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
+	float alfa = OPV.alfa * pi / 180;
+	float beta = OPV.beta * pi / 180;
+	camPositionX = OPV.R * cos(beta) * cos(alfa);
+	camPositionY = OPV.R * sin(beta) * cos(alfa);
+	camPositionZ = OPV.R * sin(alfa);
+	glUniform1f(glGetUniformLocation(shader_program, "camPosX"), camPositionX);
+	glUniform1f(glGetUniformLocation(shader_program, "camPosY"), camPositionY);
+	glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), camPositionZ);
 
 // Cridem a les funcions de l'escena i la projecció segons s'hagi 
 // seleccionat una projecció o un altra
@@ -3309,27 +3476,28 @@ void CEntornVGIView::OnShadersGouraud()
 	else sw_shader = true;
 	shader_menu = GOURAUD_SHADER;
 
-// Entorn VGI: Activació del contexte OpenGL
+	// Entorn VGI: Activaci� del contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
-
+	float rotation = 0;
 	shader_program = initializeShaders(_T("./shaders/gouraud_shdrML"));
-
 	glUniform1i(glGetUniformLocation(shader_program, "texture"), textura);
-	glUniform1i(glGetUniformLocation(shader_program, "texture0"), GLint(0));
-// Pas màscara reflectivitat
-	glUniform1i(glGetUniformLocation(shader_program, "sw_intensity[0]"), sw_material[0]);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_intensity[1]"), sw_material[1]);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_intensity[2]"), sw_material[2]);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_intensity[3]"), sw_material[3]);
-//Pas màscara llums
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[0]"), llumGL[0].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[1]"), llumGL[1].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[2]"), llumGL[2].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[3]"), llumGL[3].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[4]"), llumGL[4].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[5]"), llumGL[5].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[6]"), llumGL[6].encesa);
-	glUniform1i(glGetUniformLocation(shader_program, "sw_lights[7]"), llumGL[7].encesa);
+	glUniform1i(glGetUniformLocation(shader_program, "albedoMap"), GLint(0));
+	glUniform1i(glGetUniformLocation(shader_program, "brdfLUT"), GLint(2));
+	glUniform1i(glGetUniformLocation(shader_program, "irradianceMap"), GLint(3));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL0"), GLint(4));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL1"), GLint(5));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL2"), GLint(6));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL3"), GLint(7));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL4"), GLint(8));
+	glUniform1i(glGetUniformLocation(shader_program, "specularIBL5"), GLint(9));
+	glUniform1i(glGetUniformLocation(shader_program, "normalMapTex"), GLint(10));
+	glUniform1i(glGetUniformLocation(shader_program, "metallicMap"), GLint(11));
+	glUniform1i(glGetUniformLocation(shader_program, "glowMap"), GLint(12));
+	//////////////////////////Canvis importants
+	glUniform1f(glGetUniformLocation(shader_program, "camPosX"), camPositionX);
+	glUniform1f(glGetUniformLocation(shader_program, "camPosY"), camPositionY);
+	glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), camPositionZ);
+	glUniform1f(glGetUniformLocation(shader_program, "angle"), rotation);
 
 // Entorn VGI: Desactivació del contexte OpenGL. Permet la coexistencia d'altres contextes de generació
 	wglMakeCurrent(m_pDC->GetSafeHdc(), NULL);
@@ -3370,7 +3538,7 @@ void CEntornVGIView::OnHurakanBrazos()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_ARM);
-	char* nomTexture = CString2Char(PATH_TEXTURE_ARM);
+	char* nomTexture = CString2Char(PATH_TEXTURE_ARM_diffuse);
 
 	// Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
@@ -3419,7 +3587,7 @@ void CEntornVGIView::OnHurakanBase()
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_BASE);
 
-	char* nomTexture = CString2Char(PATH_TEXTURE_BASE);
+	char* nomTexture = CString2Char(PATH_TEXTURE_BASE_diffuse);
 
 	// Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
@@ -3466,7 +3634,7 @@ void CEntornVGIView::OnHurakanAsientos()
 
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_ASIENTO);
-	char* nomTexture = CString2Char(PATH_TEXTURE_SEIENTS);
+	char* nomTexture = CString2Char(PATH_TEXTURE_SEIENTS_diffuse);
 
 	// Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
@@ -3522,7 +3690,7 @@ void CEntornVGIView::OnHurakanSkydome()
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_SKYDOME);
 
-	char* nomTexture = CString2Char(PATH_TEXTURE_SKYDOME);
+	char* nomTexture = CString2Char(PATH_TEXTURE_SKYDOME_diffuse);
 
 	// Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
@@ -3577,7 +3745,7 @@ void CEntornVGIView::OnHurakanFloor()
 	//PATH OBJ
 	char* nomfitx = CString2Char(PATH_FLOOR);
 
-	char* nomTexture = CString2Char(PATH_TEXTURE_FLOOR);
+	char* nomTexture = CString2Char(PATH_TEXTURE_FLOOR_diffuse);
 
 	// Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
@@ -3623,11 +3791,11 @@ void CEntornVGIView::OnHurakan()
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
 
 
-	char* nomTextureArm = CString2Char(PATH_TEXTURE_ARM);
-	char* nomTextureBase = CString2Char(PATH_TEXTURE_BASE);
-	char* nomTextureSeient = CString2Char(PATH_TEXTURE_SEIENTS);
-	char* nomTextureSkydome = CString2Char(PATH_TEXTURE_SKYDOME);
-	char* nomTextureFloor = CString2Char(PATH_TEXTURE_FLOOR);
+	char* nomTextureArm = CString2Char(PATH_TEXTURE_ARM_diffuse);
+	char* nomTextureBase = CString2Char(PATH_TEXTURE_BASE_diffuse);
+	char* nomTextureSeient = CString2Char(PATH_TEXTURE_SEIENTS_diffuse);
+	char* nomTextureSkydome = CString2Char(PATH_TEXTURE_SKYDOME_diffuse);
+	char* nomTextureFloor = CString2Char(PATH_TEXTURE_FLOOR_diffuse);
 
 
 	objecte = HURAKAN;

@@ -65,157 +65,282 @@ void Hurakan::dibuixa_hurakan(bool textu, GLint VTextu[NUM_MAX_TEXTURES]) {
 	angle_abs_brac = angle_abs_brac +brac.get_angle().x;
 
 	//Brac
+	glUniform1i(glGetUniformLocation(GL_CURRENT_PROGRAM, "texture"), !textura);
 	glPushMatrix();
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTEBRAC);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		}
-		glTranslatef(-pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
-		glRotatef(angle_brac.x, 1, 0, 0);
-		glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
-		glCallList(OBJECTEBRAC);
-	
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTESEIENT);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
+	glUniform1f(glGetUniformLocation(GL_CURRENT_PROGRAM, "angle"), angle_brac.x);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBRAC + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	}
+	//
+	//glEnable(GL_TEXTURE_2D);
 
-		glTranslatef(-pos_seient_origen.x, pos_seient_origen.y, pos_seient_origen.z);
-		glRotatef(angle_seient.x, 1, 0, 0);
-		glTranslatef(pos_seient_origen.x, pos_seient_origen.y, -pos_seient_origen.z);
-		glCallList(OBJECTESEIENT);
+
+
+	glTranslatef(-pos_brac_origen.x, pos_brac_origen.y, pos_brac_origen.z);
+	glRotatef(angle_brac.x, 1, 0, 0);
+	glTranslatef(pos_brac_origen.x, pos_brac_origen.y, -pos_brac_origen.z);
+	glCallList(OBJECTEBRAC);
+
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	glUniform1f(glGetUniformLocation(GL_CURRENT_PROGRAM, "angle"), angle_seient.x);
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESEIENT + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+
+	glTranslatef(-pos_seient_origen.x, pos_seient_origen.y, pos_seient_origen.z);
+	glRotatef(angle_seient.x, 1, 0, 0);
+	glTranslatef(pos_seient_origen.x, pos_seient_origen.y, -pos_seient_origen.z);
+	glCallList(OBJECTESEIENT);
 	glPopMatrix();
 
-	//Base
-	glPushMatrix();
-		//TEXURES
-		if (textu) 
-		{
-			glActiveTexture(OBJECTEBASE);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		glCallList(OBJECTEBASE);
 	glPopMatrix();
 
-	//Floor
+
+	float rotation = 0;
 	glPushMatrix();
-		//TEXURES
-		if (textu) 
-		{
-			glActiveTexture(OBJECTEFLOOR);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		//glTranslatef(0, 0, -0.35);
-		glCallList(OBJECTEFLOOR);
+
+	glUniform1i(glGetUniformLocation(GL_CURRENT_PROGRAM, "texture"), !textura);
+	glUniform1f(glGetUniformLocation(GL_CURRENT_PROGRAM, "angle"), rotation);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEBASE + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	glCallList(OBJECTEBASE);
+	glPopMatrix();
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEFLOOR + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEFLOOR);
 	glPopMatrix();
 
-	//Grass
 	glPushMatrix();
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTEGRASS);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		//glTranslatef(0, 0, -0.35);
-		glCallList(OBJECTEGRASS);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEGRASS + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEGRASS);
 	glPopMatrix();
 
-	//Walls
 	glPushMatrix();
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTEWALLS);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		//glTranslatef(0, 0, -0.35);
-		glCallList(OBJECTEWALLS);
+
+	glPushMatrix();
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEWALLS + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEWALLS);
 	glPopMatrix();
 
-	//Others
 	glPushMatrix();
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTEOTHERS);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		//glTranslatef(0, 0, -0.35);
-		glCallList(OBJECTEOTHERS);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTEOTHERS + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTEOTHERS);
 	glPopMatrix();
 
-	//Temple
 	glPushMatrix();
-		//TEXURES
-		if (textu)
-		{
-			glActiveTexture(OBJECTETEMPLE);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		//glTranslatef(0, 0, -0.35);
-		glCallList(OBJECTETEMPLE);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTETEMPLE + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	//glTranslatef(0, 0, -0.35);
+	glCallList(OBJECTETEMPLE);
 	glPopMatrix();
 
-	//Skydome
-	glPushMatrix();
-		//TEXURES
-		if (textu) 
-		{
-			glActiveTexture(OBJECTESKYDOME);
-			glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glEnable(GL_TEXTURE_2D);
-		}//
-		glCallList(OBJECTESKYDOME);
+	//TEXURES
+	//TEXURES
+	if (textu)
+	{
+		glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 10); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME + 1]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glActiveTexture(GL_TEXTURE0 + 11); // Texture unit 0
+		glBindTexture(GL_TEXTURE_2D, VTextu[OBJECTESKYDOME + 2]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+	}//
+	glCallList(OBJECTESKYDOME);
 	glPopMatrix();
-
 }
 
 

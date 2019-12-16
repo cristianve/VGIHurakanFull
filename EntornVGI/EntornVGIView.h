@@ -196,6 +196,20 @@ public:
 	Hurakan d1;
 	bool demo_on = false;
 	CXBOXController* Player1;
+
+	GLuint spec_ibl0;
+	GLuint spec_ibl1;
+	GLuint spec_ibl2;
+	GLuint spec_ibl3;
+	GLuint spec_ibl4;
+	GLuint spec_ibl5;
+	GLuint diff_ibl;
+	GLuint lut;
+	GLuint tempNormal;
+	GLuint tempMetal;
+	float camPositionX = 0.0;
+	float camPositionY = 0.0;
+	float camPositionZ = 0.0;
 	
 
 // Operaciones
