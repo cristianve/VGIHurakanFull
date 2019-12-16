@@ -11,7 +11,7 @@
 #include "CXBOXController.h"
 // Entorn VGI: Constants de l'aplicació entorn VGI
 #include "constants.h"
-#include "Demo_prova.h"
+#include "Hurakan.h"
 // Entorn VGI: Includes shaders GLSL
 #include <gl/glew.h>
 #include <gl/wglew.h>
@@ -40,15 +40,15 @@ public:
 
 	//Control por teclado
 	bool RB_active = false;
-	bool isBrazoClavado = false;
-	bool isBrazoSoltado = true;
-	bool isAsientoSoltado = true;
-	bool isAsientoClavado = false;
+	bool isBracClavat = false;
+	bool isBracSoltat = true;
+	bool isSeientSoltat = true;
+	bool isSeientClavat = false;
 	bool isWaiting = false;
 	bool isnotWaiting = true;
-	bool isGrabando = false;
-	bool isnotGrabando = true;
-	bool istambaleo = false;
+	bool isGravant = false;
+	bool isnotGravant = true;
+	bool istrontollar = false;
 	bool iscamaravert = false;
 	double gir_vert = 0;
 	bool iscamarahoritz = false;
@@ -56,9 +56,9 @@ public:
 	double pos_persona_x = POS_PERSONA_INI_X;
 	double pos_persona_y = POS_PERSONA_INI_Y;
 	double altura_persona = ALTURA_PERSONA_INI;
-	double pos_asiento_x;
-	double pos_asiento_y;
-	double pos_asiento_z;
+	double pos_seient_x;
+	double pos_seient_y;
+	double pos_seient_z;
 	UINT last_tecla;
 //-------------- Entorn VGI: Variables globals de CPractivaView
 	HGLRC	 m_hrc;		// OpenGL Rendering Context 
@@ -193,7 +193,7 @@ public:
 	CString nom;	// Nom de fitxer.
 	CString buffer; // Buffer que magatzema string caracters corresponent a variables float a printar en Status Bar (funció Barra_Estat).
 //-------------- Entorn VGI: Fi De Variables globals de CEntornVGIView
-	Demo_prova d1;
+	Hurakan d1;
 	bool demo_on = false;
 	CXBOXController* Player1;
 	

@@ -138,7 +138,7 @@ END_MESSAGE_MAP()
 CEntornVGIView::CEntornVGIView()
 {
 // TODO: agregar aquí el código de construcción
-	d1 = Demo_prova();
+	d1 = Hurakan();
 	last_tecla = 0;
 //	int i = 0;
 
@@ -692,7 +692,7 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nomTextureOthers = CString2Char(PATH_TEXTURE_OTHERS);
 
 	//Grabacio
-	d1.setGrabacio(); //Prepara la grabación
+	d1.setGravacio(); //Prepara la grabación
 	
 	objecte = HURAKAN;
 	projeccio = PERSPECT;
@@ -798,9 +798,9 @@ void CEntornVGIView::OnPaint()
 			}
 			else {
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
-				if (cam == CAM_ASIENTOS) d1.get_pos_asientos(pos_asiento_x, pos_asiento_y, pos_asiento_z);
+				if (cam == CAM_ASIENTOS) d1.get_pos_seients(pos_seient_x, pos_seient_y, pos_seient_z);
 				Vista_Nuestra(cam, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_asiento_x,pos_asiento_y,pos_asiento_z,d1.cap_brac,d1.cap_seient,d1.pan_beta,d1.pan_alfa);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona,pos_seient_x,pos_seient_y,pos_seient_z,d1.cap_seient,d1.pan_beta,d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -872,7 +872,7 @@ void CEntornVGIView::OnPaint()
 				altura_persona = 0.5;
 				n[0] = 0;		n[1] = 0;		n[2] = 0;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z,d1.cap_brac,d1.cap_seient,d1.pan_beta, d1.pan_alfa);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_seient_x, pos_seient_y, pos_seient_z,d1.cap_seient,d1.pan_beta, d1.pan_alfa);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 			
@@ -902,7 +902,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_x = 0;
 				pos_persona_y = -15;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z,  d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_seient_x, pos_seient_y, pos_seient_z, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 				altura_persona = ALTURA_PERSONA_INI;
 			}
 
@@ -929,7 +929,7 @@ void CEntornVGIView::OnPaint()
 				pos_persona_y = 20;
 				pos_persona_x = -10;
 				Vista_Nuestra(EXTERIOR_FRONTAL, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z, d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_seient_x, pos_seient_y, pos_seient_z, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -954,7 +954,7 @@ void CEntornVGIView::OnPaint()
 				OPV.alfa = 60;
 				OPV.R = 30;
 				Vista_Nuestra(DEFAULT_CAM, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_asiento_x, pos_asiento_y, pos_asiento_z, d1.cap_brac, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
+					front_faces, oculta, test_vis, back_line, ilumina, llum_ambient, llumGL, ifixe, ilum2sides, eixos, grid, hgrid, pos_persona_x, pos_persona_y,altura_persona, pos_seient_x, pos_seient_y, pos_seient_z, d1.cap_seient, d1.pan_beta, d1.pan_alfa);
 			}
 
 			// Dibuix de l'Objecte o l'Escena
@@ -1020,7 +1020,7 @@ void CEntornVGIView::dibuixa_Escena() {
 
 	void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat[4],
 		bool textur, GLint texturID[NUM_MAX_TEXTURES], bool textur_map,
-		int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC,Demo_prova d1,bool demo_on);
+		int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC,Hurakan d1,bool demo_on);
 }
 
 // Barra_Estat: Actualitza la barra d'estat (Status Bar) de l'aplicació amb els
@@ -1605,15 +1605,15 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		if (!d1.demo_on)	//Si esta en modo libre permite la grabacion
 		{
-			if (isGrabando)
+			if (isGravant)
 			{
-				d1.stopGrabacio();
-				isGrabando = false;
+				d1.stopGravacio();
+				isGravant = false;
 			}
 			else
 			{
-				d1.initGrabacio();
-				isGrabando = true;
+				d1.initGravacio();
+				isGravant = true;
 			}
 			if (last_tecla != 0)
 			{
@@ -1631,70 +1631,70 @@ void CEntornVGIView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	//Si pulsa Q, frena el brazo
 	if (nChar == 81)
 	{
-		d1.setEstadoBrazo(FRENAR);
+		d1.setEstatBrac(FRENAR);
 	}
 	else if (nChar == 87) //Si pulsa W, acelera
 	{
-		d1.setEstadoBrazo(ACELERAR_POSITIVO);
+		d1.setEstatBrac(ACELERAR_POSITIVO);
 	}
 	else if (nChar == 83) //Si pulsa S acelera en el sentido contrario
 	{
-		d1.setEstadoBrazo(ACELERAR_NEGATIVO);
+		d1.setEstatBrac(ACELERAR_NEGATIVO);
 	}
 	else if (nChar == 69) //Si pulsa E, espera
 	{
 		if (isWaiting)
 		{
-			d1.setEstadoBrazo(LIBRE);
-			d1.setEstadoAsientos(LIBRE);
+			d1.setEstatBrac(LIBRE);
+			d1.setEstatSeients(LIBRE);
 			isWaiting = false;
 		}
 		else
 		{
-			d1.setEstadoBrazo(PAUSAR);
-			d1.setEstadoAsientos(PAUSAR);
+			d1.setEstatBrac(PAUSAR);
+			d1.setEstatSeients(PAUSAR);
 			isWaiting = true;
 		}
 	}
 	else if (nChar == 68) //Si pulsa D, clava el brazo (si puede)
 	{
-		if (isBrazoClavado)
+		if (isBracClavat)
 		{
-			d1.setEstadoBrazo(LIBRE);
-			isBrazoClavado = false;
+			d1.setEstatBrac(LIBRE);
+			isBracClavat = false;
 		}
 		else
 		{
-			d1.setEstadoBrazo(CLAVAR_BRAZO);
-			isBrazoClavado = true;
+			d1.setEstatBrac(CLAVAR_BRAZO);
+			isBracClavat = true;
 		}
 	}
 
 	//Asientos
 	if (nChar == 77)   //Si pulsas M giras positivamente los asientos
 	{
-		d1.setEstadoAsientos(GIRAR_POSITIVO);
+		d1.setEstatSeients(GIRAR_POSITIVO);
 	}
 	else if (nChar == 66) //Si pulsas B giras negativamente los asientos 
 	{
-		d1.setEstadoAsientos(GIRAR_NEGATIVO);
+		d1.setEstatSeients(GIRAR_NEGATIVO);
 	}
 	else if (nChar == 78)	//Si pulsas N bloqueas los asientos 
 	{
-		if (isAsientoClavado)
+		if (isSeientClavat)
 		{
-			isAsientoClavado = false;
-			d1.setEstadoAsientos(LIBRE);
+			isSeientClavat = false;
+			d1.setEstatSeients(LIBRE);
 		}
 		else
 		{
-			isAsientoClavado = true;
-			d1.setEstadoAsientos(CLAVAR_ASIENTO);
+			isSeientClavat = true;
+			d1.setEstatSeients(CLAVAR_ASIENTO);
 		}
 	}
 	else if (nChar == 75) //Si pulsas K tambaleas
 	{
-		d1.setEstadoAsientos(TAMBALEAR);
+		d1.setEstatSeients(TAMBALEAR);
 	}
 
 	//Guardamos la tecla, por si pulsa grabar, volverla a poner luego 
@@ -1713,13 +1713,13 @@ void CEntornVGIView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	//Si levanta cualquiera de estas teclas cambia el brazo al modo libre
 	if (nChar == 87 || nChar ==  83 || nChar == 81)
 	{
-		d1.setEstadoBrazo(LIBRE);
+		d1.setEstatBrac(LIBRE);
 	}
 
 	//Si levanta cualquiera de estas teclas cambia el asiento al modo libre
 	if (nChar == 77 || nChar == 66)
 	{
-		d1.setEstadoAsientos(LIBRE);
+		d1.setEstatSeients(LIBRE);
 	}
 
 	if (nChar == last_tecla)	//Si levanta la ultima tecla pulsada, la borramos de last_tecla porque puede dar errores
@@ -2748,8 +2748,8 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (!isWaiting) {
 						isWaiting = true;
-						d1.setEstadoAsientos(PAUSAR);
-						d1.setEstadoBrazo(PAUSAR);
+						d1.setEstatSeients(PAUSAR);
+						d1.setEstatBrac(PAUSAR);
 					}
 					else {
 						isWaiting = false;
@@ -2760,13 +2760,13 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			else if ((key.VirtualKey == VK_PAD_BACK) && !tecla_brac && !tecla_seient && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
 					if (!d1.demo_on) {	//Si no esta reproduciendo una grabación
-						if (!isGrabando) {
-							isGrabando = true;
-							d1.initGrabacio();
+						if (!isGravant) {
+							isGravant = true;
+							d1.initGravacio();
 						}
 						else {
-							isGrabando = false;
-							d1.stopGrabacio();
+							isGravant = false;
+							d1.stopGravacio();
 						}
 					}
 					else   //Si esta reproduciendo, reinicia la demo y lo deja en modo libre para el usuario
@@ -2777,9 +2777,9 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 				}
 
 			}
-			else if (!tecla_seient && !tecla_brac && !isWaiting && !istambaleo) {
-				if (!isAsientoClavado)d1.setEstadoAsientos(LIBRE);
-				if (!isBrazoClavado)d1.setEstadoBrazo(LIBRE);
+			else if (!tecla_seient && !tecla_brac && !isWaiting && !istrontollar) {
+				if (!isSeientClavat)d1.setEstatSeients(LIBRE);
+				if (!isBracClavat)d1.setEstatBrac(LIBRE);
 			}
 
 			//BOTONES BRAZO
@@ -3052,28 +3052,28 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 
 			}
 			//Right Trigger--> Acelerar Brazo +
-			if ((brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)&& !isBrazoClavado && !isWaiting) {
-				d1.setEstadoBrazo(ACELERAR_POSITIVO);
+			if ((brazo_pos > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)&& !isBracClavat && !isWaiting) {
+				d1.setEstatBrac(ACELERAR_POSITIVO);
 				tecla_brac = true;
 			}
 			//Left Trigger--> Acelerar Brazo -
-			if (brazo_neg > XINPUT_GAMEPAD_TRIGGER_THRESHOLD && !tecla_brac && !isBrazoClavado && !isWaiting) {
-				d1.setEstadoBrazo(ACELERAR_NEGATIVO);
+			if (brazo_neg > XINPUT_GAMEPAD_TRIGGER_THRESHOLD && !tecla_brac && !isBracClavat && !isWaiting) {
+				d1.setEstatBrac(ACELERAR_NEGATIVO);
 				tecla_brac = true;
 			}
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_B) && !tecla_brac && !isBrazoClavado && !isWaiting) {
-				d1.setEstadoBrazo(FRENAR);
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_B) && !tecla_brac && !isBracClavat && !isWaiting) {
+				d1.setEstatBrac(FRENAR);
 				tecla_brac = true;
 			}
 			//Clavar Brazo
 			if ((key.VirtualKey == VK_PAD_A) && !tecla_brac && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!isBrazoClavado) {
-						isBrazoClavado = true;
-						d1.setEstadoBrazo(CLAVAR_BRAZO);
+					if (!isBracClavat) {
+						isBracClavat = true;
+						d1.setEstatBrac(CLAVAR_BRAZO);
 					}
 					else {
-						isBrazoClavado = false;
+						isBracClavat = false;
 					}
 				}
 
@@ -3083,29 +3083,29 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			
 			//Asiento
 			//Girar +
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) && !tecla_seient && !isAsientoClavado && !isWaiting) {
-				d1.setEstadoAsientos(GIRAR_POSITIVO);
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) && !tecla_seient && !isSeientClavat && !isWaiting) {
+				d1.setEstatSeients(GIRAR_POSITIVO);
 				tecla_seient = true;
 			}
 			//Girar Negativo
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) && !tecla_seient && !isAsientoClavado && !isWaiting) {
-				d1.setEstadoAsientos(GIRAR_NEGATIVO);
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) && !tecla_seient && !isSeientClavat && !isWaiting) {
+				d1.setEstatSeients(GIRAR_NEGATIVO);
 				tecla_seient = true;
 			}
 			//Frenar Asiento
-			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_X) && !tecla_seient && !isAsientoClavado && !isWaiting) {
-				d1.setEstadoAsientos(FRENAR);
+			if ((state.Gamepad.wButtons & XINPUT_GAMEPAD_X) && !tecla_seient && !isSeientClavat && !isWaiting) {
+				d1.setEstatSeients(FRENAR);
 				tecla_seient = true;
 			}
 			//Tambaleo
-			if ((key.VirtualKey == VK_PAD_DPAD_UP) && !tecla_seient && !isAsientoClavado && !isWaiting) {
+			if ((key.VirtualKey == VK_PAD_DPAD_UP) && !tecla_seient && !isSeientClavat && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!istambaleo) {
-						istambaleo = true;
-						d1.setEstadoAsientos(TAMBALEAR);
+					if (!istrontollar) {
+						istrontollar = true;
+						d1.setEstatSeients(TAMBALEAR);
 					}
 					else {
-						istambaleo = false;
+						istrontollar = false;
 					}
 				}
 
@@ -3114,12 +3114,12 @@ void CEntornVGIView::OnTimer(UINT_PTR nIDEvent)
 			//Clavar Asiento
 			if ((key.VirtualKey == VK_PAD_Y) && !tecla_seient && !isWaiting) {
 				if (key.Flags == XINPUT_KEYSTROKE_KEYDOWN) {
-					if (!isAsientoClavado) {
-						isAsientoClavado = true;
-						d1.setEstadoAsientos(CLAVAR_ASIENTO);
+					if (!isSeientClavat) {
+						isSeientClavat = true;
+						d1.setEstatSeients(CLAVAR_ASIENTO);
 					}
 					else {
-						isAsientoClavado = false;
+						isSeientClavat = false;
 					}
 				}
 
@@ -3847,7 +3847,6 @@ void CEntornVGIView::OnCiclosPrueba1()
 
 			d1.demo_on = true;
 			textura = true;
-			d1.mode = 1;
 			d1.start_demo("brac_moves.txt", "seient_moves.txt");
 			anima = true;
 		}
@@ -3887,7 +3886,7 @@ void CEntornVGIView::OnCiclosPruebagrabada()
 
 			d1.demo_on = true;
 			textura = true;
-			d1.mode = 1;
+
 			d1.start_demo("grabacio_brac.txt", "grabacio_seients.txt");
 			anima = true;
 		}

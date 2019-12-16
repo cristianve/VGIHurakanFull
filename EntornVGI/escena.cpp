@@ -9,7 +9,7 @@ bool reflexio_material, sw_materials[4];
 
 // dibuixa_EscenaGL: Dibuix de l'escena amb comandes GL
 void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat[4], bool textur, GLint texturID[NUM_MAX_TEXTURES], bool textur_map,
-	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC, Demo_prova d1, bool demo_on)
+	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC, Hurakan d1, bool demo_on)
 {
 	float altfar = 0;
 
@@ -30,7 +30,7 @@ void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat
 	case HURAKAN:
 		//glDisable(GL_TEXTURE_2D);
 		//SeleccionaColor(ref_mat, sw_mat, col_object);
-		d1.dibuixa_demo1(textur, texturID);
+		d1.dibuixa_hurakan(textur, texturID);
 		
 		break;
 

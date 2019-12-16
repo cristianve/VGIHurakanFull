@@ -3,7 +3,7 @@
 //******** Ferran Poveda, Marc Vivet, Carme Julià, Débora Gil, Enric Martí (Setembre 2018)
 // escena.h : interface de escena.cpp
 //
-#include "Demo_prova.h"
+#include "Hurakan.h"
 
 #ifndef GLSOURCE_H
 #define GLSOURCE_H
@@ -13,7 +13,7 @@
 /* ------------------------------------------------------------------------- */
 // Entorn VGI: dibuixa_EscenaGL -> Dibuix de l'escena GL
 void dibuixa_EscenaGL(char objecte, CColor col_object, bool ref_mat, bool sw_mat[4], bool textur, GLint texturID[NUM_MAX_TEXTURES], bool textur_map,
-	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC,Demo_prova d1,bool demo_on);
+	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC,Hurakan d1,bool demo_on);
 
 // Entorn VGI: dibuixa -> Funció que dibuixa objectes simples de la llibreria GLUT segons obj
 void dibuixa(char obj);

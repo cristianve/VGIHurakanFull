@@ -435,7 +435,7 @@ void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CP
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln,
 	char iluminacio, bool llum_amb, LLUM* lumi, bool ifix, bool il2sides,
-	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double pos_seient_x,double pos_seient_y,double pos_seient_z,CEsfe3D cap_brac,CEsfe3D &cap_seient,double &pan_h,double &pan_v)
+	bool eix, CMask3D reixa, CPunt3D hreixa,double pos_persona_x, double pos_persona_y,double altura_persona,double pos_seient_x,double pos_seient_y,double pos_seient_z,CEsfe3D &cap_seient,double &pan_h,double &pan_v)
 {
 	GLfloat cam[3],VT_seient[3], up[3],VBN_seient[3],up_h[3],VNP_seient[3];
 

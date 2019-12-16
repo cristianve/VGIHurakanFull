@@ -36,7 +36,7 @@ void Projeccio_Camara1(int minx, int miny, GLsizei w, GLsizei h, float zoom);
 void Vista_Nuestra(char camara,CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln, char iluminacio, bool llum_amb, LLUM* lumin,
-	bool ifix, bool il2sides, bool eix, CMask3D reixa, CPunt3D hreixa, double pos_persona_x, double pos_persona_y,double altura_persona, double pos_seient_x, double pos_seient_y, double pos_seient_z,CEsfe3D cap_brac, CEsfe3D &cap_seient, double &pan_h, double &pan_v);
+	bool ifix, bool il2sides, bool eix, CMask3D reixa, CPunt3D hreixa, double pos_persona_x, double pos_persona_y,double altura_persona, double pos_seient_x, double pos_seient_y, double pos_seient_z, CEsfe3D &cap_seient, double &pan_h, double &pan_v);
 void Vista_Temple(CEsfe3D opv, char VPol, bool pant, CPunt3D tr, CPunt3D trF,
 	CColor col_fons, CColor col_object, char objecte, double mida, int step,
 	bool frnt_fcs, bool oculta, bool testv, bool bck_ln, char iluminacio, bool llum_amb, LLUM* lumin,

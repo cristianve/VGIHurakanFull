@@ -129,7 +129,7 @@
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="CXBOXController.h" />
-    <ClInclude Include="Demo_prova.h" />
+    <ClInclude Include="Hurakan.h" />
     <ClInclude Include="EntornVGI.h" />
     <ClInclude Include="EntornVGIDoc.h" />
     <ClInclude Include="EntornVGIView.h" />
@@ -139,10 +139,9 @@
     <ClInclude Include="Load3DS.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="material.h" />
-    <ClInclude Include="Move.h" />
-    <ClInclude Include="MoveQueue.h" />
+    <ClInclude Include="Gestor_moviments.h" />
     <ClInclude Include="Obj3DS.h" />
-    <ClInclude Include="Objeto.h" />
+    <ClInclude Include="Objecte.h" />
     <ClInclude Include="objLoader.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -156,7 +155,7 @@
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="CXBOXController.cpp" />
-    <ClCompile Include="Demo_prova.cpp" />
+    <ClCompile Include="Hurakan.cpp" />
     <ClCompile Include="EntornVGI.cpp" />
     <ClCompile Include="EntornVGIDoc.cpp" />
     <ClCompile Include="EntornVGIView.cpp" />
@@ -166,10 +165,8 @@
     <ClCompile Include="Load3DS.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="material.cpp" />
-    <ClCompile Include="Move.cpp" />
-    <ClCompile Include="MoveQueue.cpp" />
     <ClCompile Include="Obj3DS.cpp" />
-    <ClCompile Include="Objeto.cpp" />
+    <ClCompile Include="Objecte.cpp" />
     <ClCompile Include="objLoader.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
