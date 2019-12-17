@@ -92,6 +92,7 @@ public:
 	char projeccio;	// Menú Projecció: Tipus de projeccio 
 	char cam;
 	char objecte;	// Menú Objecte: Tipus d'Objecte
+	float camPosition[3];
 
 // Entorn VGI: Variables de control del menú Transforma
 	bool transf;	// Booleana per activar Transformacions (true) o no (false).

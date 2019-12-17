@@ -1,2 +1,6 @@
 *.ipch
 *.opendb
+*.exe
+EntornVGI/Debug/*
+*.obj
+*.tlog

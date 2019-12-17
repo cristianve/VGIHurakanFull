@@ -37,6 +37,8 @@ extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
 extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
 extern const CString PATH_PERSONA = CString(_T("obj/hombre.obj"));
 //TEXTURES
+extern const CString PATH_TEXTURE_MANDO_OFF = CString(_T("textures/mando_desc.png"));
+extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
 extern const CString PATH_TEXTURE_ARM_diffuse = CString(_T("textures/Arm_Diffuse.png"));
 extern const CString PATH_TEXTURE_ARM_normalmap = CString(_T("textures/Arm_normalmap.png"));
 extern const CString PATH_TEXTURE_ARM_arm = CString(_T("textures/Arm_ARM.png"));
@@ -703,7 +705,8 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
 	char* nom_persona = CString2Char(PATH_PERSONA);
 	
-
+	char* nomTextureMandoOff = CString2Char(PATH_TEXTURE_MANDO_OFF);
+	char* nomTextureMandoOn = CString2Char(PATH_TEXTURE_MANDO_ON);
 	char* nomTextureArm_diffuse = CString2Char(PATH_TEXTURE_ARM_diffuse);
 	char* nomTextureBase_diffuse = CString2Char(PATH_TEXTURE_BASE_diffuse);
 	char* nomTextureSeient_diffuse = CString2Char(PATH_TEXTURE_SEIENTS_diffuse);
@@ -754,6 +757,7 @@ void CEntornVGIView::OnInitialUpdate()
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
 	
 
+	
 
 	
 	glActiveTexture(GL_TEXTURE0 + 2);
@@ -847,6 +851,8 @@ void CEntornVGIView::OnInitialUpdate()
 
 
 	glActiveTexture(GL_TEXTURE0);
+	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
+	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
 	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm_diffuse);
 	texturesID[OBJECTEBRAC + 1] = loadIMA_SOIL(nomTextureArm_normalmap);
 	texturesID[OBJECTEBRAC + 2] = loadIMA_SOIL(nomTextureArm_arm);
@@ -934,14 +940,37 @@ void CEntornVGIView::OnPaint()
 
 // Entorn VGI: Activació el contexte OpenGL
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
-	float alfa = OPV.alfa * pi / 180;
-	float beta = OPV.beta * pi / 180;
-	camPositionX = OPV.R * cos(beta) * cos(alfa);
-	camPositionY = OPV.R * sin(beta) * cos(alfa);
-	camPositionZ = OPV.R * sin(alfa);
-	glUniform1f(glGetUniformLocation(shader_program, "camPosX"), camPositionX);
-	glUniform1f(glGetUniformLocation(shader_program, "camPosY"), camPositionY);
-	glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), camPositionZ);
+	
+	if (cam == CAM_ASIENTOS)
+	{
+		d1.get_pos_seients(pos_seient_x, pos_seient_y, pos_seient_z);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosX"), pos_seient_x);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosY"), pos_seient_y);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), pos_seient_z);
+	}
+	else if (cam == EXTERIOR_FRONTAL)
+	{
+		glUniform1f(glGetUniformLocation(shader_program, "camPosX"), pos_persona_x);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosY"), pos_persona_y);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), altura_persona);
+	}
+	else if (cam == TEMPLE_CAM)
+	{
+		glUniform1f(glGetUniformLocation(shader_program, "camPosX"), 0.0f);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosY"), -10.0f);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), 8.0f);
+	}
+	else if (cam == DEFAULT_CAM)
+	{
+		float alfa = OPV.alfa * pi / 180;
+		float beta = OPV.beta * pi / 180;
+		camPositionX = OPV.R * cos(beta) * cos(alfa);
+		camPositionY = OPV.R * sin(beta) * cos(alfa);
+		camPositionZ = OPV.R * sin(alfa);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosX"), camPositionX);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosY"), camPositionY);
+		glUniform1f(glGetUniformLocation(shader_program, "camPosZ"), camPositionZ);
+	}
 
 // Cridem a les funcions de l'escena i la projecció segons s'hagi 
 // seleccionat una projecció o un altra
@@ -986,16 +1015,30 @@ void CEntornVGIView::OnPaint()
 				glLoadIdentity();
 				gluLookAt(0, 0, 1.99, 0, 0, 0, 0, 1, 0);
 				glEnable(GL_TEXTURE_2D);
+				glClear(GL_COLOR_BUFFER_BIT);
 
 				glPushMatrix();
 					if (Player1->IsConnected()) {
-						glActiveTexture(texturesID[OBJECTEPAD_ON]);
+						glActiveTexture(GL_TEXTURE0 + 0);
 						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
+						glActiveTexture(GL_TEXTURE0 + 10);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTESKYDOME + 1]);
+						glActiveTexture(GL_TEXTURE0 + 11);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTESKYDOME + 2]);
+						//glActiveTexture(GL_TEXTURE0 + 12);
+						//glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_ON]);
 					}
 					else {
-						glActiveTexture(texturesID[OBJECTEPAD_OFF]);
+						glActiveTexture(GL_TEXTURE0 + 0);
 						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
+						glActiveTexture(GL_TEXTURE0 + 10);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTESKYDOME + 1]);
+						glActiveTexture(GL_TEXTURE0 + 11);
+						glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTESKYDOME + 2]);
+						//glActiveTexture(GL_TEXTURE0 + 12);
+						//glBindTexture(GL_TEXTURE_2D, texturesID[OBJECTEPAD_OFF]);
 					}
+					glActiveTexture(GL_TEXTURE0 + 0);
 					glBegin(GL_QUADS);
 						//glColor3f(1, 0, 0);
 						glTexCoord2i(0, 0);
