@@ -1,25 +1,2 @@
-﻿  stdafx.cpp
-  CXBOXController.cpp
-  ChildFrm.cpp
-  ClassView.cpp
-  EntornVGI.cpp
-  EntornVGIDoc.cpp
-  EntornVGIView.cpp
-  FileView.cpp
-  Hurakan.cpp
-  Load3DS.cpp
-  MainFrm.cpp
-  Obj3DS.cpp
-  Objecte.cpp
-  OutputWnd.cpp
-  PropertiesWnd.cpp
-  ViewTree.cpp
-  escena.cpp
-  glut_geometry.cpp
-  material.cpp
-  objLoader.cpp
-  visualitzacio.cpp
-C:\Users\hp\Documents\GitHub\VGIHurakanFull\EntornVGI\Objecte.cpp(12,6): warning C4101: 'd': variable local sin referencia
-C:\Users\hp\Documents\GitHub\VGIHurakanFull\EntornVGI\visualitzacio.cpp(440,51): warning C4101: 'up_h': variable local sin referencia
-C:\Users\hp\Documents\GitHub\VGIHurakanFull\EntornVGI\visualitzacio.cpp(1524,18): warning C4101: 'up': variable local sin referencia
-  EntornVGI.vcxproj -> C:\Users\hp\Documents\GitHub\VGIHurakanFull\Debug\EntornVGI.exe
+﻿  EntornVGIView.cpp
+  EntornVGI.vcxproj -> C:\Users\Miki\Desktop\VGIHurakanFull\Debug\EntornVGI.exe
