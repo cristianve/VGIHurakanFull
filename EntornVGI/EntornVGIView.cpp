@@ -37,8 +37,6 @@ extern const CString PATH_OTHERS = CString(_T("obj/Background_others.obj"));
 extern const CString PATH_TEMPLE = CString(_T("obj/Background_temple.obj"));
 extern const CString PATH_PERSONA = CString(_T("obj/hombre.obj"));
 //TEXTURES
-extern const CString PATH_TEXTURE_MANDO_OFF = CString(_T("textures/mando_desc.png"));
-extern const CString PATH_TEXTURE_MANDO_ON = CString(_T("textures/mando_on.jpg"));
 extern const CString PATH_TEXTURE_ARM_diffuse = CString(_T("textures/Arm_Diffuse.png"));
 extern const CString PATH_TEXTURE_ARM_normalmap = CString(_T("textures/Arm_normalmap.png"));
 extern const CString PATH_TEXTURE_ARM_arm = CString(_T("textures/Arm_ARM.png"));
@@ -705,8 +703,6 @@ void CEntornVGIView::OnInitialUpdate()
 	char* nom_skydome = CString2Char(PATH_SKYDOME);
 	char* nom_persona = CString2Char(PATH_PERSONA);
 	
-	char* nomTextureMandoOff = CString2Char(PATH_TEXTURE_MANDO_OFF);
-	char* nomTextureMandoOn = CString2Char(PATH_TEXTURE_MANDO_ON);
 
 	char* nomTextureArm_diffuse = CString2Char(PATH_TEXTURE_ARM_diffuse);
 	char* nomTextureBase_diffuse = CString2Char(PATH_TEXTURE_BASE_diffuse);
@@ -756,11 +752,11 @@ void CEntornVGIView::OnInitialUpdate()
 	SetTimer(WM_TIMER, d1.interval, NULL);
 	d1.set_t_base();
 	wglMakeCurrent(m_pDC->GetSafeHdc(), m_hRC);
-	texturesID[OBJECTEPAD_OFF] = loadIMA_SOIL(nomTextureMandoOff);
-	texturesID[OBJECTEPAD_ON] = loadIMA_SOIL(nomTextureMandoOn);
+	
+
 
 	
-	glActiveTexture(GL_TEXTURE0 + 40);
+	glActiveTexture(GL_TEXTURE0 + 2);
 	lut = SOIL_load_OGL_texture
 	(
 		"textures/2dLut.png",
@@ -770,8 +766,8 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 
 	glBindTexture(GL_TEXTURE_2D, lut);
-	
-	glActiveTexture(GL_TEXTURE0 + 41);
+
+	glActiveTexture(GL_TEXTURE0 + 3);
 	diff_ibl = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_diffuse.dds",
@@ -782,7 +778,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, diff_ibl);
 
-	glActiveTexture(GL_TEXTURE0 + 42);
+	glActiveTexture(GL_TEXTURE0 + 4);
 	spec_ibl0 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_0.dds",
@@ -793,7 +789,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl0);
 
-	glActiveTexture(GL_TEXTURE0 + 43);
+	glActiveTexture(GL_TEXTURE0 + 5);
 	spec_ibl1 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_1.dds",
@@ -804,7 +800,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl1);
 
-	glActiveTexture(GL_TEXTURE0 + 44);
+	glActiveTexture(GL_TEXTURE0 + 6);
 	spec_ibl2 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_2.dds",
@@ -815,7 +811,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl2);
 
-	glActiveTexture(GL_TEXTURE0 + 45);
+	glActiveTexture(GL_TEXTURE0 + 7);
 	spec_ibl3 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_3.dds",
@@ -826,7 +822,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl3);
 
-	glActiveTexture(GL_TEXTURE0 + 46);
+	glActiveTexture(GL_TEXTURE0 + 8);
 	spec_ibl4 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_4.dds",
@@ -837,7 +833,7 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl4);
 
-	glActiveTexture(GL_TEXTURE0 + 47);
+	glActiveTexture(GL_TEXTURE0 + 9);
 	spec_ibl5 = SOIL_load_OGL_single_cubemap
 	(
 		"textures/ibl_specular_5.dds",
@@ -848,8 +844,8 @@ void CEntornVGIView::OnInitialUpdate()
 	);
 	glBindTexture(GL_TEXTURE_2D, spec_ibl5);
 
-	
-	
+
+
 	glActiveTexture(GL_TEXTURE0);
 	texturesID[OBJECTEBRAC] = loadIMA_SOIL(nomTextureArm_diffuse);
 	texturesID[OBJECTEBRAC + 1] = loadIMA_SOIL(nomTextureArm_normalmap);
@@ -990,7 +986,7 @@ void CEntornVGIView::OnPaint()
 				glLoadIdentity();
 				gluLookAt(0, 0, 1.99, 0, 0, 0, 0, 1, 0);
 				glEnable(GL_TEXTURE_2D);
-				glClear(GL_COLOR_BUFFER_BIT);
+
 				glPushMatrix();
 					if (Player1->IsConnected()) {
 						glActiveTexture(texturesID[OBJECTEPAD_ON]);
