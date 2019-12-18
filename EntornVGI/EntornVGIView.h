@@ -336,6 +336,16 @@ public:
 	afx_msg void OnUpdateCamarasSplit(CCmdUI* pCmdUI);
 	afx_msg void OnCamarasDefault();
 	afx_msg void OnUpdateCamarasDefault(CCmdUI* pCmdUI);
+	afx_msg void OnAmbiental();
+	afx_msg void OnUpdateAmbiental(CCmdUI* pCmdUI);
+	afx_msg void OnAlba();
+	afx_msg void OnUpdateAlba(CCmdUI* pCmdUI);
+	afx_msg void OnMigdia();
+	afx_msg void OnUpdateMigdia(CCmdUI* pCmdUI);
+	afx_msg void OnCapvespre();
+	afx_msg void OnUpdateCapvespre(CCmdUI* pCmdUI);
+	afx_msg void OnNit();
+	afx_msg void OnUpdateNit(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // Versión de depuración en EntornVGIView.cpp

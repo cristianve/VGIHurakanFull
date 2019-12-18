@@ -235,13 +235,19 @@
 #define ID_CAMARAS_DEFECTE              32910
 #define ID_C32911                       32911
 #define ID_CAMARA_SPLIT                 32912
+#define ID_AMBIENTAL                    32913
+#define ID_ALBA                         32914
+#define ID_IL_MIGDIA                    32915
+#define ID_MIGDIA                       32916
+#define ID_CAPVESPRE                    32917
+#define ID_NIT                          32918
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        311
-#define _APS_NEXT_COMMAND_VALUE         32913
+#define _APS_NEXT_COMMAND_VALUE         32919
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

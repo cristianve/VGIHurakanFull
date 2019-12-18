@@ -157,6 +157,16 @@ BEGIN_MESSAGE_MAP(CEntornVGIView, CView)
 	ON_UPDATE_COMMAND_UI(ID_CAMARAS_EXTERIOR_FRONTAL, &CEntornVGIView::OnUpdateCamarasExteriorFrontal)
 	ON_COMMAND(ID_CAMARAS_TEMPLE, &CEntornVGIView::OnCamarasTemple)
 	ON_UPDATE_COMMAND_UI(ID_CAMARAS_TEMPLE, &CEntornVGIView::OnUpdateCamarasTemple)
+	ON_COMMAND(ID_AMBIENTAL, &CEntornVGIView::OnAmbiental)
+	ON_UPDATE_COMMAND_UI(ID_AMBIENTAL, &CEntornVGIView::OnUpdateAmbiental)
+	ON_COMMAND(ID_ALBA, &CEntornVGIView::OnAlba)
+	ON_UPDATE_COMMAND_UI(ID_ALBA, &CEntornVGIView::OnUpdateAlba)
+	ON_COMMAND(ID_MIGDIA, &CEntornVGIView::OnMigdia)
+	ON_UPDATE_COMMAND_UI(ID_MIGDIA, &CEntornVGIView::OnUpdateMigdia)
+	ON_COMMAND(ID_CAPVESPRE, &CEntornVGIView::OnCapvespre)
+	ON_UPDATE_COMMAND_UI(ID_CAPVESPRE, &CEntornVGIView::OnUpdateCapvespre)
+	ON_COMMAND(ID_NIT, &CEntornVGIView::OnNit)
+	ON_UPDATE_COMMAND_UI(ID_NIT, &CEntornVGIView::OnUpdateNit)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4215,3 +4225,73 @@ void CEntornVGIView::OnUpdateCamarasDefault(CCmdUI* pCmdUI)
 
 
 
+
+
+void CEntornVGIView::OnAmbiental()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	int i=0;
+	i++;
+}
+
+
+void CEntornVGIView::OnUpdateAmbiental(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+}
+
+
+void CEntornVGIView::OnAlba()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	int i=0;
+	i++;
+}
+
+
+void CEntornVGIView::OnUpdateAlba(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+}
+
+
+void CEntornVGIView::OnMigdia()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	int i=0;
+	i++;
+}
+
+
+void CEntornVGIView::OnUpdateMigdia(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+}
+
+
+void CEntornVGIView::OnCapvespre()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	int i=0;
+	i++;
+}
+
+
+void CEntornVGIView::OnUpdateCapvespre(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+}
+
+
+void CEntornVGIView::OnNit()
+{
+	// TODO: Agregue aquí su código de controlador de comandos
+	int i=0;
+	i++;
+}
+
+
+void CEntornVGIView::OnUpdateNit(CCmdUI* pCmdUI)
+{
+	// TODO: Agregue aquí su código de controlador de IU para actualización de comandos
+}
